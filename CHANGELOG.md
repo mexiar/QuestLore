@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Add Simplified Chinese (`zhCN`/`zhTW`): interface text, 5,259 quest narratives and 90 opening stories, selectable as **中文** in the options. Translations are machine-assisted from the English text and use official zhCN names.
+
 ## 0.16.3
 
 - Keep minimize/restore always visible when attached to the quest tracker. Detached windows retain hover-only controls.

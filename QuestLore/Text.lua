@@ -23,8 +23,11 @@ function Text.Clean(value)
     value = value:gsub("|T.-|t", ""):gsub("|A.-|a", "")
     value = value:gsub("%$[Bb]", "\n\n")
     value = value:gsub("%$[Gg]([^:;]*):([^;]*);", "%1")
-    value = value:gsub("%$[Nn]", (ns.Locale and ns.Locale.Get()=="en") and "adventurer" or "aventurero"):gsub("%$[Cc]", (ns.Locale and ns.Locale.Get()=="en") and "adventurer" or "aventurero")
-    value = value:gsub("%$[Rr]", (ns.Locale and ns.Locale.Get()=="en") and "traveler" or "viajero")
+    local language = ns.Locale and ns.Locale.Get()
+    local adventurer = language=="en" and "adventurer" or language=="zh" and "冒险者" or "aventurero"
+    local traveler = language=="en" and "traveler" or language=="zh" and "旅行者" or "viajero"
+    value = value:gsub("%$[Nn]", adventurer):gsub("%$[Cc]", adventurer)
+    value = value:gsub("%$[Rr]", traveler)
     value = value:gsub("%$[%w]+[^%s]*", "") -- unresolved client tokens
     -- Quest text uses angle brackets for narrative actions, not HTML. Keep
     -- their meaning; some item-started quests consist entirely of an action.

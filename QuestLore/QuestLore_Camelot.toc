@@ -1,14 +1,16 @@
 ## Interface: 16001
 ## Title: QuestLore
-## Notes: The story behind your active quest. English and Spanish lore summaries.
+## Notes: The story behind your active quest. English, Spanish and Chinese lore summaries.
 ## Notes-esES: El hilo de la misión: un resumen de por qué estás haciendo tu misión activa.
 ## Notes-esMX: El hilo de la misión: un resumen de por qué estás haciendo tu misión activa.
+## Notes-zhCN: 你正在做的任务背后的故事：剧情概要，不剧透。
 ## Author: Alejandro Sena
 ## Version: 0.16.3
 ## OptionalDeps: ForeverCore, Polestar
 ## Category: Quests
 ## Category-esES: Misiones
 ## Category-esMX: Misiones
+## Category-zhCN: 任务
 ## SavedVariablesPerCharacter: QuestLoreCharacterDB
 
 Text.lua
@@ -17,7 +19,9 @@ Stories.lua
 Stories_Undead.lua
 Stories_ForeverTirisfal.lua
 Narratives.lua
+Narratives_zhCN.lua
 Origins_Stories.lua
+Origins_Stories_zhCN.lua
 Origins.lua
 Model.lua
 History.lua

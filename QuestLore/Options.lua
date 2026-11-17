@@ -56,7 +56,7 @@ function Options:Create()
     self.languageLabel = panel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
     self.languageLabel:SetPoint("TOPLEFT", 16, -96)
     self.languageChoices = {}
-    for i, choice in ipairs({{"auto","Automático (idioma del juego)",16},{"es","Español",300},{"en","English",440}}) do
+    for i, choice in ipairs({{"auto","Automático (idioma del juego)",16},{"es","Español",260},{"en","English",370},{"zh","中文",480}}) do
         local button = CreateFrame("CheckButton", nil, panel, "InterfaceOptionsCheckButtonTemplate")
         button:SetPoint("TOPLEFT", choice[3], -120)
         button.language, button.caption = choice[1], choice[2]

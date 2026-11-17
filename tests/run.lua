@@ -13,11 +13,30 @@ loadModule("Stories.lua", ns)
 loadModule("Stories_Undead.lua", ns)
 loadModule("Stories_ForeverTirisfal.lua", ns)
 loadModule("Narratives.lua", ns)
+loadModule("Narratives_zhCN.lua", ns)
 loadModule("Origins_Stories.lua", ns)
+loadModule("Origins_Stories_zhCN.lua", ns)
 loadModule("Origins.lua", ns)
 loadModule("Model.lua", ns)
 loadModule("History.lua", ns)
 
+do -- Simplified Chinese
+    for id, entry in pairs(ns.Narratives) do check(type(entry.zh) == "string" and entry.zh ~= "", "Chinese narrative " .. id) end
+    for key in pairs(ns.OriginStories.en) do check(type(ns.OriginStories.zh[key]) == "string", "Chinese opening story " .. key) end
+    equal(ns.Locale.Resolve("zhCN"), "zh", "zhCN resolves to Chinese")
+    equal(ns.Locale.Resolve("zhTW"), "zh", "zhTW resolves to Chinese")
+    equal(ns.Locale.Resolve("deDE"), "en", "other locales still use English")
+    equal(ns.L("Selecciona una misión", "zh"), "选择一个任务", "Chinese interface text")
+    local zhQuest = ns.Model.Build({id = 12, title = "人民民兵", description = ""}, "zhCN")
+    equal(zhQuest.kind, "story", "Chinese story")
+    equal(zhQuest.language, "zh", "Chinese story language")
+    equal(zhQuest.title, "人民民兵", "Chinese keeps the client quest title")
+    check(zhQuest.body:find("西部荒野", 1, true), "Chinese narrative uses official zhCN names")
+    local saved = ns.db
+    ns.db = {language = "zh"}
+    equal(ns.Text.Clean("$N"), "冒险者", "Chinese quest token")
+    ns.db = saved
+end
 equal(ns.Text.Fold("CORRUPCIÓN Y MUERTE ÁÉÍÓÚ Ñ"), "corrupcion y muerte aeiou n", "Spanish folding")
 equal(ns.Text.Clean("|cffff0000Hola|r |Hquest:1|h[misión]|h |Ticon:16|t$B$n"),
     "Hola [misión]\n\naventurero", "safe game markup stripping")
@@ -750,11 +769,12 @@ native.Window:SetMinimized(true)
 assert(native.Window.frame:GetHeight()==native.Window:GetHeaderHeight() and not native.Window.scroll:IsShown(),"minimized tracker keeps only Lore header")
 print("PASS: transparent tracker section, fixed Lore header, yellow quest title and white summary")
 
-for _, locale in ipairs({"enUS","enGB","deDE","frFR","ptBR","ruRU","koKR","zhCN"}) do
+for _, locale in ipairs({"enUS","enGB","deDE","frFR","ptBR","ruRU","koKR"}) do
     equal(ns.Locale.Resolve(locale),"en","non-Spanish game locale defaults to English")
 end
 equal(ns.Locale.Resolve("esMX"),"es","Latin American Spanish auto language")
 equal(ns.Locale.Resolve("esES"),"es","European Spanish auto language")
+equal(ns.Locale.Resolve("zhCN"),"zh","Simplified Chinese auto language")
 for language, stories in pairs(ns.OriginStories) do
     local total=0
     for key,body in pairs(stories) do

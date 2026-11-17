@@ -49,7 +49,7 @@ function Model.Build(quest, locale)
     if bilingual and bilingual[language] and validLegacy then
         result.body, result.kind, result.language = bilingual[language], "story", language
         result.source = translated("Resumen narrativo · sin adelantar la historia")
-        local title = language=="es" and bilingual.titleES or bilingual.titleEN
+        local title = (language=="es" and bilingual.titleES) or (language=="en" and bilingual.titleEN) or nil
         if title and title~="" then result.title=title end
         return result
     end
