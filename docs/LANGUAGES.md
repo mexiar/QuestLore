@@ -19,7 +19,8 @@ Automatic summary language selection keeps the established Spanish/English defau
 
 The **Read full text** action appears only for the current quest while it is
 still in the player's quest log. It opens the original description and objective
-paragraph returned by the game, in a separate native-style scrollable reader.
+paragraph returned by the game, in a separate native-style scrollable reader. Drag its bottom-right corner to resize
+it; use the standard top-right close button to return to the summary.
 
 This text follows the **game client's language**, independently of the summary
 language chosen in QuestLore. Changing the summary language does not translate

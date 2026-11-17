@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.17.0-rc2 — 2026-11-17
+
+- Resize the original quest-text reader from its bottom-right corner, with live text and scroll reflow.
+- Replace the bottom Back to summary button with WoW's standard top-right close button.
+- Remove the original-text subtitle and align the full-text action with the summary's left margin.
+
 ## 0.17.0-rc1
 
 - Add French, German and Brazilian Portuguese summaries translated from the existing English narratives, with English proper names retained. These translations are provisional; they are not original localized client text.

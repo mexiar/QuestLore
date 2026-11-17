@@ -4,7 +4,7 @@
 
 **Understand why your character is doing a quest.** QuestLore adds short narrative context to your active quest in World of Warcraft: Forever. Its base languages are English and Latin American Spanish; French, German and Brazilian Portuguese are provisional translations from English with English proper names retained.
 
-The local **0.17.0-rc1** build adds the new languages and original quest-text reader. Native Forever visual verification is pending server maintenance ending. See [language support and source-text behavior](docs/LANGUAGES.md).
+The local **0.17.0-rc2** build adds the new languages and original quest-text reader. Native Forever visual verification is pending server maintenance ending. See [language support and source-text behavior](docs/LANGUAGES.md).
 
 [Download the latest release](https://github.com/mexiar/QuestLore/releases/latest) · [Report an issue](https://github.com/mexiar/QuestLore/issues) · [Polestar integration](docs/POLESTAR.md)
 
@@ -41,7 +41,7 @@ This layout is useful above action bars or across the top of the screen. Making 
 
 ## Installation
 
-1. Download a QuestLore ZIP from Releases, or use the local `QuestLore-0.17.0-rc1.zip` candidate for testing.
+1. Download a QuestLore ZIP from Releases, or use the local `QuestLore-0.17.0-rc2.zip` candidate for testing.
 2. Extract the **QuestLore** folder into `_forever_/Interface/AddOns/`.
 3. Check that `Interface/AddOns/QuestLore/QuestLore.toc` exists, without a second nested QuestLore folder.
 4. Enable QuestLore in the game's addon list. Restart the client for a new installation; use `/reload` when updating an existing installation.
