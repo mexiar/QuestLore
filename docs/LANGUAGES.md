@@ -57,9 +57,13 @@ quest-query data, exit normally and extract the resulting WDB cache.
 The 20-ID experiment recovered titles, objectives and initial descriptions in
 both enUS and esMX. The subsequent enUS calibration on build 70959 received
 100 successful responses in 69 seconds at up to two requests per second. Cache
-extraction recovered 99 description candidates: 78 passed the parser's stricter
-objective-chain check and 21 need further validation; one record had no usable
-description. The larger esMX calibration remains pending. Neither the 5,259-ID
+extraction recovered 100 complete records with 99 nonempty descriptions. The one
+empty description (quest 16) is also absent from the previous reference. The 21
+initially unconfirmed descriptions were validated: 20 have no countable objective
+records and one is a zero-count exploration objective. All 21 match the previous
+reference after comparison-only normalization of whitespace and player markers.
+The reader now recognizes these observed build-70959 cases without applying the
+fixed layout to future builds. The larger esMX calibration remains pending. Neither the 5,259-ID
 catalog nor a successful API event alone proves that every original quest
 description is available.
 
