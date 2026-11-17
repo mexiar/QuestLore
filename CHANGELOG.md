@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.17.0-rc3 — 2026-11-17
+
+- Remember the original quest-text reader's dimensions and position per character, including across reloads.
+- Clamp restored reader geometry to the current screen and discard invalid saved dimensions.
+
 ## 0.17.0-rc2 — 2026-11-17
 
 - Resize the original quest-text reader from its bottom-right corner, with live text and scroll reflow.

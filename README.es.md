@@ -2,7 +2,7 @@
 
 QuestLore explica por qué tu personaje está haciendo su misión activa en **WoW: Forever**. Incluye 5.259 resúmenes en inglés y español latinoamericano y añade traducciones provisionales al francés, alemán y portugués de Brasil.
 
-La versión **0.17.0-rc2** está preparada para pruebas. La comprobación visual dentro de Forever está pendiente del fin del mantenimiento.
+La versión **0.17.0-rc3** está preparada para pruebas. La comprobación visual dentro de Forever está pendiente del fin del mantenimiento.
 
 ## Idiomas
 

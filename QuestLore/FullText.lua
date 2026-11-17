@@ -2,6 +2,17 @@ local _, ns = ...
 local FullText = {}
 ns.FullText = FullText
 
+local function finite(value)
+    return type(value)=="number" and value==value and value>-math.huge and value<math.huge
+end
+
+function FullText:SaveGeometry()
+    if not self.frame or not ns.db then return end
+    local left, top = self.frame:GetLeft(), self.frame:GetTop()
+    if not finite(left) or not finite(top) then return end
+    ns.db.fullTextWindow = {width=self.frame:GetWidth(),height=self.frame:GetHeight(),x=left,y=top}
+end
+
 -- Original dialogue exists only in the live API response and visible widgets.
 -- It never joins narrative models, history entries or SavedVariables.
 function FullText:CanRead(id)
@@ -52,10 +63,24 @@ function FullText:Create()
     frame:SetResizable(true)
     frame:SetResizeBounds(math.min(320, UIParent:GetWidth()-24), math.min(200, UIParent:GetHeight()-40),
         UIParent:GetWidth()-24, UIParent:GetHeight()-40)
+    local saved = type(ns.db.fullTextWindow)=="table" and ns.db.fullTextWindow or {}
+    local screenWidth, screenHeight = UIParent:GetWidth(), UIParent:GetHeight()
+    local function dimension(value, fallback, minimum, maximum)
+        return math.max(minimum, math.min(maximum, finite(value) and value or fallback))
+    end
+    local width = dimension(saved.width,520,math.min(320,screenWidth-24),screenWidth-24)
+    local height = dimension(saved.height,580,math.min(200,screenHeight-40),screenHeight-40)
+    frame:SetSize(width,height)
+    if finite(saved.x) and finite(saved.y) then
+        frame:ClearAllPoints()
+        frame:SetPoint("TOPLEFT",UIParent,"BOTTOMLEFT",
+            math.max(0,math.min(screenWidth-width,saved.x)),
+            math.max(height,math.min(screenHeight,saved.y)))
+    end
     frame:EnableMouse(true)
     frame:RegisterForDrag("LeftButton")
     frame:SetScript("OnDragStart", function() frame:StartMoving() end)
-    frame:SetScript("OnDragStop", function() frame:StopMovingOrSizing() end)
+    frame:SetScript("OnDragStop", function() frame:StopMovingOrSizing(); self:SaveGeometry() end)
     frame:SetBackdrop({bgFile="Interface\\DialogFrame\\UI-DialogBox-Background",
         edgeFile="Interface\\DialogFrame\\UI-DialogBox-Border", tile=true, tileSize=32,
         edgeSize=32, insets={left=11,right=12,top=12,bottom=11}})
@@ -91,6 +116,7 @@ function FullText:Create()
     end)
     grip:SetScript("OnMouseUp", function()
         frame:StopMovingOrSizing()
+        self:SaveGeometry()
         self:Layout()
     end)
     frame:SetScript("OnSizeChanged", function() self:Layout() end)
@@ -106,6 +132,7 @@ function FullText:Create()
     end
     frame:SetScript("OnHide", function()
         frame:StopMovingOrSizing()
+        self:SaveGeometry()
         self.id = nil
         title:SetText("")
         body:SetText("")

@@ -20,7 +20,8 @@ Automatic summary language selection keeps the established Spanish/English defau
 The **Read full text** action appears only for the current quest while it is
 still in the player's quest log. It opens the original description and objective
 paragraph returned by the game, in a separate native-style scrollable reader. Drag its bottom-right corner to resize
-it; use the standard top-right close button to return to the summary.
+it; its position and dimensions are saved per character. Use the standard
+top-right close button to return to the summary.
 
 This text follows the **game client's language**, independently of the summary
 language chosen in QuestLore. Changing the summary language does not translate
@@ -54,9 +55,13 @@ users. The developer can use it with each client language to collect original
 quest-query data, exit normally and extract the resulting WDB cache.
 
 The 20-ID experiment recovered titles, objectives and initial descriptions in
-both enUS and esMX. A larger 100-ID calibration at the collector's new adaptive
-rate is still pending. Neither the 5,259-ID catalog nor a successful API event
-alone proves that every original quest description is available.
+both enUS and esMX. The subsequent enUS calibration on build 70959 received
+100 successful responses in 69 seconds at up to two requests per second. Cache
+extraction recovered 99 description candidates: 78 passed the parser's stricter
+objective-chain check and 21 need further validation; one record had no usable
+description. The larger esMX calibration remains pending. Neither the 5,259-ID
+catalog nor a successful API event alone proves that every original quest
+description is available.
 
 Research inputs and full original dialogue are excluded from the public addon
 ZIP. Only the short narrative banks and runtime code are distributed.

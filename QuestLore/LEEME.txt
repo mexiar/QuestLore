@@ -1,4 +1,4 @@
-QuestLore 0.17.0-rc2 — El hilo de la misión
+QuestLore 0.17.0-rc3 — El hilo de la misión
 WoW: Forever · interfaz 16001 · English / español latinoamericano
 Traducciones provisionales: français / Deutsch / português (Brasil)
 
@@ -91,5 +91,5 @@ Leer texto completo: disponible únicamente para la misión actual activa.
 Abre la descripción y los objetivos del cliente en una ventana con scroll.
 Usa el idioma del juego, independientemente del elegido para el resumen.
 El texto original no se archiva: solo se conservan los resúmenes narrativos.
-La versión 0.17.0-rc2 tiene pruebas Lua simuladas; falta revisión visual en
+La versión 0.17.0-rc3 tiene pruebas Lua simuladas; falta revisión visual en
 Forever cuando termine el mantenimiento.
