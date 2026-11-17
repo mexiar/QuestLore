@@ -2,13 +2,13 @@
 
 QuestLore explica por qué tu personaje está haciendo su misión activa en **WoW: Forever**. Incluye 5.259 resúmenes en inglés y español latinoamericano y añade traducciones provisionales al francés, alemán y portugués de Brasil.
 
-La versión **0.17.0** añade idiomas, lectura del texto original e integración directa con RestedXP.
+La versión **0.17.1** añade idiomas, lectura del texto original e integración directa con RestedXP.
 
 ## Idiomas
 
 En **Opciones → AddOns → QuestLore** puedes elegir el idioma del resumen. El modo automático mantiene español LA para clientes españoles e inglés para el resto; los idiomas beta se eligen manualmente mientras continúa su revisión. Los idiomas base son inglés y español latinoamericano; la revisión de los nombres originales de esMX sigue en curso. Un cliente español de España usa por ahora el banco latinoamericano.
 
-Los resúmenes nuevos en francés, alemán y portugués de Brasil se traducen desde el inglés y conservan los nombres propios y los títulos de misión en inglés. Son traducciones automáticas provisionales con comprobaciones y correcciones parciales; no se presentan como textos originales oficiales de esos idiomas. El aviso de las opciones explica esta diferencia.
+Los resúmenes nuevos en francés, alemán y portugués de Brasil se traducen desde el inglés y conservan los nombres propios en inglés dentro del resumen. El título mostrado se obtiene del cliente en el idioma del juego, independientemente del idioma elegido para el resumen. Son traducciones automáticas provisionales con comprobaciones y correcciones parciales; no se presentan como textos originales oficiales de esos idiomas. El aviso de las opciones explica esta diferencia.
 
 ## Leer texto completo
 

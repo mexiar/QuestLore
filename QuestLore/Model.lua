@@ -52,13 +52,13 @@ function Model.Build(quest, locale)
         if body and body ~= "" then
             result.body, result.kind = body, "story"
             result.source = translated("Resumen narrativo · sin adelantar la historia")
-            result.title = bilingual and bilingual.titleEN or (ns.L("Misión ", "en") .. quest.id)
+            if result.gameTitle == "" then result.title = bilingual and bilingual.titleEN or (ns.L("Misión ", "en") .. quest.id) end
             return result
         end
-        -- A missing translation is shown honestly in English, including its title.
+        -- A missing translated body uses English; the client title stays localized.
         if bilingual and bilingual.en then
             result.body, result.kind, result.language = bilingual.en, "story", "en"
-            result.title = bilingual.titleEN or (ns.L("Misión ", "en") .. quest.id)
+            if result.gameTitle == "" then result.title = bilingual.titleEN or (ns.L("Misión ", "en") .. quest.id) end
             result.source = ns.L("Resumen narrativo · sin adelantar la historia", "en")
             result.translationFallback = true
             return result
@@ -68,7 +68,7 @@ function Model.Build(quest, locale)
         result.body, result.kind, result.language = bilingual[language], "story", language
         result.source = translated("Resumen narrativo · sin adelantar la historia")
         local title = language=="es" and bilingual.titleES or bilingual.titleEN
-        if title and title~="" then result.title=title end
+        if result.gameTitle == "" and title and title~="" then result.title=title end
         return result
     end
     local regional = ns.Stories[quest.id]

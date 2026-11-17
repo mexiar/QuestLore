@@ -48,14 +48,18 @@ ns.NarrativeTranslations={fr={[101]="Arugal a besoin d’aide dans Silverpine Fo
 local quest={id=101,title="Titre du client",description="Texte du client"}
 local translated=ns.Model.Build(quest,"frFR")
 equal(translated.language,"fr","French narrative used")
-equal(translated.title,"Arugal's Request","translated narrative keeps English quest name")
+equal(translated.title,"Titre du client","translated narrative keeps localized client quest name")
 equal(translated.body,ns.NarrativeTranslations.fr[101],"translation body used")
 check(translated.body:find("Silverpine Forest",1,true),"English proper name preserved")
 local fallback=ns.Model.Build(quest,"deDE")
 equal(fallback.language,"en","missing translation marked English")
 equal(fallback.body,ns.Narratives[101].en,"missing translation uses English narrative")
 check(fallback.translationFallback,"missing translation carries fallback flag")
-equal(fallback.title,ns.Narratives[101].titleEN,"fallback has English title")
+equal(fallback.title,"Titre du client","English body fallback retains localized client title")
+for _,language in ipairs({"en","es","fr","de","pt"}) do
+    equal(ns.Model.Build(quest,language).title,"Titre du client","client title is independent of summary language "..language)
+end
+equal(ns.Model.Build({id=101},"fr").title,ns.Narratives[101].titleEN,"missing client title can use catalog title")
 ns.locale="frFR"
 local originalPreview=ns.Model.Build({id=102,description="Une quête inconnue."},"deDE")
 equal(originalPreview.kind,"preview","client original is explicitly a preview rather than a translated narrative")

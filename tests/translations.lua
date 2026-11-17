@@ -20,7 +20,7 @@ for _,lang in ipairs({"fr","de","pt"}) do
         assert(not text:find("ZXQ") and not text:find("<unk>") and not text:find("__P%d"),"unresolved marker "..id..lang)
         local model=ns.Model.Build({id=id,title="Client title"},lang)
         assert(model.body==text and model.language==lang and not model.translationFallback,"selected bank "..id..lang)
-        assert(model.title==original.titleEN,"translated bank uses English title "..id..lang)
+        assert(model.title=="Client title","translated bank preserves client title "..id..lang)
     end
     for key,original in pairs(ns.OriginStories.en) do
         local text=assert(origins[key],"missing introduction "..key..lang)
@@ -29,7 +29,9 @@ for _,lang in ipairs({"fr","de","pt"}) do
     end
     local history=ns.History.New({{key="quest:363",id=363,title="Old",body="Old",kind="story",source=""}})
     assert(history.entries[1].body==bank[363] and history.entries[1].description==nil,"translated summary archive")
+    local localizedHistory=ns.History.New({{key="quest:363",id=363,title="Old English title",gameTitle="Titre localisé",body="Old",kind="story",source=""}})
+    assert(localizedHistory.entries[1].title=="Titre localisé" and localizedHistory.entries[1].body==bank[363],"archive preserves localized game title while translating narrative")
     local intro=ns.Origins.Build({race="Scourge",class="PRIEST",faction="Horde"})
     assert(intro.language==lang and intro.body==origins["Scourge:PRIEST"],"translated origin selection")
 end
-print("PASS: 15,777 translated quest summaries and 270 introductions; exhaustive selection, no empty/English fallback/sentinel, English titles and summary-only history")
+print("PASS: 15,777 translated quest summaries and 270 introductions; exhaustive selection, no empty/English fallback/sentinel, localized client titles and summary-only history")

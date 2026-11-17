@@ -7,8 +7,10 @@ A Spanish (Spain) client currently uses the explicitly labeled Latin American
 Spanish narrative bank.
 
 French, German and Brazilian Portuguese summaries are provisional translations
-of the English narrative bank. They retain English proper names and English quest
-titles. They are not summaries generated from independently collected original
+of the English narrative bank. They retain English proper names inside the narrative. The displayed quest title
+uses the localized name from the game client, independently of summary language;
+a catalog title is only a fallback when the client has no title available.
+They are not summaries generated from independently collected original
 French, German or Portuguese quest descriptions. The addon options explain this
 distinction. A missing translated entry falls back to English with its actual
 language retained in the model metadata.

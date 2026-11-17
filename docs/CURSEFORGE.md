@@ -19,7 +19,7 @@ scopes Polestar, Questie and RestedXP support.
 
 - Avatar: `media/questlore-icon-400.png`, exactly 400×400 PNG.
 - Original generated image: `media/questlore-icon-original.png`.
-- Upload archive: `dist/QuestLore-0.17.0.zip`.
+- Upload archive: `dist/QuestLore-0.17.1.zip`.
 - Source: https://github.com/mexiar/QuestLore
 - Issues: https://github.com/mexiar/QuestLore/issues
 - License selection: MIT License.

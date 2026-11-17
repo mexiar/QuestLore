@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.17.1 — 2026-11-17
+
+- Prefer the localized quest title returned by the game client in every summary language, including French, German and Portuguese and English-body fallbacks.
+- Keep English proper names inside English-derived narratives; use catalog titles only when the client has no title available.
+- Preserve known localized quest titles when switching archived narratives between languages, and update language-support documentation.
+
 ## 0.17.0 — 2026-11-17
 
 - Add French, German and Brazilian Portuguese beta banks: 5,259 quest summaries and 90 race/class introductions per language. These English-derived translations retain English proper names and quest titles; linguistic review remains partial.

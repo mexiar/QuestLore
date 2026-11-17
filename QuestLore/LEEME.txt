@@ -1,4 +1,4 @@
-QuestLore 0.17.0 — El hilo de la misión
+QuestLore 0.17.1 — El hilo de la misión
 WoW: Forever · interfaz 16001 · English / español latinoamericano
 Traducciones provisionales: français / Deutsch / português (Brasil)
 
@@ -97,3 +97,6 @@ RestedXP: integración directa opcional en los ajustes, guardada por personaje.
 Sigue su misión aceptada de la flecha o un paso con una sola misión identificable.
 Polestar tiene prioridad cuando ambos están activados.
 Questie funciona mediante la selección y el enfoque habituales de misiones.
+
+El título de la misión usa el nombre localizado del cliente, aunque el resumen
+esté en otro idioma. Solo se usa el título del catálogo si falta el del cliente.

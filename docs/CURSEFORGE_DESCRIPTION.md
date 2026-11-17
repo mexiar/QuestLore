@@ -33,7 +33,7 @@ Enable or disable the guide integrations in the addon settings. Without a usable
 ## Language support
 
 - **Full support: English and Latin American Spanish**, with complete narrative coverage of the supported quest catalog.
-- **Partial support: German, Brazilian Portuguese, and French.** These provisional summaries are translated from the English narratives and retain **English proper names and quest titles**. They are not based on original quest text collected in those languages, and their linguistic review is incomplete.
+- **Partial support: German, Brazilian Portuguese, and French.** These provisional summaries are translated from the English narratives and retain **English proper names within the summary**. The displayed quest title uses the localized name from your game client, independently of your summary language. They are not based on original quest text collected in those languages, and their linguistic review is incomplete.
 
 Each language bank covers **5,259 quest narratives**, including Forever-specific quests. Full support describes narrative coverage; the audit of original localized Spanish proper names is still in progress.
 
