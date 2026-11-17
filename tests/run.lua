@@ -337,6 +337,7 @@ end
 QuestLoreCharacterDB = nil
 loadModule("QuestAPI.lua", ns)
 loadModule("Polestar.lua", ns)
+loadModule("RestedXP.lua", ns)
 loadModule("Justify.lua", ns)
 loadModule("FullText.lua", ns)
 loadModule("Window.lua", ns)
@@ -541,7 +542,7 @@ equal(ns.Window.currentID,99,"reopening reads current quest after hidden changes
 ns.SetVisible(false)
 ns.db.position={x=200,y=80}
 local reloaded = {}
-for _,file in ipairs({"Text.lua","Locale.lua","Stories.lua","Stories_Undead.lua","Stories_ForeverTirisfal.lua","Narratives.lua","Origins_Stories.lua","Origins.lua","Model.lua","History.lua","QuestAPI.lua","Polestar.lua","Justify.lua","FullText.lua","Window.lua","Tracker.lua","Options.lua","Core.lua"}) do
+for _,file in ipairs({"Text.lua","Locale.lua","Stories.lua","Stories_Undead.lua","Stories_ForeverTirisfal.lua","Narratives.lua","Origins_Stories.lua","Origins.lua","Model.lua","History.lua","QuestAPI.lua","Polestar.lua","RestedXP.lua","Justify.lua","FullText.lua","Window.lua","Tracker.lua","Options.lua","Core.lua"}) do
     loadModule(file,reloaded)
 end
 local reloadEvents=frames[#frames]
@@ -559,7 +560,7 @@ equal(reloaded.Window.body.fontSize,18,"font size survives a reload")
 QuestLoreCharacterDB=nil
 logged={};tracked=0
 local fresh={}
-for _,file in ipairs({"Text.lua","Locale.lua","Stories.lua","Stories_Undead.lua","Stories_ForeverTirisfal.lua","Narratives.lua","Origins_Stories.lua","Origins.lua","Model.lua","History.lua","QuestAPI.lua","Polestar.lua","Justify.lua","FullText.lua","Window.lua","Tracker.lua","Options.lua","Core.lua"}) do
+for _,file in ipairs({"Text.lua","Locale.lua","Stories.lua","Stories_Undead.lua","Stories_ForeverTirisfal.lua","Narratives.lua","Origins_Stories.lua","Origins.lua","Model.lua","History.lua","QuestAPI.lua","Polestar.lua","RestedXP.lua","Justify.lua","FullText.lua","Window.lua","Tracker.lua","Options.lua","Core.lua"}) do
     loadModule(file,fresh)
 end
 local freshEvents=frames[#frames]
@@ -703,7 +704,7 @@ window:SetMinimized(true)
 local function loginCharacter(db)
     QuestLoreCharacterDB=db
     local character={}
-    for _,file in ipairs({"Text.lua","Locale.lua","Stories.lua","Stories_Undead.lua","Stories_ForeverTirisfal.lua","Narratives.lua","Origins_Stories.lua","Origins.lua","Model.lua","History.lua","QuestAPI.lua","Polestar.lua","Justify.lua","FullText.lua","Window.lua","Tracker.lua","Options.lua","Core.lua"}) do
+    for _,file in ipairs({"Text.lua","Locale.lua","Stories.lua","Stories_Undead.lua","Stories_ForeverTirisfal.lua","Narratives.lua","Origins_Stories.lua","Origins.lua","Model.lua","History.lua","QuestAPI.lua","Polestar.lua","RestedXP.lua","Justify.lua","FullText.lua","Window.lua","Tracker.lua","Options.lua","Core.lua"}) do
         loadModule(file,character)
     end
     local event=frames[#frames]
@@ -1182,3 +1183,5 @@ assert(loadfile(root.."/tests/layout.lua"))()({
 assert(loadfile(root.."/tests/horizontal.lua"))()({login=loginCharacter,tick=tick,object=object})
 
 assert(loadfile(root.."/tests/fulltext.lua"))()({login=loginCharacter,tick=tick,object=object})
+
+assert(loadfile(root.."/tests/restedxp.lua"))()({login=loginCharacter,tick=tick,setNative=function() tracked=99;logged[12]={title="La Milicia Popular",description="La Milicia Popular quiere defender los campos."};logged[13]={title="La Milicia Popular II",description="Los saqueadores Defias amenazan a la Milicia."};QuestMapFrame.DetailsFrame:Hide() end})

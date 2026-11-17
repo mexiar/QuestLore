@@ -1,4 +1,4 @@
-QuestLore 0.17.0-rc3 — El hilo de la misión
+QuestLore 0.17.0-rc4 — El hilo de la misión
 WoW: Forever · interfaz 16001 · English / español latinoamericano
 Traducciones provisionales: français / Deutsch / português (Brasil)
 
@@ -91,5 +91,11 @@ Leer texto completo: disponible únicamente para la misión actual activa.
 Abre la descripción y los objetivos del cliente en una ventana con scroll.
 Usa el idioma del juego, independientemente del elegido para el resumen.
 El texto original no se archiva: solo se conservan los resúmenes narrativos.
-La versión 0.17.0-rc3 tiene pruebas Lua simuladas; falta revisión visual en
+La versión 0.17.0-rc4 tiene pruebas Lua simuladas; falta revisión visual en
 Forever cuando termine el mantenimiento.
+
+RestedXP: integración directa opcional en los ajustes, guardada por personaje.
+Sigue su misión aceptada de la flecha o un paso con una sola misión identificable.
+Polestar tiene prioridad cuando ambos están activados. RestedXP sigue siendo
+experimental: falta comprobarlo con una instalación real dentro de Forever.
+Questie funciona mediante la selección y el enfoque habituales de misiones.

@@ -2,7 +2,7 @@
 
 QuestLore explica por qué tu personaje está haciendo su misión activa en **WoW: Forever**. Incluye 5.259 resúmenes en inglés y español latinoamericano y añade traducciones provisionales al francés, alemán y portugués de Brasil.
 
-La versión **0.17.0-rc3** está preparada para pruebas. La comprobación visual dentro de Forever está pendiente del fin del mantenimiento.
+La versión **0.17.0-rc4** está preparada para pruebas. La comprobación visual dentro de Forever está pendiente del fin del mantenimiento.
 
 ## Idiomas
 
@@ -35,3 +35,5 @@ Extrae la carpeta **QuestLore** del ZIP dentro de `_forever_/Interface/AddOns/`.
 La recopilación manual de originales con **QuestLoreProbe** es una herramienta separada de investigación y no se distribuye a los usuarios normales del addon.
 
 Consulta [la documentación principal en inglés](README.md) y [los detalles de idiomas y almacenamiento](docs/LANGUAGES.md).
+
+La integración opcional con RestedXP sigue la misión aceptada de su flecha o un paso con una única misión identificable. Se configura por personaje; Polestar tiene prioridad si ambas integraciones están activadas. Questie funciona mediante la selección y el enfoque habituales de misiones. La integración directa con RestedXP es nueva y experimental, con pruebas simuladas aprobadas y validación en Forever pendiente. Consulta [los detalles y límites](docs/RESTEDXP.md).

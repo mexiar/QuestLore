@@ -72,6 +72,8 @@ end
 local function resolveContext()
     local polestarID = ns.PolestarBridge:QuestID()
     if polestarID then return polestarID end
+    local restedID = ns.RestedXPBridge:QuestID()
+    if restedID then return restedID end
     -- The latest explicit interaction wins over a stale, still-open journal.
     if selectionMode == "tracked" then
         local id = ns.API.superTracked()
@@ -196,6 +198,7 @@ local function initialise()
     ns.db = QuestLoreCharacterDB
     if ns.db.attachToTracker == nil then ns.db.attachToTracker = true end
     if ns.db.followPolestar == nil then ns.db.followPolestar = true end
+    if ns.db.followRestedXP == nil then ns.db.followRestedXP = true end
     ns.locale = GetLocale()
     local profile = ns.API.Profile()
     if profile.level and profile.level > 1 then ns.db.adventureStarted = true end
@@ -218,6 +221,7 @@ local function initialise()
     ns.ready = true
     installHooks()
     ns.PolestarBridge:Sync()
+    ns.RestedXPBridge:Sync()
     ns.SetVisible(ns.db.visible)
 end
 
@@ -226,7 +230,7 @@ events:SetScript("OnEvent", function(_, event, a, b)
     if event == "PLAYER_LOGIN" then
         initialise()
     elseif event == "ADDON_LOADED" then
-        if ns.ready then installHooks(); ns.PolestarBridge:Sync() end
+        if ns.ready then installHooks(); ns.PolestarBridge:Sync(); ns.RestedXPBridge:Sync() end
     elseif ns.ready then
         -- Full original dialogue belongs only to the current active quest.
         -- Validate it even while the summary window is hidden/minimized.

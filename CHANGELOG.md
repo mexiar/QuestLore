@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.17.0-rc4 — 2026-11-17
+
+- Add optional direct RestedXP following via its accepted arrow quest or an unambiguous current guide step, with a per-character switch.
+- Observe guide messages through a private AceEvent listener and recover silent changes with one local timer; unchanged targets do not redraw.
+- Keep Polestar priority when both guide integrations are enabled, and normal quest selection as the fallback.
+- Update CurseForge description with full base-language coverage, partial translations, original quest reading and accurately scoped addon compatibility.
+- RestedXP native client verification remains pending; this new integration is experimental.
+
 ## 0.17.0-rc3 — 2026-11-17
 
 - Remember the original quest-text reader's dimensions and position per character, including across reloads.

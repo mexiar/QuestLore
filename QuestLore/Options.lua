@@ -28,6 +28,13 @@ function Options:Sync()
             or "Polestar no está disponible. Se usará el seguimiento habitual."
         self.polestarStatus:SetText(ns.L(status))
     end
+    if self.restedXP then
+        self.restedXP:SetChecked(ns.db.followRestedXP == true)
+        self.restedXP.label:SetText(ns.L("Seguir la misión activa de RestedXP"))
+        self.restedXPStatus:SetText(ns.L(ns.RestedXPBridge:IsAvailable()
+            and "RestedXP sigue su objetivo de misión o un paso con una sola misión activa. Polestar tiene prioridad si ambos están activados."
+            or "RestedXP no está disponible. Se usará el seguimiento habitual."))
+    end
     if self.attachment then
         local available = ns.Tracker and ns.Tracker:IsAvailable()
         self.attachment:SetChecked(ns.db.attachToTracker == true)
@@ -68,6 +75,8 @@ function Options:Layout()
     y=paragraph(self.attachmentStatus,y,48)+24
     at(self.polestar,y); y=y+34
     y=paragraph(self.polestarStatus,y,48)+24
+    at(self.restedXP,y); y=y+34
+    y=paragraph(self.restedXPStatus,y,48)+24
     at(self.historyButton,y)
     self.content:SetHeight(y+52)
     if self.scroll.UpdateScrollChildRect then self.scroll:UpdateScrollChildRect() end
@@ -173,6 +182,16 @@ function Options:Create()
     self.polestarStatus:SetPoint("TOPRIGHT", -16, -500)
     self.polestarStatus:SetJustifyH("LEFT")
     self.polestarStatus:SetWordWrap(true)
+    local restedXP = CreateFrame("CheckButton", nil, panel, "InterfaceOptionsCheckButtonTemplate")
+    restedXP.label = restedXP:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+    restedXP.label:SetPoint("LEFT", restedXP, "RIGHT", 2, 0)
+    restedXP.label:SetPoint("RIGHT", panel, "RIGHT", -16, 0)
+    restedXP.label:SetJustifyH("LEFT")
+    restedXP:SetScript("OnClick", function() ns.RestedXPBridge:SetEnabled(not ns.db.followRestedXP) end)
+    self.restedXP = restedXP
+    self.restedXPStatus = panel:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+    self.restedXPStatus:SetJustifyH("LEFT")
+    self.restedXPStatus:SetWordWrap(true)
     self.historyButton = CreateFrame("Button", nil, panel, "UIPanelButtonTemplate")
     self.historyButton:SetPoint("TOPLEFT", 16, -554)
     self.historyButton:SetSize(180, 24)

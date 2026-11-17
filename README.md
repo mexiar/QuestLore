@@ -4,7 +4,7 @@
 
 **Understand why your character is doing a quest.** QuestLore adds short narrative context to your active quest in World of Warcraft: Forever. Its base languages are English and Latin American Spanish; French, German and Brazilian Portuguese are provisional translations from English with English proper names retained.
 
-The local **0.17.0-rc3** build adds the new languages and original quest-text reader. Native Forever visual verification is pending server maintenance ending. See [language support and source-text behavior](docs/LANGUAGES.md).
+The local **0.17.0-rc4** build adds the new languages and original quest-text reader. Native Forever visual verification is pending server maintenance ending. See [language support and source-text behavior](docs/LANGUAGES.md).
 
 [Download the latest release](https://github.com/mexiar/QuestLore/releases/latest) · [Report an issue](https://github.com/mexiar/QuestLore/issues) · [Polestar integration](docs/POLESTAR.md)
 
@@ -41,7 +41,7 @@ This layout is useful above action bars or across the top of the screen. Making 
 
 ## Installation
 
-1. Download a QuestLore ZIP from Releases, or use the local `QuestLore-0.17.0-rc3.zip` candidate for testing.
+1. Download a QuestLore ZIP from Releases, or use the local `QuestLore-0.17.0-rc4.zip` candidate for testing.
 2. Extract the **QuestLore** folder into `_forever_/Interface/AddOns/`.
 3. Check that `Interface/AddOns/QuestLore/QuestLore.toc` exists, without a second nested QuestLore folder.
 4. Enable QuestLore in the game's addon list. Restart the client for a new installation; use `/reload` when updating an existing installation.
@@ -91,6 +91,17 @@ When enabled, Lore reads the accepted quest associated with Polestar's current n
 While the option is enabled and Polestar has a valid accepted quest, **Polestar takes priority** over another quest selected automatically by the game or manually in the journal. This prevents accepting a side quest from leaving Lore on that quest while the guide continues elsewhere. Turn off the option to follow your own quest selection. Acceptance recommendations, unaccepted quests, manual pins, missing targets, missing or incompatible APIs, and removed quests fall back to ordinary journal/super-tracked/watched quest selection. Disabling the option cancels the safety timer, removes the subscription and immediately restores ordinary selection. This controls the direct bridge; native super-tracking can still reflect changes made by Polestar itself.
 
 See [integration details and tested limits](docs/POLESTAR.md).
+
+## RestedXP and Questie
+
+Questie works through its usual quest-journal and focused-tracker interactions.
+The optional **Follow RestedXP's active quest** setting reads the accepted quest
+associated with RXP's arrow or, if unambiguous, its current guide step. Both guide
+bridges default to on; Polestar has priority when both identify a quest. Disable
+the guide integration you do not want. A missing RXP installation creates no timer.
+
+This new RXP bridge is experimental: contract-fixture tests pass, but native
+Forever testing is pending. See [integration details and limits](docs/RESTEDXP.md).
 
 ## Development
 

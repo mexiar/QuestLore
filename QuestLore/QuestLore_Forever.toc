@@ -4,8 +4,8 @@
 ## Notes-esES: El hilo de la misión: un resumen de por qué estás haciendo tu misión activa.
 ## Notes-esMX: El hilo de la misión: un resumen de por qué estás haciendo tu misión activa.
 ## Author: Alejandro Sena
-## Version: 0.17.0-rc3
-## OptionalDeps: ForeverCore, Polestar
+## Version: 0.17.0-rc4
+## OptionalDeps: ForeverCore, Polestar, RXPGuides
 ## Category: Quests
 ## Category-esES: Misiones
 ## Category-esMX: Misiones
@@ -26,6 +26,7 @@ Model.lua
 History.lua
 QuestAPI.lua
 Polestar.lua
+RestedXP.lua
 Justify.lua
 FullText.lua
 Window.lua
