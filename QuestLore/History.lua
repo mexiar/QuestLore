@@ -94,7 +94,7 @@ end
 
 function History:Current()
     local model = self.cursor and self.entries[self.cursor] or self.live
-    if model and model.language and model.language ~= ns.Locale.Get() then
+    if model and model.kind == "story" and model.language and model.language ~= ns.Locale.Get() then
         if model.id then
             if model.guardRejected then
                 return {key=model.key,id=model.id,title=model.title,kind="missing",source="",

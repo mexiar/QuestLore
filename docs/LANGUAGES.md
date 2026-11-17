@@ -33,6 +33,12 @@ substitute. It clears its text on close, context change or quest removal. No
 full-text action is provided in the historical summary list. It is also absent
 from race/class introductions.
 
+When a quest has no usable authored summary, Lore shows a short literal preview
+of its original client-language description/objectives, ending in **…**. Clicking
+the preview opens the full-text reader. This preview is not translated to match
+the selected summary language and is never archived. Empty originals remain an
+explicit loading or unavailable state.
+
 ## Source storage and history
 
 Original descriptions are retained only in memory for quests still active in the
@@ -84,9 +90,8 @@ The 90 new race/class introductions per language are separately translated and
 reviewed by AI agents against the complete English source. This is not a claim
 of human native-speaker review. Model weights are not bundled.
 
-The 0.17.0 release candidate is tested with Lua 5.1 and a simulated client,
-including complete original-text scrolling and source-storage isolation. Native
-Forever visual verification is pending the end of server maintenance. Translation
+Automated validation uses Lua 5.1 and a simulated client, including complete
+original-text scrolling, clickable previews and source-storage isolation. Translation
 coverage, protected-name checks and the scope of sampled editorial review must
 be reported separately; automated checks do not establish native-speaker review.
 

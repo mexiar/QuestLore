@@ -77,7 +77,12 @@ function Model.Build(quest, locale)
         result.source = translated("Resumen narrativo · sin adelantar la historia")
         return result
     end
-    if description == "" then
+    local original = type(quest.description)=="string" and quest.description or ""
+    if type(quest.objectives)=="string" and quest.objectives~="" then
+        original = original .. (original~="" and "\n\n" or "") .. quest.objectives
+    end
+    local preview = ns.Text.Preview(original)
+    if preview == "" then
         result.kind = quest.loading and "loading" or "missing"
         result.body = quest.loading and translated("Cargando el relato de la misión…")
             or translated("Todavía no hay relato disponible para esta misión. Prueba a abrir sus detalles en el diario.")
@@ -103,12 +108,9 @@ function Model.Build(quest, locale)
             return result
         end
     end
-    if ns.Locale.Resolve(ns.locale or "esMX") ~= language then
-        result.body,result.kind,result.source = translated("Este relato todavía no tiene una traducción al idioma elegido."), "missing", ""
-        return result
-    end
-    result.body, result.kind = ns.Text.Extract(description)
-    result.source = result.kind == "extract" and translated("Extracto del relato de la misión")
-        or translated("Descripción de la misión")
+    result.sourceLocale = quest.sourceLocale or ns.locale or "enUS"
+    result.language = ns.Locale.Resolve(result.sourceLocale)
+    result.body, result.kind = preview, "preview"
+    result.source = ns.L("Descripción de la misión", result.language)
     return result
 end

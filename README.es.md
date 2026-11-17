@@ -2,7 +2,7 @@
 
 QuestLore explica por qué tu personaje está haciendo su misión activa en **WoW: Forever**. Incluye 5.259 resúmenes en inglés y español latinoamericano y añade traducciones provisionales al francés, alemán y portugués de Brasil.
 
-La versión **0.17.0-rc4** está preparada para pruebas. La comprobación visual dentro de Forever está pendiente del fin del mantenimiento.
+La versión **0.17.0** añade idiomas, lectura del texto original e integración directa con RestedXP.
 
 ## Idiomas
 
@@ -13,6 +13,8 @@ Los resúmenes nuevos en francés, alemán y portugués de Brasil se traducen de
 ## Leer texto completo
 
 El botón **Leer texto completo** aparece para la misión actual mientras esté activa en tu diario. Abre la descripción y los objetivos originales en una ventana con scroll, sin recortar el contenido.
+
+Si falta un resumen, Lore muestra una vista previa literal del original con **…**. Al pulsarla se abre el texto completo. La vista previa no se guarda en el historial.
 
 El texto completo usa el **idioma del cliente del juego**, aunque hayas elegido otro idioma para el resumen. No se añade al historial ni se conserva después de cerrar el lector o abandonar la misión. El historial guarda únicamente resúmenes narrativos e introducciones.
 
@@ -28,7 +30,7 @@ La integración opcional con Polestar sigue su misión activa aceptada. Se puede
 
 ## Instalación
 
-Extrae la carpeta **QuestLore** del ZIP dentro de `_forever_/Interface/AddOns/`. Si actualizas una instalación existente, usa `/reload`. El addon apunta a la interfaz 16001 y al cliente de referencia 1.60.1.70938.
+Extrae la carpeta **QuestLore** del ZIP dentro de `_forever_/Interface/AddOns/`. Si actualizas una instalación existente, usa `/reload`. El addon apunta a la interfaz 16001.
 
 `/lore` muestra la ventana; `/lore reset` restaura su posición. El addon funciona localmente y no traduce mediante servicios de Internet durante la partida.
 
@@ -36,4 +38,4 @@ La recopilación manual de originales con **QuestLoreProbe** es una herramienta 
 
 Consulta [la documentación principal en inglés](README.md) y [los detalles de idiomas y almacenamiento](docs/LANGUAGES.md).
 
-La integración opcional con RestedXP sigue la misión aceptada de su flecha o un paso con una única misión identificable. Se configura por personaje; Polestar tiene prioridad si ambas integraciones están activadas. Questie funciona mediante la selección y el enfoque habituales de misiones. La integración directa con RestedXP es nueva y experimental, con pruebas simuladas aprobadas y validación en Forever pendiente. Consulta [los detalles y límites](docs/RESTEDXP.md).
+La integración opcional con RestedXP sigue la misión aceptada de su flecha o un paso con una única misión identificable. Se configura por personaje; Polestar tiene prioridad si ambas integraciones están activadas. Questie funciona mediante la selección y el enfoque habituales de misiones. Consulta [los detalles y límites](docs/RESTEDXP.md).

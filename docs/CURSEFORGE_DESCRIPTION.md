@@ -30,8 +30,6 @@ QuestLore works alongside **Polestar, Questie, and RestedXP**:
 
 Enable or disable the guide integrations in the addon settings. Without a usable guide target, QuestLore follows your selected or tracked quest. If both direct guide integrations are enabled, Polestar takes priority.
 
-The RestedXP integration is new and experimental; testing inside Forever with the user's installed guide version is still pending.
-
 ## Language support
 
 - **Full support: English and Latin American Spanish**, with complete narrative coverage of the supported quest catalog.
@@ -40,6 +38,8 @@ The RestedXP integration is new and experimental; testing inside Forever with th
 Each language bank covers **5,259 quest narratives**, including Forever-specific quests. Full support describes narrative coverage; the audit of original localized Spanish proper names is still in progress.
 
 Automatic selection uses Latin American Spanish for Spanish game clients and English for other clients. Choose any supported language manually in the options. The full-text reader always uses your game client's language, independently of your summary language.
+
+If a quest has no usable summary, QuestLore shows a short preview of its original text in your game client's language, ending in **…**. Click it to read the full quest. Original-text previews are not saved in story history.
 
 ## Find your place in the world
 

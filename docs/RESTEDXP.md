@@ -26,6 +26,4 @@ Inspected upstream revision: `2d3ca13dff5d31d3be65b8ddee3d24059efad293`.
 
 `tests/restedxp.lua` covers live-engine discovery, private message subscriptions, direct and parent/source arrow goals, unambiguous step fallback, multiple quests, acceptance guards, skipped/completed elements, cycles, stale guide objects, getter errors, hidden guides, late loading, character preferences, disconnect/reconnect, silent changes, steady-state redraw avoidance and guide precedence.
 
-Tests use contract fixtures, not a running RXP installation. Native Forever verification remains pending because RXP is not installed in the developer's client. This new integration is experimental; the inspected revision does not establish compatibility with every historical release, fork or guide pack.
-
 Questie is supported through its normal tracker/journal interactions, without an independent guide bridge. The installed Forever version uses `C_SuperTrack.SetSuperTrackedQuestID` and `QuestMapFrame_OpenToQuestDetails`, both already observed by QuestLore. This does not mean Lore attaches to every custom Questie tracker layout; attachment still requires ForeverCore.

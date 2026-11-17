@@ -50,17 +50,16 @@ function API.watched()
 end
 
 function API.Read(questID)
-    local index = call(log.GetLogIndexForQuestID, questID)
-    if not index or index <= 0 then return nil end
-    local info = call(log.GetInfo, index)
-    local title = type(info) == "table" and info.title or call(log.GetTitleForQuestID, questID)
-    local description = call(GetQuestLogQuestText, index)
-    return { id = questID, title = title, description = description }
+    local original = API.ReadOriginal(questID, true)
+    if original then
+        return {id=questID,title=original.title,description=original.description,
+            objectives=original.objectives,sourceLocale=original.locale}
+    end
 end
 
 -- Full quest prose is read from the current log only, in the client's locale.
 -- Never serve it from the narrative archive or an earlier quest's source cache.
-function API.ReadOriginal(questID)
+function API.ReadOriginal(questID, allowEmpty)
     if not id(questID) then return nil end
     local index = call(log.GetLogIndexForQuestID, questID)
     if type(index) ~= "number" or index <= 0 then return nil end
@@ -85,7 +84,7 @@ function API.ReadOriginal(questID)
     if not title or title == "" then title = plain(call(log.GetTitleForQuestID, questID)) end
     description, objectives = plain(description), plain(objectives)
     description = description or ""
-    if description:match("^%s*$") and (not objectives or objectives:match("^%s*$")) then return nil end
+    if not allowEmpty and description:match("^%s*$") and (not objectives or objectives:match("^%s*$")) then return nil end
     if call(log.GetLogIndexForQuestID, questID) ~= index then return nil end
     return { id=questID, title=title or "", description=description,
              objectives=objectives or "", locale=(GetLocale and GetLocale()) or ns.locale }

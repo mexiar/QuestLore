@@ -39,7 +39,7 @@ equal(ns.Model.Build(nil, "esMX").kind, "empty", "empty log")
 equal(ns.Model.Build({id = 1, loading = true}, "esMX").kind, "loading", "loading state")
 equal(ns.Model.Build({id = 1}, "esMX").kind, "missing", "missing text is not invented")
 local unknown = ns.Model.Build({id = 999999, title = "Una misión", description = narrative}, "esMX")
-equal(unknown.kind, "extract", "unwritten quest gets meaningful extraction")
+equal(unknown.kind, "preview", "unwritten quest gets a literal original-text preview")
 local quest = {id = 12, title = "La Milicia Popular", description = "La Milicia Popular solo quiere defender estas tierras."}
 equal(ns.Model.Build(quest, "esMX").kind, "story", "esMX story")
 equal(ns.Model.Build(quest, "esES").kind, "story", "esES story")
@@ -298,7 +298,7 @@ function GetBuildInfo() return "1.60.1", "70938" end
 function UnitRace() return "Elfa de la noche", "NightElf" end
 function UnitClass() return "Druida", "DRUID" end
 function UnitFactionGroup() return "Alliance", "Alianza" end
-function GetQuestLogQuestText(index) return logged[index] and logged[index].description end
+function GetQuestLogQuestText(index) return logged[index] and logged[index].description, logged[index] and logged[index].objectives end
 C_QuestLog = {
     GetLogIndexForQuestID = function(id) return logged[id] and id end,
     GetInfo = function(index) return logged[index] end,
@@ -823,7 +823,7 @@ guarded:Update(stale)
 check(guarded:Current().kind~="story","history never promotes an ID with rejected source anchors")
 native.locale="esMX"
 local uncertain=native.Model.Build({id=777777,title="Una misión sin traducir",description="Hay un problema en el bosque."},"en")
-check(uncertain.kind=="missing" and not uncertain.body:find("bosque",1,true),"untranslated text never leaks into another language")
+check(uncertain.kind=="preview" and uncertain.body:find("bosque",1,true) and uncertain.language=="es","missing summary explicitly uses client-language original preview")
 print("PASS: "..totalBilingual.." bilingual narrative IDs, source-change guard and no mixed-language fallback")
 
 check(ns.NarrativeCoverage.pending==0,"no unclassified catalog quest IDs remain")
@@ -1185,3 +1185,8 @@ assert(loadfile(root.."/tests/horizontal.lua"))()({login=loginCharacter,tick=tic
 assert(loadfile(root.."/tests/fulltext.lua"))()({login=loginCharacter,tick=tick,object=object})
 
 assert(loadfile(root.."/tests/restedxp.lua"))()({login=loginCharacter,tick=tick,setNative=function() tracked=99;logged[12]={title="La Milicia Popular",description="La Milicia Popular quiere defender los campos."};logged[13]={title="La Milicia Popular II",description="Los saqueadores Defias amenazan a la Milicia."};QuestMapFrame.DetailsFrame:Hide() end})
+
+assert(loadfile(root.."/tests/preview.lua"))()({login=loginCharacter,tick=tick,select=function(id,description,objectives)
+    tracked=id;QuestMapFrame.DetailsFrame:Hide()
+    if description then logged[id]={title="Original del cliente",description=description,objectives=objectives} else logged[id]=nil end
+end})

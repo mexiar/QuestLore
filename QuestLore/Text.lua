@@ -41,6 +41,28 @@ function Text.WordCount(value)
     return n
 end
 
+-- A literal client-language prefix, not sentence selection or translation.
+-- Strip only display markup, preserve names/actions and never split UTF-8.
+function Text.Preview(value)
+    if type(value) ~= "string" then return "" end
+    value = value:gsub("|c%x%x%x%x%x%x%x%x", ""):gsub("|r", "")
+        :gsub("|H.-|h(.-)|h", "%1"):gsub("|T.-|t", ""):gsub("|A.-|a", "")
+        :gsub("%$[Bb]", " "):gsub("%s+", " "):gsub("^%s+", ""):gsub("%s+$", "")
+    if value == "" then return "" end
+    local count, cut = 0
+    for position in value:gmatch("()(.[\128-\191]*)") do
+        count = count + 1
+        if count > 420 then cut = position - 1; break end
+    end
+    if cut then
+        value = value:sub(1, cut)
+        local boundary = value:match("^.*()%s")
+        if boundary and boundary > #value * 0.75 then value = value:sub(1, boundary-1) end
+    end
+    value = value:gsub("%s+$", ""):gsub("%.+$", "")
+    return value:sub(-3) == "…" and value or value .. "…"
+end
+
 local function hasAny(text, patterns)
     for _, pattern in ipairs(patterns) do
         if text:find(pattern, 1, true) then return true end

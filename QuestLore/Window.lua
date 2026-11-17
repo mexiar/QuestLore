@@ -235,6 +235,9 @@ function Window:SetMinimized(value, initial)
     if self.fullTextButton then
         if self.fullTextEligible and not ns.db.minimized then self.fullTextButton:Show() else self.fullTextButton:Hide() end
     end
+    if self.previewButton then
+        if self.sourcePreview and self.fullTextEligible and not ns.db.minimized then self.previewButton:Show() else self.previewButton:Hide() end
+    end
     self.applyingSize = true
     self.frame:SetResizeBounds(self.attachedLayout and 1 or self.minWidth,
         (ns.db.minimized or self.attachedLayout) and self:GetHeaderHeight() or self.minHeight,
@@ -440,6 +443,16 @@ function Window:Create()
     self.body = body
     self.justified=ns.Justify.New(content,self.fontName)
 
+    local previewButton = CreateFrame("Button", nil, scroll)
+    previewButton:SetPoint("TOPLEFT", scroll, "TOPLEFT", 0, 0)
+    previewButton:SetPoint("BOTTOMRIGHT", scroll, "BOTTOMRIGHT", 0, 0)
+    if previewButton.SetFrameLevel and scroll.GetFrameLevel then previewButton:SetFrameLevel(scroll:GetFrameLevel()+3) end
+    previewButton:SetScript("OnClick", function() ns.FullText:Open(self.currentID) end)
+    previewButton:EnableMouseWheel(true)
+    previewButton:SetScript("OnMouseWheel", function(_, delta) self:Scroll(-delta) end)
+    previewButton:Hide()
+    self.previewButton = previewButton
+
     local fullTextButton = textButton(frame, "QuestLoreReadFullTextButton", ns.L("Leer texto completo"))
     fullTextButton:SetSize(190, 22)
     fullTextButton.label:ClearAllPoints()
@@ -475,7 +488,7 @@ function Window:Create()
         region:HookScript("OnEnter",function() self:UpdateHoverControls(true) end)
         region:HookScript("OnLeave",function() self:UpdateHoverControls() end)
     end
-    watch(frame);watch(header);watch(scroll);watch(content);watch(self.minimize);watch(grip);watch(fullTextButton)
+    watch(frame);watch(header);watch(scroll);watch(content);watch(self.minimize);watch(grip);watch(fullTextButton);watch(previewButton)
     if scroll.ScrollBar then
         watch(scroll.ScrollBar)
         watch(scroll.ScrollBar.ScrollUpButton);watch(scroll.ScrollBar.ScrollDownButton)
@@ -495,6 +508,7 @@ end
 function Window:Render(model)
     local changedQuest = self.currentKey ~= model.key
     self.currentID, self.currentKey, self.currentTitle = model.id, model.key, model.title
+    self.sourcePreview = model.kind == "preview"
     self:RefreshFullText()
     if changedQuest then self.pendingScrollFraction = nil; self.scroll:SetVerticalScroll(0) end
     self.title:SetText(model.title); self.body:SetText(model.body)
@@ -509,6 +523,9 @@ function Window:RefreshFullText()
     self.FOOTER_HEIGHT = self.fullTextEligible and 30 or 8
     self.fullTextButton:SetText(ns.L("Leer texto completo"))
     if self.fullTextEligible and not ns.db.minimized then self.fullTextButton:Show() else self.fullTextButton:Hide() end
+    if self.previewButton then
+        if self.sourcePreview and self.fullTextEligible and not ns.db.minimized then self.previewButton:Show() else self.previewButton:Hide() end
+    end
     if ns.FullText then ns.FullText:Refresh() end
     if previous ~= self.fullTextEligible then self:QueueLayout() end
 end

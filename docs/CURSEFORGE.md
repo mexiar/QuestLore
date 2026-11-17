@@ -13,13 +13,13 @@ Leveling guides tell you what to do. QuestLore tells you why, with quest stories
 Copy the complete Markdown from [CURSEFORGE_DESCRIPTION.md](CURSEFORGE_DESCRIPTION.md).
 It distinguishes complete English/Latin American Spanish narrative coverage from
 partial English-derived translations, explains the original-text reader, and
-scopes Polestar, Questie and the new experimental RestedXP support.
+scopes Polestar, Questie and RestedXP support.
 
 ## Files
 
 - Avatar: `media/questlore-icon-400.png`, exactly 400×400 PNG.
 - Original generated image: `media/questlore-icon-original.png`.
-- Upload archive: `dist/QuestLore-0.17.0-rc4.zip` (local release candidate; experimental RXP integration).
+- Upload archive: `dist/QuestLore-0.17.0.zip`.
 - Source: https://github.com/mexiar/QuestLore
 - Issues: https://github.com/mexiar/QuestLore/issues
 - License selection: MIT License.

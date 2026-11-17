@@ -57,7 +57,11 @@ equal(fallback.body,ns.Narratives[101].en,"missing translation uses English narr
 check(fallback.translationFallback,"missing translation carries fallback flag")
 equal(fallback.title,ns.Narratives[101].titleEN,"fallback has English title")
 ns.locale="frFR"
-equal(ns.Model.Build({id=102,description="Une quête inconnue."},"deDE").kind,"missing","foreign-language client text never masquerades as translated narrative")
+local originalPreview=ns.Model.Build({id=102,description="Une quête inconnue."},"deDE")
+equal(originalPreview.kind,"preview","client original is explicitly a preview rather than a translated narrative")
+equal(originalPreview.language,"fr","original preview uses client language")
+equal(originalPreview.sourceLocale,"frFR","original preview retains exact client locale")
+equal(originalPreview.body,"Une quête inconnue…","original preview does not translate into selected German")
 equal(ns.locale,"frFR","summary choice leaves raw client locale unchanged")
 ns.OriginStories={en={["Human:MAGE"]="A human mage finds a place in Stormwind."},es={["Human:MAGE"]="Un mago humano encuentra su lugar en Ventormenta."}}
 ns.OriginTranslations={fr={["Human:MAGE"]="Un mage humain trouve sa place à Stormwind."}}

@@ -91,12 +91,14 @@ function ns.Refresh()
     local quest = questID and ns.API.Read(questID) or nil
     if quest then
         local cached = ns.questSources[questID]
-        if ns.Text.Clean(quest.description) == "" and cached then
+        if ns.Text.Clean(quest.description) == "" and ns.Text.Clean(quest.objectives) == "" and cached then
             quest.description = cached.description
             quest.title = quest.title or cached.title
+            quest.objectives, quest.sourceLocale = cached.objectives, cached.sourceLocale
         end
-        if ns.Text.Clean(quest.description) ~= "" then
-            ns.questSources[questID] = { title = quest.title, description = quest.description }
+        if ns.Text.Clean(quest.description) ~= "" or ns.Text.Clean(quest.objectives) ~= "" then
+            ns.questSources[questID] = { title = quest.title, description = quest.description,
+                objectives = quest.objectives, sourceLocale = quest.sourceLocale }
             requested[questID] = nil
         elseif not requested[questID] then
             -- Bounded, per-quest retries. Never continuously poll the client.
