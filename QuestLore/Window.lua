@@ -203,6 +203,7 @@ function Window:SetFontSize(value)
     self.body:SetSpacing(math.max(2, math.floor(value / 4)))
     self:Layout()
     self:QueueLayout()
+    if ns.FullText then ns.FullText:Refresh() end
     if ns.Options then ns.Options:Sync() end
 end
 
@@ -230,6 +231,10 @@ function Window:SetMinimized(value, initial)
     local left, top
     if not initial then left, top = self.frame:GetLeft(), self.frame:GetTop() end
     ns.db.minimized = value == true
+    if ns.db.minimized and ns.FullText then ns.FullText:Close() end
+    if self.fullTextButton then
+        if self.fullTextEligible and not ns.db.minimized then self.fullTextButton:Show() else self.fullTextButton:Hide() end
+    end
     self.applyingSize = true
     self.frame:SetResizeBounds(self.attachedLayout and 1 or self.minWidth,
         (ns.db.minimized or self.attachedLayout) and self:GetHeaderHeight() or self.minHeight,
@@ -435,6 +440,13 @@ function Window:Create()
     self.body = body
     self.justified=ns.Justify.New(content,self.fontName)
 
+    local fullTextButton = textButton(frame, "QuestLoreReadFullTextButton", ns.L("Leer texto completo"))
+    fullTextButton:SetSize(190, 22)
+    fullTextButton:SetPoint("BOTTOMLEFT", 8, 5)
+    fullTextButton:SetScript("OnClick", function() ns.FullText:Open(self.currentID) end)
+    fullTextButton:Hide()
+    self.fullTextButton = fullTextButton
+
     local grip = CreateFrame("Button", "QuestLoreResizeGrip", frame)
     grip:SetSize(20, 20); grip:SetPoint("BOTTOMRIGHT", -2, 2)
     grip:SetNormalTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Up")
@@ -460,7 +472,7 @@ function Window:Create()
         region:HookScript("OnEnter",function() self:UpdateHoverControls(true) end)
         region:HookScript("OnLeave",function() self:UpdateHoverControls() end)
     end
-    watch(frame);watch(header);watch(scroll);watch(content);watch(self.minimize);watch(grip)
+    watch(frame);watch(header);watch(scroll);watch(content);watch(self.minimize);watch(grip);watch(fullTextButton)
     if scroll.ScrollBar then
         watch(scroll.ScrollBar)
         watch(scroll.ScrollBar.ScrollUpButton);watch(scroll.ScrollBar.ScrollDownButton)
@@ -480,12 +492,26 @@ end
 function Window:Render(model)
     local changedQuest = self.currentKey ~= model.key
     self.currentID, self.currentKey, self.currentTitle = model.id, model.key, model.title
+    self:RefreshFullText()
     if changedQuest then self.pendingScrollFraction = nil; self.scroll:SetVerticalScroll(0) end
     self.title:SetText(model.title); self.body:SetText(model.body)
     self:Layout()
     self:QueueLayout()
 end
 
+function Window:RefreshFullText()
+    if not self.fullTextButton then return end
+    local previous = self.fullTextEligible
+    self.fullTextEligible = ns.FullText and ns.FullText:CanRead(self.currentID) or false
+    self.FOOTER_HEIGHT = self.fullTextEligible and 30 or 8
+    self.fullTextButton:SetText(ns.L("Leer texto completo"))
+    if self.fullTextEligible and not ns.db.minimized then self.fullTextButton:Show() else self.fullTextButton:Hide() end
+    if ns.FullText then ns.FullText:Refresh() end
+    if previous ~= self.fullTextEligible then self:QueueLayout() end
+end
+
 function Window:Localize()
     -- The tracker always follows the live quest; history lives in Options.
+    self:RefreshFullText()
+    if self.frame then self:Layout(); self:QueueLayout() end
 end

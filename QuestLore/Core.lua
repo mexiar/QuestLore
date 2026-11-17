@@ -6,6 +6,13 @@ local selectionPending = false
 local selectionMode, selectionTargetID
 local lastSelectedID
 
+-- Source dialogue is a session-only cache, never a SavedVariables archive.
+function ns.PruneQuestSources()
+    for id in pairs(ns.questSources or {}) do
+        if not ns.API.isActive(id) then ns.questSources[id] = nil end
+    end
+end
+
 BINDING_HEADER_QUESTLORE = "QuestLore · El hilo de la misión"
 BINDING_NAME_QUESTLORE_TOGGLE = "Mostrar el relato"
 BINDING_NAME_QUESTLORE_SCROLL_UP = "Subir el relato"
@@ -21,6 +28,7 @@ function ns.SetVisible(visible)
         ns.Window.frame:Show()
         ns.QueueRefresh()
     else
+        if ns.FullText then ns.FullText:Close() end
         ns.Window.frame:Hide()
     end
 end
@@ -80,13 +88,13 @@ function ns.Refresh()
     local questID = resolveContext()
     local quest = questID and ns.API.Read(questID) or nil
     if quest then
-        local cached = ns.db.quests[questID]
+        local cached = ns.questSources[questID]
         if ns.Text.Clean(quest.description) == "" and cached then
             quest.description = cached.description
             quest.title = quest.title or cached.title
         end
         if ns.Text.Clean(quest.description) ~= "" then
-            ns.db.quests[questID] = { title = quest.title, description = quest.description }
+            ns.questSources[questID] = { title = quest.title, description = quest.description }
             requested[questID] = nil
         elseif not requested[questID] then
             -- Bounded, per-quest retries. Never continuously poll the client.
@@ -192,17 +200,13 @@ local function initialise()
     local profile = ns.API.Profile()
     if profile.level and profile.level > 1 then ns.db.adventureStarted = true end
     local _, build = ns.API.Call(GetBuildInfo)
-    if ns.db.locale ~= ns.locale or ns.db.build ~= build or type(ns.db.quests) ~= "table" then
-        ns.db.quests = {}
-    end
+    ns.questSources = {}
+    -- Remove raw dialogue saved by older releases; it is not migrated into
+    -- history or retained after abandoning/completing a quest.
+    ns.db.quests, ns.db.questCache = nil, nil
     ns.db.locale = ns.locale
     ns.db.build = build
     if ns.db.visible == nil then ns.db.visible = true end
-    -- Source cache and reading history have separate lifetimes. The latter
-    -- keeps snapshots of completed/abandoned quests, across client builds.
-    for questID in pairs(ns.db.quests) do
-        if not ns.API.isActive(questID) then ns.db.quests[questID] = nil end
-    end
     ns.history = ns.History.New(ns.db.history)
     ns.db.history = ns.history.entries
     for _, entry in ipairs(ns.db.history) do
@@ -224,9 +228,14 @@ events:SetScript("OnEvent", function(_, event, a, b)
     elseif event == "ADDON_LOADED" then
         if ns.ready then installHooks(); ns.PolestarBridge:Sync() end
     elseif ns.ready then
+        -- Full original dialogue belongs only to the current active quest.
+        -- Validate it even while the summary window is hidden/minimized.
+        ns.PruneQuestSources()
+        if ns.Window.RefreshFullText then ns.Window:RefreshFullText() end
         if event == "QUEST_REMOVED" or event == "QUEST_TURNED_IN" then
-            ns.db.quests[a] = nil
+            ns.questSources[a] = nil
             requested[a] = nil
+            if ns.FullText and ns.FullText.id == a then ns.FullText:Close() end
         elseif event == "QUEST_DATA_LOAD_RESULT" and b == false then
             requested[a] = "done"
         elseif event == "PLAYER_ENTERING_WORLD" then

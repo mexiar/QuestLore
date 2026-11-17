@@ -1,12 +1,17 @@
-QuestLore 0.16.3 — El hilo de la misión
-WoW: Forever · interfaz 16001 · español neutro / English
+QuestLore 0.17.0-rc1 — El hilo de la misión
+WoW: Forever · interfaz 16001 · English / español latinoamericano
+Traducciones provisionales: français / Deutsch / português (Brasil)
 
 Copia esta carpeta en _forever_/Interface/AddOns/QuestLore.
 Si actualizas una instalación existente, usa /reload.
 
 Opciones → AddOns → QuestLore:
-- Idioma: Automático, Español o English.
-- Automático usa español si el cliente está en español; en los demás, inglés.
+- Idioma: Automático, Español (Latinoamérica), English, Français, Deutsch
+  o Português (Brasil). Los últimos tres se traducen desde inglés y mantienen
+  nombres propios y títulos ingleses. La auditoría de nombres de esMX sigue
+  en curso. Las opciones explican el estado de cada grupo.
+- Automático usa español LA para clientes españoles e inglés para el resto.
+  Los tres idiomas beta se eligen manualmente mientras continúa su revisión.
 - Tamaño del texto de 12 a 24 con vista previa.
 - Seguir la misión activa de Polestar (activado por defecto, opcional).
   Se guarda por personaje. Solo sigue misiones aceptadas; si no hay un
@@ -81,3 +86,10 @@ No utiliza IA ni servicios de traducción durante el juego.
 
 Cambios probados en un entorno simulado de Lua 5.1. La apariencia de los
 controles nuevos requiere comprobación dentro de WoW: Forever.
+
+Leer texto completo: disponible únicamente para la misión actual activa.
+Abre la descripción y los objetivos del cliente en una ventana con scroll.
+Usa el idioma del juego, independientemente del elegido para el resumen.
+El texto original no se archiva: solo se conservan los resúmenes narrativos.
+La versión 0.17.0-rc1 tiene pruebas Lua simuladas; falta revisión visual en
+Forever cuando termine el mantenimiento.

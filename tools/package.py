@@ -30,6 +30,8 @@ def main():
         subprocess.run([lua, '-e', "assert(loadstring(io.read('*a')))"], input=path.read_text(), text=True, check=True)
     ET.parse(addon / 'Bindings.xml')
     subprocess.run([lua, str(ROOT / 'tests/run.lua'), str(ROOT)], check=True)
+    subprocess.run([lua, str(ROOT / 'tests/localization.lua'), str(ROOT)], check=True)
+    subprocess.run([lua, str(ROOT / 'tests/translations.lua'), str(ROOT)], check=True)
     version = re.search(r'^## Version: (.+)$', toc, re.MULTILINE).group(1).strip()
     destination = ROOT / 'dist' / f'QuestLore-{version}.zip'
     destination.parent.mkdir(exist_ok=True)

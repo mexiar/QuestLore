@@ -14,6 +14,7 @@ function Options:Sync()
     if self.historyButton then self.historyButton:SetText(ns.L("Ver historial")) end
     if self.historyPanel then self:SyncHistory() end
     self.languageLabel:SetText(ns.L("Idioma del relato"))
+    self.languageNotice:SetText(ns.L("Idiomas base: inglés y español latinoamericano. La revisión de nombres originales en español sigue en curso. Francés, alemán y portugués de Brasil son traducciones automáticas provisionales del inglés y conservan los nombres propios en inglés. Los idiomas beta se eligen manualmente. Si falta una traducción, se muestra inglés."))
     for _, choice in ipairs(self.languageChoices) do
         choice:SetChecked((ns.db.language or "auto")==choice.language)
         choice.label:SetText(ns.L(choice.caption))
@@ -37,6 +38,40 @@ function Options:Sync()
             or "Desactiva esta opción para mover y redimensionar la ventana libremente."
         self.attachmentStatus:SetText(ns.L(status))
     end
+    self:Layout()
+end
+
+-- All options live in a scroll child; wrapped translations and large previews
+-- contribute their measured height instead of covering later controls.
+function Options:Layout()
+    if not self.content then return end
+    local width = math.max(240, (self.panel:GetWidth() or 600)-34)
+    self.content:SetWidth(width)
+    local function at(widget, y, inset)
+        widget:ClearAllPoints()
+        widget:SetPoint("TOPLEFT", inset or 16, -y)
+    end
+    local function paragraph(widget, y, inset)
+        at(widget, y, inset)
+        widget:SetWidth(math.max(100, width-(inset or 16)-16))
+        return y+widget:GetStringHeight()
+    end
+    local y = paragraph(self.description, 52)+22
+    at(self.languageLabel,y); y=y+24
+    for _, choice in ipairs(self.languageChoices) do at(choice,y); y=y+28 end
+    y=paragraph(self.languageNotice,y+8)+24
+    at(self.value,y); y=y+28
+    at(self.slider,y); y=y+42
+    y=paragraph(self.preview,y)+20
+    at(self.reset,y); y=y+44
+    at(self.attachment,y); y=y+34
+    y=paragraph(self.attachmentStatus,y,48)+24
+    at(self.polestar,y); y=y+34
+    y=paragraph(self.polestarStatus,y,48)+24
+    at(self.historyButton,y)
+    self.content:SetHeight(y+52)
+    if self.scroll.UpdateScrollChildRect then self.scroll:UpdateScrollChildRect() end
+    self.scroll:SetVerticalScroll(math.min(self.scroll:GetVerticalScroll(),self.scroll:GetVerticalScrollRange()))
 end
 
 function Options:Create()
@@ -45,6 +80,18 @@ function Options:Create()
     panel:Hide()
     panel.name = "QuestLore"
     self.panel = panel
+    local categoryPanel = panel
+    local scroll = CreateFrame("ScrollFrame", "QuestLoreOptionsScroll", categoryPanel, "UIPanelScrollFrameTemplate")
+    scroll:SetPoint("TOPLEFT", 0, -8)
+    scroll:SetPoint("BOTTOMRIGHT", -30, 8)
+    scroll:EnableMouseWheel(true)
+    scroll:SetScript("OnMouseWheel", function(_, delta)
+        scroll:SetVerticalScroll(math.max(0, math.min(scroll:GetVerticalScrollRange(), scroll:GetVerticalScroll()-delta*48)))
+    end)
+    panel = CreateFrame("Frame", nil, scroll)
+    panel:SetSize(550, 1000)
+    scroll:SetScrollChild(panel)
+    self.content, self.scroll = panel, scroll
     local title = panel:CreateFontString(nil, "ARTWORK", "GameFontHighlightHuge")
     title:SetPoint("TOPLEFT", 16, -16)
     title:SetText("QuestLore")
@@ -56,9 +103,9 @@ function Options:Create()
     self.languageLabel = panel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
     self.languageLabel:SetPoint("TOPLEFT", 16, -96)
     self.languageChoices = {}
-    for i, choice in ipairs({{"auto","Automático (idioma del juego)",16},{"es","Español",300},{"en","English",440}}) do
+    for i, choice in ipairs({{"auto","Automático (idioma del juego)"},{"es","Español (Latinoamérica)"},{"en","English"},{"fr","Français (traduction)"},{"de","Deutsch (Übersetzung)"},{"pt","Português (Brasil, tradução)"}}) do
         local button = CreateFrame("CheckButton", nil, panel, "InterfaceOptionsCheckButtonTemplate")
-        button:SetPoint("TOPLEFT", choice[3], -120)
+        button:SetPoint("TOPLEFT", 16, -120-(i-1)*28)
         button.language, button.caption = choice[1], choice[2]
         button.label = button:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
         button.label:SetPoint("LEFT", button, "RIGHT", 2, 0)
@@ -66,6 +113,9 @@ function Options:Create()
         self.languageChoices[i] = button
     end
 
+    self.languageNotice = panel:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+    self.languageNotice:SetJustifyH("LEFT")
+    self.languageNotice:SetWordWrap(true)
     local label = panel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
     label:SetPoint("TOPLEFT", 16, -184)
     self.value = label
@@ -127,14 +177,15 @@ function Options:Create()
     self.historyButton:SetPoint("TOPLEFT", 16, -554)
     self.historyButton:SetSize(180, 24)
     self.historyButton:SetScript("OnClick", function() self:OpenHistory() end)
-    panel:SetScript("OnShow", function() self:Sync() end)
+    categoryPanel:SetScript("OnShow", function() self:Sync() end)
+    categoryPanel:SetScript("OnSizeChanged", function() self:Sync() end)
     self:Sync()
 
     if Settings and Settings.RegisterCanvasLayoutCategory and Settings.RegisterAddOnCategory then
-        self.category = Settings.RegisterCanvasLayoutCategory(panel, panel.name)
+        self.category = Settings.RegisterCanvasLayoutCategory(categoryPanel, categoryPanel.name)
         Settings.RegisterAddOnCategory(self.category)
     elseif InterfaceOptions_AddCategory then
-        InterfaceOptions_AddCategory(panel)
+        InterfaceOptions_AddCategory(categoryPanel)
     end
     self:CreateHistory()
 end

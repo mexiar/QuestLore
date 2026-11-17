@@ -4,8 +4,10 @@ History.__index = History
 History.LIMIT = 200
 ns.History = History
 
-local fields = { "key", "id", "title", "body", "source", "kind", "language", "gameTitle", "guardRejected" }
-local kinds = { story = true, extract = true, description = true, origins = true }
+local fields = { "key", "id", "title", "body", "source", "kind", "language", "requestedLanguage", "translationFallback", "gameTitle", "guardRejected" }
+-- Archive authored summaries only. A client description/excerpt can be shown
+-- live, but must never become a saved full-text archive of past quests.
+local kinds = { story = true, origins = true }
 local function snapshot(model)
     local result = {}
     for _, field in ipairs(fields) do result[field] = model[field] end
@@ -36,7 +38,11 @@ function History.New(saved)
     local entries, positions = {}, {}
     if type(saved) == "table" then
         for _, model in ipairs(saved) do
-            if isReadable(model) then
+            -- Old installations may have stored a raw extract. Upgrade it only
+            -- when a current authored summary replaces that original text.
+            local legacy = type(model) == "table" and (model.kind == "extract" or model.kind == "description")
+                and model.id and ns.Narratives and ns.Narratives[model.id]
+            if isReadable(model) or legacy then
                 local copy = snapshot(model)
                 if isReadable(copy) then
                     local index = positions[copy.key]

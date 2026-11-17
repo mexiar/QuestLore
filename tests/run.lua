@@ -6,6 +6,7 @@ local function check(condition, message)
 end
 local function equal(a, b, message) check(a == b, message .. " (" .. tostring(a) .. " ~= " .. tostring(b) .. ")") end
 local function loadModule(file, ns) assert(loadfile(root .. "/QuestLore/" .. file))("QuestLore", ns) end
+assert(loadfile(root .. "/tests/source_api.lua"))(root)
 local ns = {}
 loadModule("Text.lua", ns)
 loadModule("Locale.lua", ns)
@@ -90,6 +91,8 @@ end
 local a=ns.Model.Build({id=12,title="A",description="La Milicia Popular quiere defender las tierras."},"esMX")
 local b=ns.Model.Build({id=13,title="B",description="Los saqueadores Defias amenazan a la Milicia."},"esMX")
 local c=ns.Model.Build({id=99,title="C",description=narrative},"esMX")
+-- A third authored fixture exercises navigation; raw-source retention is tested below.
+c.kind,c.source="story","Authored test fixture"
 local history=ns.History.New()
 check(not history:Move(-1),"empty history cannot move backwards")
 check(not history:Move(1),"empty history cannot move forwards")
@@ -124,14 +127,14 @@ history.entries[1].body="changed after snapshot"
 check(restored.entries[1].body~="changed after snapshot","history snapshots do not alias saved tables")
 local bounded=ns.History.New()
 for i=1,205 do
-    bounded:Update({key="quest:"..(900000+i),id=900000+i,title="Misión",body="Relato "..i,kind="extract",source="Texto"})
+    bounded:Update({key="quest:"..(900000+i),id=900000+i,title="Misión",body="Relato "..i,kind="story",source="Texto"})
 end
 equal(#bounded.entries,200,"history is bounded across unique pages")
 equal(bounded.entries[1].id,900006,"history keeps the latest 200 unique quests")
 local migrated=ns.History.New({
- {key="quest:999001",id=999001,title="A",body="Anterior",source="",kind="extract"},
- {key="quest:999002",id=999002,title="B",body="Otro",source="",kind="extract"},
- {key="quest:999001",id=999001,title="A",body="Actualizado",source="",kind="extract"},
+ {key="quest:999001",id=999001,title="A",body="Anterior",source="",kind="story"},
+ {key="quest:999002",id=999002,title="B",body="Otro",source="",kind="story"},
+ {key="quest:999001",id=999001,title="A",body="Actualizado",source="",kind="story"},
 })
 equal(#migrated.entries,2,"old duplicate visits collapse during reload")
 equal(migrated.entries[1].body,"Actualizado","migration retains latest content at the original position")
@@ -140,6 +143,15 @@ equal(history:Current().id,99,"explicit quest selection exits history browsing")
 equal(#history.entries,4,"explicit selection reuses the existing page")
 local invalid=ns.History.New({{key="bad",kind="story"},intro})
 equal(#invalid.entries,1,"invalid saved entries do not break navigation")
+local noRaw=ns.History.New({
+ {key="quest:999001",id=999001,title="A",body="Old full original",source="",kind="description"},
+ {key="quest:999002",id=999002,title="B",body="Old excerpt",source="",kind="extract"},
+})
+equal(#noRaw.entries,0,"raw descriptions and source excerpts are not retained in saved history")
+noRaw:Update({key="quest:999001",id=999001,title="A",body="Live full original",source="",kind="description"})
+equal(#noRaw.entries,0,"live raw descriptions never enter saved history")
+noRaw:Update({key="quest:999003",id=999003,title="C",body="Authored summary",source="",kind="story",description="Private original",fullText="Private original"})
+check(noRaw.entries[1].description==nil and noRaw.entries[1].fullText==nil,"history whitelist excludes original-text fields")
 
 -- Runtime harness: execute the actual adapter, native window and event wiring
 -- on a strict subset of the WoW UI API, with simulated asynchronous events.
@@ -326,6 +338,7 @@ QuestLoreCharacterDB = nil
 loadModule("QuestAPI.lua", ns)
 loadModule("Polestar.lua", ns)
 loadModule("Justify.lua", ns)
+loadModule("FullText.lua", ns)
 loadModule("Window.lua", ns)
 loadModule("Tracker.lua", ns)
 loadModule("Options.lua", ns)
@@ -334,7 +347,7 @@ emit("PLAYER_LOGIN");tick(0.2)
 equal(ns.Window.currentID,12,"login displays current navigation quest")
 check(ns.Window.frame:IsShown(),"window opens on first installation")
 equal(ns.Window.body.text,ns.Stories[12].text,"real frame displays narrative body")
-check(ns.db.quests[12],"quest source cached per character")
+check(ns.questSources[12] and ns.db.quests==nil,"quest source is session-only and absent from SavedVariables")
 equal(#ns.db.history,1,"actual displayed summary persisted")
 check(ns.Window.back==nil and ns.Window.forward==nil and ns.Window.status==nil and ns.Window.footer==nil,"main Lore has no history controls or pagination")
 
@@ -423,7 +436,7 @@ logged[999501].description="Esta misión pertenece a otro contexto."
 emit("QUEST_DATA_LOAD_RESULT",999501,true);tick(4)
 equal(ns.Window.currentID,12,"late old response cannot overwrite newer selection")
 logged[12]=nil;emit("QUEST_REMOVED",12);tick(0.2)
-equal(ns.db.quests[12],nil,"abandoned or turned-in quest cache pruned")
+equal(ns.questSources[12],nil,"abandoned or turned-in quest source pruned")
 check(ns.Window.currentID~=12,"abandoned quest never remains active")
 local found12=false
 for _,entry in ipairs(ns.db.history) do if entry.id==12 then found12=true end end
@@ -496,7 +509,7 @@ equal(#ns.db.history,beforeMinimized,"Actual binding cannot archive unread minim
 check(not ns.history:Find("quest:999777"),"minimized selection is deferred until displayed")
 ns.Window:SetMinimized(false);tick(0.2)
 equal(ns.Window.currentID,999777,"restore opens the quest selected while minimized")
-equal(#ns.db.history,beforeMinimized+1,"restoring archives the selected page once")
+equal(#ns.db.history,beforeMinimized,"restoring an unknown quest does not archive its original source text")
 C_SuperTrack.SetSuperTrackedQuestID(13);tick(0.2)
 
 tracked=0
@@ -528,7 +541,7 @@ equal(ns.Window.currentID,99,"reopening reads current quest after hidden changes
 ns.SetVisible(false)
 ns.db.position={x=200,y=80}
 local reloaded = {}
-for _,file in ipairs({"Text.lua","Locale.lua","Stories.lua","Stories_Undead.lua","Stories_ForeverTirisfal.lua","Narratives.lua","Origins_Stories.lua","Origins.lua","Model.lua","History.lua","QuestAPI.lua","Polestar.lua","Justify.lua","Window.lua","Tracker.lua","Options.lua","Core.lua"}) do
+for _,file in ipairs({"Text.lua","Locale.lua","Stories.lua","Stories_Undead.lua","Stories_ForeverTirisfal.lua","Narratives.lua","Origins_Stories.lua","Origins.lua","Model.lua","History.lua","QuestAPI.lua","Polestar.lua","Justify.lua","FullText.lua","Window.lua","Tracker.lua","Options.lua","Core.lua"}) do
     loadModule(file,reloaded)
 end
 local reloadEvents=frames[#frames]
@@ -546,7 +559,7 @@ equal(reloaded.Window.body.fontSize,18,"font size survives a reload")
 QuestLoreCharacterDB=nil
 logged={};tracked=0
 local fresh={}
-for _,file in ipairs({"Text.lua","Locale.lua","Stories.lua","Stories_Undead.lua","Stories_ForeverTirisfal.lua","Narratives.lua","Origins_Stories.lua","Origins.lua","Model.lua","History.lua","QuestAPI.lua","Polestar.lua","Justify.lua","Window.lua","Tracker.lua","Options.lua","Core.lua"}) do
+for _,file in ipairs({"Text.lua","Locale.lua","Stories.lua","Stories_Undead.lua","Stories_ForeverTirisfal.lua","Narratives.lua","Origins_Stories.lua","Origins.lua","Model.lua","History.lua","QuestAPI.lua","Polestar.lua","Justify.lua","FullText.lua","Window.lua","Tracker.lua","Options.lua","Core.lua"}) do
     loadModule(file,fresh)
 end
 local freshEvents=frames[#frames]
@@ -690,7 +703,7 @@ window:SetMinimized(true)
 local function loginCharacter(db)
     QuestLoreCharacterDB=db
     local character={}
-    for _,file in ipairs({"Text.lua","Locale.lua","Stories.lua","Stories_Undead.lua","Stories_ForeverTirisfal.lua","Narratives.lua","Origins_Stories.lua","Origins.lua","Model.lua","History.lua","QuestAPI.lua","Polestar.lua","Justify.lua","Window.lua","Tracker.lua","Options.lua","Core.lua"}) do
+    for _,file in ipairs({"Text.lua","Locale.lua","Stories.lua","Stories_Undead.lua","Stories_ForeverTirisfal.lua","Narratives.lua","Origins_Stories.lua","Origins.lua","Model.lua","History.lua","QuestAPI.lua","Polestar.lua","Justify.lua","FullText.lua","Window.lua","Tracker.lua","Options.lua","Core.lua"}) do
         loadModule(file,character)
     end
     local event=frames[#frames]
@@ -750,7 +763,7 @@ native.Window:SetMinimized(true)
 assert(native.Window.frame:GetHeight()==native.Window:GetHeaderHeight() and not native.Window.scroll:IsShown(),"minimized tracker keeps only Lore header")
 print("PASS: transparent tracker section, fixed Lore header, yellow quest title and white summary")
 
-for _, locale in ipairs({"enUS","enGB","deDE","frFR","ptBR","ruRU","koKR","zhCN"}) do
+for _, locale in ipairs({"enUS","enGB","ruRU","koKR","zhCN"}) do
     equal(ns.Locale.Resolve(locale),"en","non-Spanish game locale defaults to English")
 end
 equal(ns.Locale.Resolve("esMX"),"es","Latin American Spanish auto language")
@@ -764,7 +777,7 @@ for language, stories in pairs(ns.OriginStories) do
     equal(total,90,"every race/class and Skyborne faction variant has integrated lore")
 end
 native.db.language="auto";native.locale="frFR"
-equal(native.Locale.Get(),"en","auto uses English on a French client")
+equal(native.Locale.Get(),"en","automatic mode keeps English until experimental French is explicitly selected")
 native.Locale.Set("es")
 equal(native.Locale.Get(),"es","explicit Spanish overrides client")
 native.Locale.Set("en")
@@ -884,7 +897,7 @@ local stored=#dock.db.history
 host:Hide();tracked=99;dock.Refresh();tick(0.2)
 assert(#dock.db.history==stored,"a hidden tracker never archives unread lore")
 host:Show();dock.Refresh();tick(0.2)
-assert(dock.Window.currentID==99 and #dock.db.history==stored+1,"showing the tracker records the now visible story once")
+assert(dock.Window.currentID==99 and #dock.db.history==stored,"showing an unknown quest does not archive its original source text")
 combat=true
 dock.Tracker:SetAttached(false)
 assert(dock.Tracker:IsAttached() and dock.Tracker.pending and not dock.db.attachToTracker,"combat preserves layout while saving the requested detached mode")
@@ -980,7 +993,7 @@ if #detachedPreference.history.entries>0 then
     opts:MoveHistory(1)
     assert(detachedPreference.Window.currentKey==live,"archive selection never replaces main quest")
 end
-assert(detachedPreference.Window.FOOTER_HEIGHT==8,"main window no longer reserves pagination space")
+assert(detachedPreference.Window.FOOTER_HEIGHT==(detachedPreference.Window.fullTextButton:IsShown() and 30 or 8),"main window reserves only the eligible full-text action, with no pagination")
 print("PASS: default attachment respects saved detachment; pagination absent; options archive is independent of live quest")
 
 -- Archive capacity, independent selection, and safe native settings opening.
@@ -1013,6 +1026,8 @@ assert(opened==nil,"archive opener does not request protected settings in combat
 ForeverCore,InCombatLockdown=originalCore,originalCombat
 print("PASS: 200-entry scrollable archive, independent row callbacks, empty state, secure settings opening and combat guard")
 
+local beforeLanguageTracked=tracked
+tracked=13;QuestMapFrame.DetailsFrame:Hide()
 local translated=loginCharacter({language="es",attachToTracker=false});tick(0.2)
 translated.Options:OpenHistory()
 local entriesBeforeLanguage=#translated.history.entries
@@ -1022,6 +1037,7 @@ local selectedArchive=translated.history:Find(translated.Options.historyKey)
 assert(translated.Options.historyBody.text==translated.history.entries[selectedArchive].body,"archive language refreshes immediately even with live window hidden")
 assert(#translated.history.entries==entriesBeforeLanguage,"language changes never duplicate archive entries")
 print("PASS: hidden live window does not delay archive language changes")
+tracked=beforeLanguageTracked
 
 
 -- Polestar's real dot-style message bus and navigation-target contract.
@@ -1164,3 +1180,5 @@ assert(loadfile(root.."/tests/layout.lua"))()({
 })
 
 assert(loadfile(root.."/tests/horizontal.lua"))()({login=loginCharacter,tick=tick,object=object})
+
+assert(loadfile(root.."/tests/fulltext.lua"))()({login=loginCharacter,tick=tick,object=object})

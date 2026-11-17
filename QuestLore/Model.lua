@@ -29,7 +29,7 @@ function Model.Build(quest, locale)
         }
     end
     local description = ns.Text.Clean(quest.description)
-    local result = { id = quest.id, key = "quest:" .. quest.id, title = ns.Text.Clean(quest.title), gameTitle = ns.Text.Clean(quest.title), language = language }
+    local result = { id = quest.id, key = "quest:" .. quest.id, title = ns.Text.Clean(quest.title), gameTitle = ns.Text.Clean(quest.title), language = language, requestedLanguage = language }
     if result.title == "" then result.title = translated("Misión ") .. quest.id end
     local bilingual = ns.Narratives and ns.Narratives[quest.id]
     local legacy = ns.Stories[quest.id]
@@ -46,6 +46,24 @@ function Model.Build(quest, locale)
         end
     end
     result.guardRejected = not validLegacy
+    if language ~= "es" and language ~= "en" and validLegacy then
+        local bank = ns.NarrativeTranslations and ns.NarrativeTranslations[language]
+        local body = bank and bank[quest.id]
+        if body and body ~= "" then
+            result.body, result.kind = body, "story"
+            result.source = translated("Resumen narrativo · sin adelantar la historia")
+            result.title = bilingual and bilingual.titleEN or (ns.L("Misión ", "en") .. quest.id)
+            return result
+        end
+        -- A missing translation is shown honestly in English, including its title.
+        if bilingual and bilingual.en then
+            result.body, result.kind, result.language = bilingual.en, "story", "en"
+            result.title = bilingual.titleEN or (ns.L("Misión ", "en") .. quest.id)
+            result.source = ns.L("Resumen narrativo · sin adelantar la historia", "en")
+            result.translationFallback = true
+            return result
+        end
+    end
     if bilingual and bilingual[language] and validLegacy then
         result.body, result.kind, result.language = bilingual[language], "story", language
         result.source = translated("Resumen narrativo · sin adelantar la historia")

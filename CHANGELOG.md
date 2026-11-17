@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.17.0-rc1
+
+- Add French, German and Brazilian Portuguese summaries translated from the existing English narratives, with English proper names retained. These translations are provisional; they are not original localized client text.
+- Add explicit opt-in language choices for the new beta banks; preserve automatic Spanish/English defaults. Identify the Spanish base explicitly as Latin American Spanish.
+- Explain language support and localization limitations in the addon options, including the pending original-name audit of the existing Spanish bank.
+- Add **Read full text** for the current active quest. It opens the original client-language description and objectives in a separate scrollable reader.
+- Keep original dialogue out of SavedVariables and the story archive. Remove older saved source caches and retain only in-session sources for active quests.
+- Translate the options and reader controls, and place options in a measured scroll panel so longer labels do not overlap.
+- Preserve native tracker attachment, detached banner, font-size controls and complete scrolling. Live Forever visual verification is pending maintenance ending.
+
+
 ## 0.16.3
 
 - Keep minimize/restore always visible when attached to the quest tracker. Detached windows retain hover-only controls.
