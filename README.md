@@ -6,7 +6,7 @@
 
 **Version 0.18.0-beta11** includes Russian support, update notices and the last five release notes in settings, saved encyclopedia geometry, more efficient history rendering, and bug-report/news contact details. It also verifies per-character preference persistence across saved reloads and upgrades. See [all changes since beta7](docs/RELEASE-0.18.0-beta11.md) and [language support](docs/LANGUAGES.md).
 
-[Download the latest release](https://github.com/mexiar/QuestLore/releases/latest) · [Report an issue](https://github.com/mexiar/QuestLore/issues) · [Polestar integration](docs/POLESTAR.md)
+[Download the latest release](https://github.com/mexiar/QuestLore/releases/tag/v0.18.0-beta11) · [Report an issue](https://github.com/mexiar/QuestLore/issues) · [Polestar integration](docs/POLESTAR.md)
 
 ## What it does
 
@@ -60,7 +60,7 @@ This layout is useful above action bars or across the top of the screen. Making 
 
 ## Installation
 
-1. Download the latest **QuestLore release ZIP** from [CurseForge](https://www.curseforge.com/wow/addons/questlore) or [Releases](https://github.com/mexiar/QuestLore/releases/latest).
+1. Download the latest **QuestLore release ZIP** from [CurseForge](https://www.curseforge.com/wow/addons/questlore) or [Releases](https://github.com/mexiar/QuestLore/releases/tag/v0.18.0-beta11).
 2. Extract the **QuestLore** folder into `_forever_/Interface/AddOns/`.
 3. Check that `Interface/AddOns/QuestLore/QuestLore.toc` exists, without a second nested QuestLore folder.
 4. Enable QuestLore in the game's addon list. Restart the client for a new installation; use `/reload` when updating an existing installation.
