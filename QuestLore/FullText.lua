@@ -2,6 +2,14 @@ local _, ns = ...
 local FullText = {}
 ns.FullText = FullText
 
+local function tooltip(button, key)
+    button:SetScript("OnEnter", function(self)
+        GameTooltip:SetOwner(self,"ANCHOR_TOP")
+        GameTooltip:SetText(ns.L(key)); GameTooltip:Show()
+    end)
+    button:SetScript("OnLeave", function() GameTooltip:Hide() end)
+end
+
 local function finite(value)
     return type(value)=="number" and value==value and value>-math.huge and value<math.huge
 end
@@ -21,6 +29,7 @@ end
 
 function FullText:Close()
     self.id = nil
+    self.context = nil
     if not self.frame then return end
     self.title:SetText("")
     self.body:SetText("")
@@ -105,12 +114,14 @@ function FullText:Create()
     close:SetSize(32, 32)
     close:SetPoint("TOPRIGHT", -5, -5)
     close:SetScript("OnClick", function() self:Close() end)
+    tooltip(close,"Cerrar")
     local grip = CreateFrame("Button", nil, frame)
     grip:SetSize(20, 20)
     grip:SetPoint("BOTTOMRIGHT", -7, 7)
     grip:SetNormalTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Up")
     grip:SetHighlightTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Highlight")
     grip:SetPushedTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Down")
+    tooltip(grip,"Arrastra para cambiar el tamaño")
     grip:SetScript("OnMouseDown", function(_, button)
         if button == "LeftButton" then frame:StartSizing("BOTTOMRIGHT") end
     end)
@@ -134,6 +145,7 @@ function FullText:Create()
         frame:StopMovingOrSizing()
         self:SaveGeometry()
         self.id = nil
+        self.context = nil
         title:SetText("")
         body:SetText("")
         -- Hiding UIParent (Alt+Z) also fires OnHide without clearing this
@@ -146,7 +158,7 @@ end
 
 function FullText:Refresh()
     if not self.id then return end
-    if not self:CanRead(self.id) or not ns.Window or ns.Window.currentID ~= self.id then
+    if not self:CanRead(self.id) or not ns.Window or (self.context~="history" and ns.Window.currentID ~= self.id) then
         self:Close()
         return
     end
@@ -164,10 +176,11 @@ function FullText:Refresh()
     self:Layout()
 end
 
-function FullText:Open(id)
-    if not self:CanRead(id) or not ns.Window or ns.Window.currentID ~= id then return false end
+function FullText:Open(id,context)
+    if not self:CanRead(id) or not ns.Window or (context~="history" and ns.Window.currentID ~= id) then return false end
     self:Create()
     self.id = id
+    self.context = context=="history" and "history" or "live"
     self.scroll:SetVerticalScroll(0)
     self:Refresh()
     if not self.id then return false end

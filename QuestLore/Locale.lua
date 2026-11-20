@@ -13,7 +13,7 @@ local translations = {
         ["El texto completo solo está disponible para misiones activas."] = "El texto completo solo está disponible para misiones activas.",
         ["Seguir la misión activa de Polestar"] = "Seguir la misión activa de Polestar",
         ["Polestar no está disponible. Se usará el seguimiento habitual."] = "Polestar no está disponible. Se usará el seguimiento habitual.",
-        ["Polestar tiene prioridad. Su misión se comprueba cada segundo y al actualizar tus misiones."] = "Polestar tiene prioridad. Su misión se comprueba cada segundo y al actualizar tus misiones.",
+        ["La misión seleccionada o en foco tiene prioridad. Polestar se usa cuando no hay una misión en foco."] = "La misión seleccionada o en foco tiene prioridad. Polestar se usa cuando no hay una misión en foco.",
         ["Ver historial"] = "Ver historial",
         ["Historial de relatos"] = "Historial de relatos",
         ["Selecciona un relato de la lista. El historial se guarda para este personaje."] = "Selecciona un relato de la lista. El historial se guarda para este personaje.",
@@ -58,7 +58,7 @@ local translations = {
         ["Resumen narrativo · sin adelantar la historia"] = "Resumen narrativo · sin adelantar la historia",
         ["Extracto del relato de la misión"] = "Extracto del relato de la misión",
         ["Descripción de la misión"] = "Descripción de la misión",
-        ["Idiomas base: inglés y español latinoamericano. La revisión de nombres originales en español sigue en curso. Francés, alemán y portugués de Brasil son traducciones automáticas provisionales del inglés y conservan los nombres propios en inglés. Los idiomas beta se eligen manualmente. Si falta una traducción, se muestra inglés."] = "Idiomas base: inglés y español latinoamericano. La revisión de nombres originales en español sigue en curso. Francés, alemán y portugués de Brasil son traducciones automáticas provisionales del inglés y conservan los nombres propios en inglés. Los idiomas beta se eligen manualmente. Si falta una traducción, se muestra inglés.",
+        ["Resúmenes y enciclopedia en inglés y español latinoamericano. Polaco: resúmenes aportados por la comunidad y enciclopedia traducida del inglés. Francés, alemán y portugués de Brasil: traducciones provisionales del inglés. Las traducciones conservan los nombres propios en inglés. Los títulos de misión y el texto completo usan el idioma del juego. Los idiomas adicionales se eligen manualmente."] = "Resúmenes y enciclopedia en inglés y español latinoamericano. Polaco: resúmenes aportados por la comunidad y enciclopedia traducida del inglés. Francés, alemán, portugués de Brasil y ruso: traducciones provisionales del inglés. Las traducciones conservan los nombres propios en inglés. Los títulos de misión y el texto completo usan el idioma del juego. Los idiomas adicionales del relato se eligen manualmente.",
     },
     en = {
         ["Seguir la misión activa de RestedXP"] = "Follow RestedXP's active quest",
@@ -71,7 +71,7 @@ local translations = {
         ["El texto completo solo está disponible para misiones activas."] = "Full text is only available for active quests.",
         ["Seguir la misión activa de Polestar"] = "Follow Polestar's active quest",
         ["Polestar no está disponible. Se usará el seguimiento habitual."] = "Polestar is unavailable. Normal quest selection will be used.",
-        ["Polestar tiene prioridad. Su misión se comprueba cada segundo y al actualizar tus misiones."] = "Polestar takes priority. Its quest is checked every second and when your quest log updates.",
+        ["La misión seleccionada o en foco tiene prioridad. Polestar se usa cuando no hay una misión en foco."] = "Selected or focused quests take priority. Polestar is used when no quest has focus.",
         ["Ver historial"] = "View history",
         ["Historial de relatos"] = "Story history",
         ["Selecciona un relato de la lista. El historial se guarda para este personaje."] = "Select a story from the list. History is saved for this character.",
@@ -116,7 +116,7 @@ local translations = {
         ["Resumen narrativo · sin adelantar la historia"] = "Narrative summary · no story spoilers",
         ["Extracto del relato de la misión"] = "Quest story excerpt",
         ["Descripción de la misión"] = "Quest description",
-        ["Idiomas base: inglés y español latinoamericano. La revisión de nombres originales en español sigue en curso. Francés, alemán y portugués de Brasil son traducciones automáticas provisionales del inglés y conservan los nombres propios en inglés. Los idiomas beta se eligen manualmente. Si falta una traducción, se muestra inglés."] = "Base languages: English and Latin American Spanish. The audit of original Spanish names is ongoing. French, German and Brazilian Portuguese are provisional machine translations from English and keep English proper names. Beta languages must be selected manually. Missing translations use English.",
+        ["Resúmenes y enciclopedia en inglés y español latinoamericano. Polaco: resúmenes aportados por la comunidad y enciclopedia traducida del inglés. Francés, alemán y portugués de Brasil: traducciones provisionales del inglés. Las traducciones conservan los nombres propios en inglés. Los títulos de misión y el texto completo usan el idioma del juego. Los idiomas adicionales se eligen manualmente."] = "Summaries and encyclopedia in English and Latin American Spanish. Polish: community-contributed summaries and an encyclopedia translated from English. French, German, Brazilian Portuguese and Russian: provisional English-based translations retaining English proper names. Quest titles and full text use the game language. Additional story languages must be selected manually.",
     },
     fr = {
         ["Seguir la misión activa de RestedXP"] = "Suivre la quête active de RestedXP",
@@ -129,7 +129,7 @@ local translations = {
         ["El texto completo solo está disponible para misiones activas."] = "Le texte complet est uniquement disponible pour les quêtes actives.",
         ["Seguir la misión activa de Polestar"] = "Suivre la quête active de Polestar",
         ["Polestar no está disponible. Se usará el seguimiento habitual."] = "Polestar est indisponible. La sélection habituelle des quêtes sera utilisée.",
-        ["Polestar tiene prioridad. Su misión se comprueba cada segundo y al actualizar tus misiones."] = "Polestar est prioritaire. Sa quête est vérifiée chaque seconde et à chaque mise à jour du journal.",
+        ["La misión seleccionada o en foco tiene prioridad. Polestar se usa cuando no hay una misión en foco."] = "La quête sélectionnée ou ciblée est prioritaire. Sinon, Polestar fournit la quête active.",
         ["Ver historial"] = "Voir l’historique",
         ["Historial de relatos"] = "Historique des récits",
         ["Selecciona un relato de la lista. El historial se guarda para este personaje."] = "Sélectionnez un récit dans la liste. L’historique est enregistré pour ce personnage.",
@@ -167,14 +167,14 @@ local translations = {
         ["Deutsch (Übersetzung)"] = "Deutsch (Beta)",
         ["Português (Brasil, tradução)"] = "Português (Brasil, beta)",
         ["El contexto de tus misiones. Las preferencias se guardan para este personaje."] = "Le contexte de vos quêtes. Les préférences sont enregistrées pour ce personnage.",
-        ["Has recuperado tu voluntad. Ahora debes encontrar tu lugar entre los Renegados y ayudar a proteger Tirisfal."] = "Vous avez retrouvé votre libre arbitre. Vous devez maintenant trouver votre place parmi les Forsaken et contribuer à protéger Tirisfal.",
+        ["Has recuperado tu voluntad. Ahora debes encontrar tu lugar entre los Renegados y ayudar a proteger Tirisfal."] = "Vous avez retrouvé votre libre arbitre. Vous devez maintenant trouver votre place parmi les Réprouvés et contribuer à protéger Tirisfal.",
         ["Todavía no se pudo leer tu raza y tu clase. El contexto aparecerá cuando tu personaje termine de cargar."] = "Votre race et votre classe ne sont pas encore disponibles. Votre récit apparaîtra une fois le chargement du personnage terminé.",
         ["Este relato todavía no tiene una traducción al idioma elegido."] = "Ce récit n’a pas encore été traduit dans la langue sélectionnée.",
         ["Misión "] = "Quête ",
         ["Resumen narrativo · sin adelantar la historia"] = "Résumé narratif · sans révéler la suite",
         ["Extracto del relato de la misión"] = "Extrait du récit de la quête",
         ["Descripción de la misión"] = "Description de la quête",
-        ["Idiomas base: inglés y español latinoamericano. La revisión de nombres originales en español sigue en curso. Francés, alemán y portugués de Brasil son traducciones automáticas provisionales del inglés y conservan los nombres propios en inglés. Los idiomas beta se eligen manualmente. Si falta una traducción, se muestra inglés."] = "Langues de base : anglais et espagnol latino-américain. La vérification des noms espagnols originaux est en cours. Le français, l’allemand et le portugais du Brésil sont des traductions automatiques provisoires de l’anglais et conservent les noms propres anglais. Les langues bêta doivent être sélectionnées manuellement. Les traductions manquantes s’affichent en anglais.",
+        ["Resúmenes y enciclopedia en inglés y español latinoamericano. Polaco: resúmenes aportados por la comunidad y enciclopedia traducida del inglés. Francés, alemán y portugués de Brasil: traducciones provisionales del inglés. Las traducciones conservan los nombres propios en inglés. Los títulos de misión y el texto completo usan el idioma del juego. Los idiomas adicionales se eligen manualmente."] = "Résumés et encyclopédie en anglais et en espagnol latino-américain. Polonais : résumés communautaires et encyclopédie traduite de l’anglais. Français, allemand, portugais du Brésil et russe : traductions provisoires de l’anglais conservant les noms propres anglais. Les titres et le texte intégral des quêtes utilisent la langue du jeu. Les langues de récit supplémentaires se choisissent manuellement.",
     },
     de = {
         ["Seguir la misión activa de RestedXP"] = "RestedXPs aktive Quest verfolgen",
@@ -187,7 +187,7 @@ local translations = {
         ["El texto completo solo está disponible para misiones activas."] = "Der vollständige Text ist nur für aktive Quests verfügbar.",
         ["Seguir la misión activa de Polestar"] = "Der aktiven Quest von Polestar folgen",
         ["Polestar no está disponible. Se usará el seguimiento habitual."] = "Polestar ist nicht verfügbar. Die normale Questauswahl wird verwendet.",
-        ["Polestar tiene prioridad. Su misión se comprueba cada segundo y al actualizar tus misiones."] = "Polestar hat Vorrang. Die Quest wird jede Sekunde und bei Aktualisierungen des Questlogs geprüft.",
+        ["La misión seleccionada o en foco tiene prioridad. Polestar se usa cuando no hay una misión en foco."] = "Ausgewählte Quests oder Quests im Fokus haben Vorrang. Ohne Quest im Fokus wird Polestar verwendet.",
         ["Ver historial"] = "Verlauf anzeigen",
         ["Historial de relatos"] = "Geschichtenverlauf",
         ["Selecciona un relato de la lista. El historial se guarda para este personaje."] = "Wähle eine Geschichte aus der Liste. Der Verlauf wird für diesen Charakter gespeichert.",
@@ -225,14 +225,14 @@ local translations = {
         ["Deutsch (Übersetzung)"] = "Deutsch (Beta)",
         ["Português (Brasil, tradução)"] = "Português (Brasil, beta)",
         ["El contexto de tus misiones. Las preferencias se guardan para este personaje."] = "Der Hintergrund deiner Quests. Einstellungen werden für diesen Charakter gespeichert.",
-        ["Has recuperado tu voluntad. Ahora debes encontrar tu lugar entre los Renegados y ayudar a proteger Tirisfal."] = "Du hast deinen freien Willen zurückerlangt. Nun musst du deinen Platz unter den Forsaken finden und helfen, Tirisfal zu schützen.",
+        ["Has recuperado tu voluntad. Ahora debes encontrar tu lugar entre los Renegados y ayudar a proteger Tirisfal."] = "Du hast deinen freien Willen zurückerlangt. Nun musst du deinen Platz unter den Verlassenen finden und helfen, Tirisfal zu schützen.",
         ["Todavía no se pudo leer tu raza y tu clase. El contexto aparecerá cuando tu personaje termine de cargar."] = "Volk und Klasse sind noch nicht verfügbar. Deine Geschichte erscheint, sobald dein Charakter vollständig geladen ist.",
         ["Este relato todavía no tiene una traducción al idioma elegido."] = "Diese Geschichte wurde noch nicht in die ausgewählte Sprache übersetzt.",
         ["Misión "] = "Quest ",
         ["Resumen narrativo · sin adelantar la historia"] = "Erzählerische Zusammenfassung · ohne Spoiler",
         ["Extracto del relato de la misión"] = "Auszug aus der Questgeschichte",
         ["Descripción de la misión"] = "Questbeschreibung",
-        ["Idiomas base: inglés y español latinoamericano. La revisión de nombres originales en español sigue en curso. Francés, alemán y portugués de Brasil son traducciones automáticas provisionales del inglés y conservan los nombres propios en inglés. Los idiomas beta se eligen manualmente. Si falta una traducción, se muestra inglés."] = "Basissprachen: Englisch und lateinamerikanisches Spanisch. Die Prüfung der spanischen Originalnamen läuft noch. Französisch, Deutsch und brasilianisches Portugiesisch sind vorläufige maschinelle Übersetzungen aus dem Englischen und behalten englische Eigennamen bei. Beta-Sprachen müssen manuell ausgewählt werden. Fehlende Übersetzungen erscheinen auf Englisch.",
+        ["Resúmenes y enciclopedia en inglés y español latinoamericano. Polaco: resúmenes aportados por la comunidad y enciclopedia traducida del inglés. Francés, alemán y portugués de Brasil: traducciones provisionales del inglés. Las traducciones conservan los nombres propios en inglés. Los títulos de misión y el texto completo usan el idioma del juego. Los idiomas adicionales se eligen manualmente."] = "Zusammenfassungen und Enzyklopädie auf Englisch und lateinamerikanischem Spanisch. Polnisch: Zusammenfassungen aus der Community und aus dem Englischen übersetzte Enzyklopädie. Französisch, Deutsch, brasilianisches Portugiesisch und Russisch: vorläufige Übersetzungen aus dem Englischen mit englischen Eigennamen. Questtitel und vollständige Texte verwenden die Spielsprache. Zusätzliche Erzählsprachen müssen manuell gewählt werden.",
     },
     pt = {
         ["Seguir la misión activa de RestedXP"] = "Seguir a missão ativa do RestedXP",
@@ -245,7 +245,7 @@ local translations = {
         ["El texto completo solo está disponible para misiones activas."] = "O texto completo só está disponível para missões ativas.",
         ["Seguir la misión activa de Polestar"] = "Seguir a missão ativa do Polestar",
         ["Polestar no está disponible. Se usará el seguimiento habitual."] = "Polestar não está disponível. A seleção normal de missões será usada.",
-        ["Polestar tiene prioridad. Su misión se comprueba cada segundo y al actualizar tus misiones."] = "Polestar tem prioridade. Sua missão é verificada a cada segundo e quando o registro de missões é atualizado.",
+        ["La misión seleccionada o en foco tiene prioridad. Polestar se usa cuando no hay una misión en foco."] = "Missões selecionadas ou em foco têm prioridade. O Polestar é usado quando nenhuma missão está em foco.",
         ["Ver historial"] = "Ver histórico",
         ["Historial de relatos"] = "Histórico de histórias",
         ["Selecciona un relato de la lista. El historial se guarda para este personaje."] = "Selecione uma história na lista. O histórico é salvo para este personagem.",
@@ -283,17 +283,281 @@ local translations = {
         ["Deutsch (Übersetzung)"] = "Deutsch (Beta)",
         ["Português (Brasil, tradução)"] = "Português (Brasil, beta)",
         ["El contexto de tus misiones. Las preferencias se guardan para este personaje."] = "O contexto das suas missões. As preferências são salvas para este personagem.",
-        ["Has recuperado tu voluntad. Ahora debes encontrar tu lugar entre los Renegados y ayudar a proteger Tirisfal."] = "Você recuperou seu livre-arbítrio. Agora precisa encontrar seu lugar entre os Forsaken e ajudar a proteger Tirisfal.",
+        ["Has recuperado tu voluntad. Ahora debes encontrar tu lugar entre los Renegados y ayudar a proteger Tirisfal."] = "Você recuperou seu livre-arbítrio. Agora precisa encontrar seu lugar entre os Renegados e ajudar a proteger Tirisfal.",
         ["Todavía no se pudo leer tu raza y tu clase. El contexto aparecerá cuando tu personaje termine de cargar."] = "Sua raça e classe ainda não estão disponíveis. Sua história aparecerá quando o personagem terminar de carregar.",
         ["Este relato todavía no tiene una traducción al idioma elegido."] = "Esta história ainda não foi traduzida para o idioma selecionado.",
         ["Misión "] = "Missão ",
         ["Resumen narrativo · sin adelantar la historia"] = "Resumo narrativo · sem revelar a continuação",
         ["Extracto del relato de la misión"] = "Trecho da história da missão",
         ["Descripción de la misión"] = "Descrição da missão",
-        ["Idiomas base: inglés y español latinoamericano. La revisión de nombres originales en español sigue en curso. Francés, alemán y portugués de Brasil son traducciones automáticas provisionales del inglés y conservan los nombres propios en inglés. Los idiomas beta se eligen manualmente. Si falta una traducción, se muestra inglés."] = "Idiomas base: inglês e espanhol latino-americano. A revisão dos nomes originais em espanhol continua em andamento. Francês, alemão e português do Brasil são traduções automáticas provisórias do inglês e mantêm os nomes próprios em inglês. Os idiomas beta devem ser selecionados manualmente. Traduções ausentes são exibidas em inglês.",
+        ["Resúmenes y enciclopedia en inglés y español latinoamericano. Polaco: resúmenes aportados por la comunidad y enciclopedia traducida del inglés. Francés, alemán y portugués de Brasil: traducciones provisionales del inglés. Las traducciones conservan los nombres propios en inglés. Los títulos de misión y el texto completo usan el idioma del juego. Los idiomas adicionales se eligen manualmente."] = "Resumos e enciclopédia em inglês e espanhol latino-americano. Polonês: resumos da comunidade e enciclopédia traduzida do inglês. Francês, alemão, português do Brasil e russo: traduções provisórias do inglês que mantêm os nomes próprios em inglês. Títulos e textos completos das missões usam o idioma do jogo. Os idiomas adicionais dos relatos devem ser selecionados manualmente.",
     },
 }
-local supported = {es=true, en=true, fr=true, de=true, pt=true}
+-- Interface strings are independent from narrative-bank availability. Native
+-- language names stay recognizable even after an accidental language change.
+local interfaceText = {
+    ["Tus relatos más recientes primero. El texto completo solo está disponible mientras la misión siga activa."] = {
+        es="Tus relatos más recientes primero. El texto completo solo está disponible mientras la misión siga activa.",
+        en="Your newest stories first. Full quest text is only available while the quest is still active.",
+        fr="Vos récits les plus récents en premier. Le texte intégral est disponible uniquement tant que la quête est active.",
+        de="Deine neuesten Geschichten zuerst. Der vollständige Questtext ist nur verfügbar, solange die Quest noch aktiv ist.",
+        pt="Suas histórias mais recentes primeiro. O texto completo só fica disponível enquanto a missão está ativa.",
+    },
+    ["Enciclopedia"] = {es="Enciclopedia",en="Encyclopedia",fr="Encyclopédie",de="Enzyklopädie",pt="Enciclopédia"},
+    ["Abrir enciclopedia"] = {es="Abrir enciclopedia",en="Open encyclopedia",fr="Ouvrir l’encyclopédie",de="Enzyklopädie öffnen",pt="Abrir enciclopédia"},
+    ["Entradas disponibles en español."] = {es="Entradas disponibles en español.",en="Entries available in Spanish.",fr="Articles disponibles en espagnol.",de="Einträge auf Spanisch verfügbar.",pt="Entradas disponíveis em espanhol."},
+    ["Pueblo"] = {es="Pueblo",en="People",fr="Peuple",de="Volk",pt="Povo"},
+    ["Concepto"] = {es="Concepto",en="Concept",fr="Concept",de="Konzept",pt="Conceito"},
+    ["Evento"] = {es="Evento",en="Event",fr="Événement",de="Ereignis",pt="Evento"},
+    ["Personaje"] = {es="Personaje",en="Character",fr="Personnage",de="Charakter",pt="Personagem"},
+    ["Organización"] = {es="Organización",en="Organization",fr="Organisation",de="Organisation",pt="Organização"},
+    ["Lugar"] = {es="Lugar",en="Place",fr="Lieu",de="Ort",pt="Local"},
+    ["Objeto"] = {es="Objeto",en="Object",fr="Objet",de="Gegenstand",pt="Objeto"},
+    ["Mostrar fondo"] = {es="Mostrar fondo",en="Show background",fr="Afficher le fond",de="Hintergrund anzeigen",pt="Mostrar fundo"},
+    ["Mostrar botón de texto completo"] = {es="Mostrar botón de texto completo",en="Show full quest text button",fr="Afficher le bouton du texte intégral",de="Schaltfläche für vollständigen Questtext anzeigen",pt="Mostrar botão de texto completo"},
+    ["Transparencia del fondo: "] = {es="Transparencia del fondo: ",en="Background transparency: ",fr="Transparence du fond : ",de="Hintergrundtransparenz: ",pt="Transparência do fundo: "},
+    ["Opaco"] = {es="Opaco",en="Opaque",fr="Opaque",de="Undurchsichtig",pt="Opaco"},
+    ["Transparente"] = {es="Transparente",en="Transparent",fr="Transparent",de="Transparent",pt="Transparente"},
+    ["Lore"] = {es="Lore", en="Lore", fr="Histoire", de="Hintergrund", pt="História"},
+    ["Idioma de la interfaz"] = {es="Idioma de la interfaz", en="Interface language", fr="Langue de l’interface", de="Sprache der Benutzeroberfläche", pt="Idioma da interface"},
+    ["El idioma de la interfaz es independiente del idioma de los resúmenes."] = {
+        es="El idioma de la interfaz es independiente del idioma de los resúmenes.",
+        en="The interface language is independent of the summary language.",
+        fr="La langue de l’interface est indépendante de celle des résumés.",
+        de="Die Sprache der Benutzeroberfläche ist unabhängig von der Sprache der Zusammenfassungen.",
+        pt="O idioma da interface é independente do idioma dos resumos.",
+    },
+    ["Français"] = {es="Français", en="Français", fr="Français", de="Français", pt="Français"},
+    ["Deutsch"] = {es="Deutsch", en="Deutsch", fr="Deutsch", de="Deutsch", pt="Deutsch"},
+    ["Português (Brasil)"] = {es="Português (Brasil)", en="Português (Brasil)", fr="Português (Brasil)", de="Português (Brasil)", pt="Português (Brasil)"},
+    ["Mostrar el relato"] = {es="Mostrar el relato", en="Show story", fr="Afficher le récit", de="Geschichte anzeigen", pt="Mostrar história"},
+    ["Subir el relato"] = {es="Desplazar el relato hacia arriba", en="Scroll story up", fr="Faire défiler le récit vers le haut", de="Geschichte nach oben scrollen", pt="Rolar a história para cima"},
+    ["Bajar el relato"] = {es="Desplazar el relato hacia abajo", en="Scroll story down", fr="Faire défiler le récit vers le bas", de="Geschichte nach unten scrollen", pt="Rolar a história para baixo"},
+    ["Abrir el historial"] = {es="Abrir el historial", en="Open story history", fr="Ouvrir l’historique des récits", de="Geschichtenverlauf öffnen", pt="Abrir histórico de histórias"},
+    ["Reducir tamaño del texto"] = {es="Reducir tamaño del texto", en="Decrease text size", fr="Réduire la taille du texte", de="Text verkleinern", pt="Diminuir o tamanho do texto"},
+    ["Ampliar tamaño del texto"] = {es="Ampliar tamaño del texto", en="Increase text size", fr="Augmenter la taille du texte", de="Text vergrößern", pt="Aumentar o tamanho do texto"},
+}
+for key, values in pairs(interfaceText) do
+    for language, text in pairs(values) do translations[language][key] = text end
+end
+-- Polish interface: dawiss’s contribution, completed for the current UI.
+translations.pl = {
+    ["Seguir la misión activa de RestedXP"] = "Śledź aktywnego questa z RestedXP",
+    ["RestedXP sigue su objetivo de misión o un paso con una sola misión activa. Polestar tiene prioridad si ambos están activados."] = "RestedXP wskazuje swój cel albo krok z jednym aktywnym questem. Gdy włączone są oba dodatki, pierwszeństwo ma Polestar.",
+    ["RestedXP no está disponible. Se usará el seguimiento habitual."] = "RestedXP jest niedostępny. Używane będzie zwykłe śledzenie questów.",
+    ["Leer texto completo"] = "Czytaj pełny tekst questa",
+    ["Volver al resumen"] = "Wróć do streszczenia",
+    ["Texto original del juego"] = "Oryginalny tekst z gry",
+    ["Cerrar"] = "Zamknij",
+    ["El texto completo solo está disponible para misiones activas."] = "Pełny tekst jest dostępny tylko dla aktywnych questów.",
+    ["Seguir la misión activa de Polestar"] = "Śledź aktywnego questa z Polestar",
+    ["Polestar no está disponible. Se usará el seguimiento habitual."] = "Polestar jest niedostępny. Używany będzie zwykły wybór questów.",
+    ["La misión seleccionada o en foco tiene prioridad. Polestar se usa cuando no hay una misión en foco."] = "Wybrany quest lub quest z fokusem ma pierwszeństwo. Polestar jest używany, gdy żaden quest nie ma fokusu.",
+    ["Ver historial"] = "Pokaż historię",
+    ["Historial de relatos"] = "Historia opowieści",
+    ["Selecciona un relato de la lista. El historial se guarda para este personaje."] = "Wybierz opowieść z listy. Historia jest zapisywana dla tej postaci.",
+    ["Aún no hay relatos guardados."] = "Nie ma jeszcze zapisanych opowieści.",
+    ["Adjuntar al final del rastreador de misiones"] = "Przypnij pod listą śledzonych questów",
+    ["Requiere ForeverCore para adjuntar el relato al rastreador."] = "Przypięcie opowieści do listy questów wymaga ForeverCore.",
+    ["El cambio se aplicará al salir de combate."] = "Zmiana zostanie zastosowana po zakończeniu walki.",
+    ["Desactiva esta opción para mover y redimensionar la ventana libremente."] = "Wyłącz tę opcję, żeby swobodnie przesuwać okno i zmieniać jego rozmiar.",
+    ["Tu lugar en Azeroth"] = "Twoje miejsce w Azeroth",
+    ["Selecciona una misión"] = "Wybierz questa",
+    ["Abre el diario y selecciona una misión, o sigue una para leer por qué estás haciéndola."] = "Wybierz questa w dzienniku albo zacznij go śledzić, żeby przeczytać, po co go robisz.",
+    ["Cargando el relato de la misión…"] = "Wczytuję opowieść questa…",
+    ["Todavía no hay relato disponible para esta misión. Prueba a abrir sus detalles en el diario."] = "Opowieść tego questa nie jest jeszcze dostępna. Spróbuj otworzyć jego szczegóły w dzienniku questów.",
+    ["Tu aventura"] = "Twoja przygoda",
+    ["Preparando el relato de tu personaje…"] = "Przygotowuję opowieść twojej postaci…",
+    ["Sin misiones activas"] = "Brak aktywnych questów",
+    ["Has comenzado tu aventura. Selecciona una misión para leer su contexto. Puedes consultar tus relatos anteriores en las opciones de QuestLore."] = "Twoja przygoda się zaczęła. Wybierz questa, żeby przeczytać jego tło. Wcześniejsze opowieści znajdziesz w opcjach QuestLore.",
+    ["Minimizar ventana"] = "Zminimalizuj okno",
+    ["Restaurar ventana"] = "Przywróć okno",
+    ["Relato anterior"] = "Poprzednia opowieść",
+    ["Relato siguiente"] = "Następna opowieść",
+    ["Volver al contexto actual de tu personaje"] = "Wróć do bieżącego tła twojej postaci",
+    ["Arrastra para cambiar el tamaño"] = "Przeciągnij, żeby zmienić rozmiar",
+    ["Actual"] = "Bieżąca",
+    ["Actual · nuevo"] = "Bieżąca · nowa",
+    ["Historial"] = "Historia",
+    ["Tamaño del texto: "] = "Rozmiar tekstu: ",
+    ["Restablecer texto"] = "Przywróć rozmiar tekstu",
+    ["Idioma del relato"] = "Język opowieści",
+    ["Automático (idioma del juego)"] = "Automatycznie (język gry)",
+    ["Español"] = "Español",
+    ["Español (Latinoamérica)"] = "Español (Latinoamérica)",
+    ["English"] = "English",
+    ["Français (traduction)"] = "Français (beta)",
+    ["Deutsch (Übersetzung)"] = "Deutsch (beta)",
+    ["Português (Brasil, tradução)"] = "Português (Brasil, beta)",
+    ["El contexto de tus misiones. Las preferencias se guardan para este personaje."] = "Tło twoich questów. Ustawienia są zapisywane dla tej postaci.",
+    ["Has recuperado tu voluntad. Ahora debes encontrar tu lugar entre los Renegados y ayudar a proteger Tirisfal."] = "Odzyskujesz wolną wolę. Teraz musisz znaleźć swoje miejsce wśród Forsaken i pomóc bronić Tirisfal.",
+    ["Todavía no se pudo leer tu raza y tu clase. El contexto aparecerá cuando tu personaje termine de cargar."] = "Twoja rasa i klasa nie są jeszcze dostępne. Opowieść pojawi się, gdy postać skończy się wczytywać.",
+    ["Este relato todavía no tiene una traducción al idioma elegido."] = "Ta opowieść nie ma jeszcze tłumaczenia na wybrany język.",
+    ["Misión "] = "Quest ",
+    ["Resumen narrativo · sin adelantar la historia"] = "Streszczenie fabularne · bez spoilerów",
+    ["Extracto del relato de la misión"] = "Fragment opowieści questa",
+    ["Descripción de la misión"] = "Opis questa",
+    ["Resúmenes y enciclopedia en inglés y español latinoamericano. Polaco: resúmenes aportados por la comunidad y enciclopedia traducida del inglés. Francés, alemán y portugués de Brasil: traducciones provisionales del inglés. Las traducciones conservan los nombres propios en inglés. Los títulos de misión y el texto completo usan el idioma del juego. Los idiomas adicionales se eligen manualmente."] = "Streszczenia i encyklopedia są dostępne po angielsku i w hiszpańskim latynoamerykańskim. Po polsku: streszczenia społeczności i encyklopedia tłumaczona z angielskiego. Francuski, niemiecki, portugalski brazylijski i rosyjski: wstępne tłumaczenia z angielskiego zachowujące angielskie nazwy własne. Tytuły i pełne teksty questów używają języka gry. Dodatkowe języki opowieści wybiera się ręcznie.",
+    ["Tus relatos más recientes primero. El texto completo solo está disponible mientras la misión siga activa."] = "Najnowsze opowieści są na początku. Pełny tekst questa jest dostępny tylko wtedy, gdy quest jest aktywny.",
+    ["Enciclopedia"] = "Encyklopedia",
+    ["Abrir enciclopedia"] = "Otwórz encyklopedię",
+    ["Entradas disponibles en español."] = "Hasła dostępne po hiszpańsku.",
+    ["Pueblo"] = "Lud",
+    ["Concepto"] = "Pojęcie",
+    ["Evento"] = "Wydarzenie",
+    ["Personaje"] = "Postać",
+    ["Organización"] = "Organizacja",
+    ["Lugar"] = "Miejsce",
+    ["Objeto"] = "Przedmiot",
+    ["Mostrar fondo"] = "Pokaż tło",
+    ["Mostrar botón de texto completo"] = "Pokaż przycisk pełnego tekstu questa",
+    ["Transparencia del fondo: "] = "Przezroczystość tła: ",
+    ["Opaco"] = "Nieprzezroczyste",
+    ["Transparente"] = "Przezroczyste",
+    ["Lore"] = "Lore",
+    ["Idioma de la interfaz"] = "Język interfejsu",
+    ["El idioma de la interfaz es independiente del idioma de los resúmenes."] = "Język interfejsu jest niezależny od języka streszczeń.",
+    ["Français"] = "Français",
+    ["Deutsch"] = "Deutsch",
+    ["Português (Brasil)"] = "Português (Brasil)",
+    ["Mostrar el relato"] = "Pokaż opowieść",
+    ["Subir el relato"] = "Przewiń opowieść w górę",
+    ["Bajar el relato"] = "Przewiń opowieść w dół",
+    ["Abrir el historial"] = "Otwórz historię opowieści",
+    ["Reducir tamaño del texto"] = "Zmniejsz tekst",
+    ["Ampliar tamaño del texto"] = "Powiększ tekst",
+}
+translations.ru = {
+    ["Abre el diario y selecciona una misión, o sigue una para leer por qué estás haciéndola."] = "Выберите задание в журнале или начните его отслеживать, чтобы узнать, зачем вы его выполняете.",
+    ["Abrir el historial"] = "Открыть историю",
+    ["Abrir enciclopedia"] = "Открыть энциклопедию",
+    ["Actual"] = "Текущее",
+    ["Actual · nuevo"] = "Текущее · новое",
+    ["Actualizado - Ver novedades"] = "Обновлено — Что нового",
+    ["Actualizado a "] = "Обновлено до ",
+    ["Adjuntar al final del rastreador de misiones"] = "Прикрепить под списком заданий",
+    ["Ampliar tamaño del texto"] = "Увеличить размер текста",
+    ["Arrastra para cambiar el tamaño"] = "Перетащите, чтобы изменить размер",
+    ["Automático (idioma del juego)"] = "Автоматически (язык игры)",
+    ["Aún no hay relatos guardados."] = "Сохранённых историй пока нет.",
+    ["Bajar el relato"] = "Прокрутить историю вниз",
+    ["Cargando el relato de la misión…"] = "Загрузка истории задания…",
+    ["Cerrar"] = "Закрыть",
+    ["Cerrar aviso"] = "Закрыть уведомление",
+    ["Concepto"] = "Понятие",
+    ["Desactiva esta opción para mover y redimensionar la ventana libremente."] = "Отключите этот параметр, чтобы свободно перемещать окно и менять его размер.",
+    ["Descripción de la misión"] = "Описание задания",
+    ["Deutsch"] = "Deutsch",
+    ["Deutsch (Übersetzung)"] = "Deutsch (Beta)",
+    ["El cambio se aplicará al salir de combate."] = "Изменение вступит в силу после боя.",
+    ["El contexto de tus misiones. Las preferencias se guardan para este personaje."] = "История ваших заданий. Настройки сохраняются отдельно для каждого персонажа.",
+    ["El idioma de la interfaz es independiente del idioma de los resúmenes."] = "Язык интерфейса не зависит от языка кратких историй.",
+    ["El texto completo solo está disponible para misiones activas."] = "Полный текст доступен только для активных заданий.",
+    ["Enciclopedia"] = "Энциклопедия",
+    ["English"] = "English",
+    ["Entradas disponibles en español."] = "Статьи доступны на испанском языке.",
+    ["Español"] = "Español",
+    ["Español (Latinoamérica)"] = "Español (Latinoamérica)",
+    ["Este relato todavía no tiene una traducción al idioma elegido."] = "Эта история пока не переведена на выбранный язык.",
+    ["Evento"] = "Событие",
+    ["Extracto del relato de la misión"] = "Отрывок из истории задания",
+    ["Français"] = "Français",
+    ["Français (traduction)"] = "Français (bêta)",
+    ["Has comenzado tu aventura. Selecciona una misión para leer su contexto. Puedes consultar tus relatos anteriores en las opciones de QuestLore."] = "Ваше приключение началось. Выберите задание, чтобы узнать его предысторию. Прочитанные истории доступны в настройках QuestLore.",
+    ["Has recuperado tu voluntad. Ahora debes encontrar tu lugar entre los Renegados y ayudar a proteger Tirisfal."] = "Вы вновь обрели свободу воли. Теперь вам предстоит найти своё место среди Forsaken и помочь защитить Tirisfal.",
+    ["Historial"] = "История",
+    ["Historial de relatos"] = "История приключений",
+    ["Idioma de la interfaz"] = "Язык интерфейса",
+    ["Idioma del relato"] = "Язык историй",
+    ["La misión seleccionada o en foco tiene prioridad. Polestar se usa cuando no hay una misión en foco."] = "Выбранное задание имеет приоритет. Polestar используется, когда ни одно задание не находится в фокусе.",
+    ["Leer texto completo"] = "Читать полный текст задания",
+    ["Lore"] = "История",
+    ["Lugar"] = "Место",
+    ["Minimizar ventana"] = "Свернуть окно",
+    ["Misión "] = "Задание ",
+    ["Mostrar avisos de actualización"] = "Показывать уведомления об обновлениях",
+    ["Mostrar botón de texto completo"] = "Показывать кнопку полного текста задания",
+    ["Mostrar el relato"] = "Показать историю",
+    ["Mostrar fondo"] = "Показывать фон",
+    ["No hay notas disponibles para esta versión."] = "Описание изменений для этой версии недоступно.",
+    ["Novedades"] = "Что нового",
+    ["Novedades de QuestLore"] = "Новости QuestLore",
+    ["Novedades de la versión instalada"] = "Что нового в установленной версии",
+    ["Objeto"] = "Предмет",
+    ["Opaco"] = "Непрозрачный",
+    ["Organización"] = "Организация",
+    ["Personaje"] = "Персонаж",
+    ["Polestar no está disponible. Se usará el seguimiento habitual."] = "Polestar недоступен. Будет использоваться обычный выбор задания.",
+    ["Polski"] = "Polski",
+    ["Português (Brasil)"] = "Português (Brasil)",
+    ["Português (Brasil, tradução)"] = "Português (Brasil, beta)",
+    ["Preparando el relato de tu personaje…"] = "Подготовка истории вашего персонажа…",
+    ["Pueblo"] = "Народ",
+    ["Reducir tamaño del texto"] = "Уменьшить размер текста",
+    ["Relato anterior"] = "Предыдущая история",
+    ["Relato siguiente"] = "Следующая история",
+    ["Requiere ForeverCore para adjuntar el relato al rastreador."] = "Для прикрепления истории к списку заданий требуется ForeverCore.",
+    ["Restablecer texto"] = "Сбросить размер текста",
+    ["Restaurar ventana"] = "Развернуть окно",
+    ["RestedXP no está disponible. Se usará el seguimiento habitual."] = "RestedXP недоступен. Будет использоваться обычное отслеживание заданий.",
+    ["RestedXP sigue su objetivo de misión o un paso con una sola misión activa. Polestar tiene prioridad si ambos están activados."] = "RestedXP выбирает целевое задание или шаг с одним активным заданием. Если обе интеграции включены, Polestar имеет приоритет.",
+    ["Resumen narrativo · sin adelantar la historia"] = "Краткая история · без спойлеров",
+    ["Seguir la misión activa de Polestar"] = "Следовать активному заданию Polestar",
+    ["Seguir la misión activa de RestedXP"] = "Следовать активному заданию RestedXP",
+    ["Selecciona un relato de la lista. El historial se guarda para este personaje."] = "Выберите историю из списка. История сохраняется отдельно для каждого персонажа.",
+    ["Selecciona una misión"] = "Выберите задание",
+    ["Sin misiones activas"] = "Нет активных заданий",
+    ["Subir el relato"] = "Прокрутить историю вверх",
+    ["Tamaño del texto: "] = "Размер текста: ",
+    ["Texto original del juego"] = "Оригинальный текст из игры",
+    ["Todavía no hay relato disponible para esta misión. Prueba a abrir sus detalles en el diario."] = "История этого задания пока недоступна. Попробуйте открыть его описание в журнале.",
+    ["Todavía no se pudo leer tu raza y tu clase. El contexto aparecerá cuando tu personaje termine de cargar."] = "Раса и класс вашего персонажа пока недоступны. История появится после завершения загрузки персонажа.",
+    ["Transparencia del fondo: "] = "Прозрачность фона: ",
+    ["Transparente"] = "Прозрачный",
+    ["Tu aventura"] = "Ваше приключение",
+    ["Tu lugar en Azeroth"] = "Ваше место в Azeroth",
+    ["Tus relatos más recientes primero. El texto completo solo está disponible mientras la misión siga activa."] = "Сначала показаны самые новые истории. Полный текст доступен, только пока задание активно.",
+    ["Ver historial"] = "Посмотреть историю",
+    ["Ver novedades"] = "Что нового",
+    ["Ver todo el changelog en CurseForge"] = "Полная история изменений на CurseForge (выделите и скопируйте ссылку)",
+    ["Versión instalada: "] = "Установленная версия: ",
+    ["Volver al contexto actual de tu personaje"] = "Вернуться к текущей истории персонажа",
+    ["Volver al resumen"] = "Вернуться к краткой истории",
+    ["Últimas cinco versiones"] = "Последние пять версий",
+    ["Русский"] = "Русский",
+    ["Resúmenes y enciclopedia en inglés y español latinoamericano. Polaco: resúmenes aportados por la comunidad y enciclopedia traducida del inglés. Francés, alemán y portugués de Brasil: traducciones provisionales del inglés. Las traducciones conservan los nombres propios en inglés. Los títulos de misión y el texto completo usan el idioma del juego. Los idiomas adicionales se eligen manualmente."] = "Краткие истории и энциклопедия доступны на английском и латиноамериканском испанском. Польские истории предоставлены сообществом, энциклопедия переведена с английского. Французский, немецкий, бразильский португальский и русский — предварительные переводы с английского с сохранением английских имён собственных. Названия заданий и полный текст берутся из игры на её языке. Дополнительные языки историй выбираются вручную.",
+}
+for _, dictionary in pairs(translations) do dictionary["Русский"]="Русский"; dictionary["Русский (перевод)"]="Русский (бета)" end
+
+-- Native language names remain readable in every interface.
+for _, dictionary in pairs(translations) do dictionary["Polski"] = "Polski" end
+-- Update notices and the installed release notes use the chosen UI language.
+local updateText = {
+    ["Actualizado - Ver novedades"] = {es="Actualizado - Ver novedades", en="Updated - See what’s new", fr="Mis à jour - Voir les nouveautés", de="Aktualisiert - Neuigkeiten ansehen", pt="Atualizado - Ver novidades", pl="Zaktualizowano - Zobacz nowości"},
+    ["Últimas cinco versiones"] = {es="Últimas cinco versiones", en="Last five releases", fr="Les cinq dernières versions", de="Die letzten fünf Versionen", pt="Últimas cinco versões", pl="Ostatnie pięć wersji"},
+    ["Ver todo el changelog en CurseForge"] = {es="Changelog completo en CurseForge (selecciona y copia el enlace)", en="Full changelog on CurseForge (select and copy the link)", fr="Historique complet sur CurseForge (sélectionnez et copiez le lien)", de="Vollständiges Änderungsprotokoll auf CurseForge (Link auswählen und kopieren)", pt="Histórico completo no CurseForge (selecione e copie o link)", pl="Pełna lista zmian na CurseForge (zaznacz i skopiuj link)"},
+
+    ["Novedades de QuestLore"] = {es="Novedades de QuestLore", en="QuestLore news", fr="Nouveautés de QuestLore", de="Neuigkeiten zu QuestLore", pt="Novidades do QuestLore", pl="Nowości w QuestLore"},
+    ["Ver novedades"] = {es="Ver novedades", en="See what’s new", fr="Voir les nouveautés", de="Neuigkeiten ansehen", pt="Ver novidades", pl="Zobacz nowości"},
+    ["Cerrar aviso"] = {es="Cerrar aviso", en="Dismiss notice", fr="Fermer l’avis", de="Hinweis schließen", pt="Dispensar aviso", pl="Zamknij powiadomienie"},
+    ["Versión instalada: "] = {es="Versión instalada: ", en="Installed version: ", fr="Version installée : ", de="Installierte Version: ", pt="Versão instalada: ", pl="Zainstalowana wersja: "},
+    ["Actualizado a "] = {es="Actualizado a ", en="Updated to ", fr="Mise à jour vers ", de="Aktualisiert auf ", pt="Atualizado para ", pl="Zaktualizowano do "},
+    ["Mostrar avisos de actualización"] = {es="Mostrar avisos de actualización", en="Show update notices", fr="Afficher les avis de mise à jour", de="Update-Hinweise anzeigen", pt="Mostrar avisos de atualização", pl="Pokazuj powiadomienia o aktualizacjach"},
+    ["Novedades de la versión instalada"] = {es="Novedades de la versión instalada", en="What’s new in the installed version", fr="Nouveautés de la version installée", de="Neues in der installierten Version", pt="Novidades da versão instalada", pl="Nowości w zainstalowanej wersji"},
+    ["Novedades"] = {es="Novedades", en="What’s new", fr="Nouveautés", de="Neuigkeiten", pt="Novidades", pl="Nowości"},
+    ["No hay notas disponibles para esta versión."] = {es="No hay notas disponibles para esta versión.", en="No release notes are available for this version.", fr="Aucune note n’est disponible pour cette version.", de="Für diese Version sind keine Versionshinweise verfügbar.", pt="Não há notas disponíveis para esta versão.", pl="Brak opisu zmian dla tej wersji."},
+}
+for key, values in pairs(updateText) do
+    for language, text in pairs(values) do translations[language][key] = text end
+end
+local contactText = {
+    ["Errores y novedades"] = {es="Errores y novedades", en="Bugs and news", fr="Bugs et nouveautés", de="Fehler und Neuigkeiten", pt="Erros e novidades", pl="Błędy i nowości", ru="Ошибки и новости"},
+    ["Reporta errores y sigue las novedades de QuestLore en X: @alejandrosena. Selecciona y copia el enlace para abrirlo en tu navegador."] = {es="Reporta errores y sigue las novedades de QuestLore en X: @alejandrosena. Selecciona y copia el enlace para abrirlo en tu navegador.", en="Report bugs and follow QuestLore news on X: @alejandrosena. Select and copy the link to open it in your browser.", fr="Signalez les bugs et suivez les nouveautés de QuestLore sur X : @alejandrosena. Sélectionnez et copiez le lien pour l’ouvrir dans votre navigateur.", de="Melde Fehler und verfolge QuestLore-Neuigkeiten auf X: @alejandrosena. Wähle den Link aus und kopiere ihn, um ihn im Browser zu öffnen.", pt="Relate erros e acompanhe as novidades do QuestLore no X: @alejandrosena. Selecione e copie o link para abri-lo no navegador.", pl="Zgłaszaj błędy i śledź nowości QuestLore na X: @alejandrosena. Zaznacz i skopiuj link, aby otworzyć go w przeglądarce.", ru="Сообщайте об ошибках и следите за новостями QuestLore в X: @alejandrosena. Выделите и скопируйте ссылку, чтобы открыть её в браузере."},
+}
+for key,values in pairs(contactText) do
+    for language,value in pairs(values) do translations[language][key]=value end
+end
+local supported = {es=true, en=true, fr=true, de=true, pt=true, pl=true, ru=true}
 -- Short codes remain compatible with saved preferences and history.
 function Locale.Resolve(value)
     local prefix = type(value) == "string" and value:sub(1,2):lower() or "en"
@@ -307,9 +571,34 @@ function Locale.Get()
     -- Preserve the established automatic Spanish/English default until review.
     return detected == "es" and "es" or "en"
 end
+function Locale.GetUI()
+    local choice = ns.db and ns.db.uiLanguage
+    if supported[choice] then return choice end
+    return Locale.Resolve(ns.locale or (GetLocale and GetLocale()) or "esMX")
+end
+function Locale.InitialiseUI()
+    -- Preserve a previous explicit interface choice, which formerly shared the
+    -- story preference. Automatic installs start with native UI detection.
+    if ns.db.uiLanguage == nil then
+        ns.db.uiLanguage = supported[ns.db.language] and ns.db.language or "auto"
+    elseif ns.db.uiLanguage ~= "auto" and not supported[ns.db.uiLanguage] then
+        ns.db.uiLanguage = "auto"
+    end
+end
 function ns.L(key, language)
-    local selected = Locale.Resolve(language or Locale.Get())
+    local selected = Locale.Resolve(language or Locale.GetUI())
     return translations[selected][key] or translations.en[key] or key
+end
+function Locale.SetUI(choice)
+    if choice ~= "auto" and not supported[choice] then return end
+    ns.db.uiLanguage = choice
+    if ns.LocalizeBindings then ns.LocalizeBindings() end
+    if ns.ready then ns.history:Relocalize() end
+    if ns.Options then ns.Options:Sync() end
+    if ns.ready then
+        if ns.Window.Localize then ns.Window:Localize() end
+        ns.QueueRefresh()
+    end
 end
 function Locale.Set(choice)
     if choice ~= "auto" and not supported[choice] then return end

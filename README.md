@@ -2,16 +2,16 @@
 
 <img src="media/questlore-icon-400.png" width="160" alt="QuestLore: an open book beneath a golden quest marker">
 
-**Understand why your character is doing a quest.** QuestLore adds short narrative context to your active quest in World of Warcraft: Forever. Its base languages are English and Latin American Spanish; French, German and Brazilian Portuguese are provisional translations from English with English proper names retained.
+**Understand why your character is doing a quest.** QuestLore adds short narrative context to your active quest in World of Warcraft: Forever. Its base languages are English and Latin American Spanish; French, German, Brazilian Portuguese and Russian are provisional translations from English with English proper names retained. Polish narratives and introductions are a community contribution from [dawiss](https://github.com/dawiss).
 
-**Version 0.17.1** adds French, German and Portuguese translations, the original quest-text reader, direct RestedXP following, and clickable original-text previews for quests without a summary. See [language support and source-text behavior](docs/LANGUAGES.md).
+**Version 0.18.0-beta11** includes Russian support, update notices and the last five release notes in settings, saved encyclopedia geometry, more efficient history rendering, and bug-report/news contact details. It also verifies per-character preference persistence across saved reloads and upgrades. See [all changes since beta7](docs/RELEASE-0.18.0-beta11.md) and [language support](docs/LANGUAGES.md).
 
 [Download the latest release](https://github.com/mexiar/QuestLore/releases/latest) · [Report an issue](https://github.com/mexiar/QuestLore/issues) · [Polestar integration](docs/POLESTAR.md)
 
 ## What it does
 
 - Shows the story behind the quest selected in your quest journal or followed through the quest tracker.
-- Includes **5,259 bilingual quest narratives** across the audited catalog, including Forever-specific quests, without a level cap.
+- Includes **5,259 quest narratives in seven languages** across the audited catalog, including Forever-specific quests, without a level cap.
 - Explains the current assignment using information available at that step. The editorial review removes later chain outcomes and unsupported interpretations.
 - Introduces a new level-one character through a single story combining race and class. There are 90 defensive variants per language, including faction-specific Skyborne variants; this does not mean all 90 combinations are playable.
 - Keeps up to **200 unique stories per character**, accessible exclusively in **Options → AddOns → QuestLore → Story history**, or through **View history** in the main options panel.
@@ -25,7 +25,26 @@ The transparent **Lore** section uses a yellow quest title and white narrative t
 
 Lore attaches below the quest list by default when **ForeverCore** exposes its shared tracker API. It follows the tracker width and visibility. You can detach it in the options, then drag the header to move it or the lower-right corner to resize it. The resize icon appears only while hovering the detached window and stays visible during resizing. Long narratives scroll; the scrollbar disappears when the text fits. Collapsing other tracker sections triggers a deferred reflow so Lore can reclaim the released space. Its desired height is measured at the full text width, independently of the previous scrollbar gutter. Text is measured without stale height constraints so the full narrative remains available instead of ending in an ellipsis. Attachment changes requested during combat wait until combat ends.
 
-Language, font size, attachment preference, detached position and size, visibility, minimized state, and summary history are saved per character. Original quest descriptions are session-only and removed when the quest leaves the log. Existing explicit detachment settings are respected.
+Language, font size, attachment preference, detached position and size, encyclopedia and full-text window position and size, visibility, minimized state, and summary history are saved per character. Original quest descriptions are session-only and removed when the quest leaves the log. Existing explicit detachment settings are respected.
+
+## Encyclopedia
+
+The encyclopedia includes **2,163 entities and 15,141 articles across seven languages**. Recognized proper names in supported-language narratives are
+yellow and clickable, without underlines. Click a name to read an independent
+article about that character, place, organization, object, concept or event.
+The same canonical article is shared across quests, history and opening stories.
+
+French, German, Brazilian Portuguese, Polish and Russian articles are provisional English-based translations that retain English proper names, titles and aliases. Articles follow the narrative language and include contextual links to other
+reviewed entries. Opening an article leaves the active quest unchanged. There is
+no entry index or settings launcher: the reader opens from the name you click.
+It can be moved, resized and scrolled. Original game dialogue remains untouched.
+
+The catalog uses localized source names, with current Forever client text taking
+priority over older reference records. Its descriptions stay within the
+Classic/Forever setting and avoid hidden identities and later quest outcomes.
+Coverage is curated rather than an automatic definition for every capitalized
+word: unknown or ambiguous names remain plain text. See the
+[coverage, sources and verification workflow](docs/ENCYCLOPEDIA.md).
 
 ## Wide detached layout
 
@@ -41,7 +60,7 @@ This layout is useful above action bars or across the top of the screen. Making 
 
 ## Installation
 
-1. Download **QuestLore-0.17.1.zip** from [Releases](https://github.com/mexiar/QuestLore/releases/latest).
+1. Download the latest **QuestLore release ZIP** from [CurseForge](https://www.curseforge.com/wow/addons/questlore) or [Releases](https://github.com/mexiar/QuestLore/releases/latest).
 2. Extract the **QuestLore** folder into `_forever_/Interface/AddOns/`.
 3. Check that `Interface/AddOns/QuestLore/QuestLore.toc` exists, without a second nested QuestLore folder.
 4. Enable QuestLore in the game's addon list. Restart the client for a new installation; use `/reload` when updating an existing installation.
@@ -54,10 +73,13 @@ The source-code ZIP generated by GitHub contains repository documentation and te
 
 Open **Options → AddOns → QuestLore** to choose:
 
-- **Automatic**, **Español (Latinoamérica)**, **English**, or the opt-in **French**, **German** and **Brazilian Portuguese** beta banks. Automatic selects Spanish for `esES`/`esMX` and English for every other game locale. Beta translations preserve English proper names within the narrative. The displayed quest title always prefers the localized name from the game client, regardless of summary language.
+- **Interface language**, independently of the summaries: English, Latin American Spanish, French, German, Brazilian Portuguese, Polish or Russian. Automatic follows the game language when supported and uses English otherwise. Settings, tooltips, tracker headings, key bindings and history labels update together. Both language preferences are saved per character. Existing explicit language choices are preserved during the upgrade.
+- **Automatic**, **Español (Latinoamérica)**, **English**, or the opt-in **French**, **German**, **Brazilian Portuguese** and **Russian** beta banks, plus the **Polski** community bank. Automatic selects Spanish for `esES`/`esMX` and English for every other game locale. Beta translations preserve English proper names within the narrative. The displayed quest title always prefers the localized name from the game client, regardless of summary language.
+- **Show full quest text button**, enabled by default. Disable it to hide the action in Lore and history; the preference is saved per character. Literal fallback previews remain clickable.
 - Narrative text size, **12–24**, with a live preview and reset to **14**.
+- An optional black background, with live transparency from **0% (opaque)** to **100% (transparent)**. It works attached or detached, follows the minimized window, and never fades the text. Both preferences are saved per character; the background is off by default.
 - Whether to attach below the quest tracker.
-- **View history**, opening the history subcategory with a scrollable title list and full story reader.
+- **View history**, opening a continuous, newest-first feed with titles, narratives and separators. Full quest text can be opened while the corresponding quest remains active, without changing the live summary.
 
 Changing language also updates available archived narratives. History retains completed and abandoned quests, reuses one entry per quest, and preserves its first position. Duplicate entries from older versions are merged automatically. Hidden or minimized narratives are not archived as newly read stories.
 
@@ -78,7 +100,7 @@ The game's Key Bindings panel includes actions to show Lore, scroll its text, op
 
 The audited catalog contains **5,413 records**: **5,259 bilingual narratives**, **154 documented exclusions**, and **zero pending narratives**. It combines 5,410 records from the installed Forever quest database with three supplementary published quest records whose current in-game availability is unverified. Catalog inclusion is not a promise that every quest is currently obtainable by every character.
 
-The existing English/Spanish editorial pass reread every narrative in those two languages and all 90 opening variants. It corrected 400 quest rows and three opening combinations for fluency, neutral Spanish, narrative clarity, supported motivation, and current-step chronology. Sparse exchanges or automatic rewards receive a concise account of their documented purpose rather than an invented backstory. The additional French, German and Portuguese quest banks have sampled review only and remain provisional; see [language support](docs/LANGUAGES.md).
+The existing English/Spanish editorial pass reread every narrative in those two languages and all 90 opening variants. It corrected 400 quest rows and three opening combinations for fluency, neutral Spanish, narrative clarity, supported motivation, and current-step chronology. Sparse exchanges or automatic rewards receive a concise account of their documented purpose rather than an invented backstory. The additional French, German, Portuguese and Russian quest banks have sampled review only and remain provisional; see [language support](docs/LANGUAGES.md).
 
 Known quest IDs use curated narratives. If an unknown or altered quest has no usable summary, Lore shows a short literal preview of its original text in the game client's language, ending in **…**. Click the preview to open the complete description and objectives. Previews are never saved in the story archive. Empty or unavailable originals keep the loading/missing-text notice; no story is invented. Report an incorrect title, translation, spoiler, or missing quest with its quest ID, game locale, and the text visible when accepting it. Avoid posting personal SavedVariables files.
 
@@ -88,7 +110,7 @@ Known quest IDs use curated narratives. If an unknown or altered quest has no us
 
 When enabled, Lore reads the accepted quest associated with Polestar's current navigation target, including area/search objectives and turn-ins. It subscribes once to target changes, reads the target after quest-log updates (including accepting, completing, or removing quests), and checks once per second as recovery for missed or delayed messages. Unchanged targets do not cause repeated window redraws. It does not change Polestar's route, waypoints, or quest tracking.
 
-While the option is enabled and Polestar has a valid accepted quest, **Polestar takes priority** over another quest selected automatically by the game or manually in the journal. This prevents accepting a side quest from leaving Lore on that quest while the guide continues elsewhere. Turn off the option to follow your own quest selection. Acceptance recommendations, unaccepted quests, manual pins, missing targets, missing or incompatible APIs, and removed quests fall back to ordinary journal/super-tracked/watched quest selection. Disabling the option cancels the safety timer, removes the subscription and immediately restores ordinary selection. This controls the direct bridge; native super-tracking can still reflect changes made by Polestar itself.
+An active quest explicitly selected in the journal or currently in native focus takes priority over both guides. The latest explicit journal/tracker interaction wins while its context remains valid. Guide updates never clear that context. With no valid selected/focused quest, QuestLore uses Polestar, then RestedXP, then the ordinary watched-quest fallback. Clearing focus or removing the focused quest allows guide following to resume. Invalid or unaccepted guide targets are ignored; disabling the integration cancels its recovery timer and subscription. Native focus can still reflect changes made by another addon, since it is the client state QuestLore follows.
 
 See [integration details and tested limits](docs/POLESTAR.md).
 
@@ -120,6 +142,20 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for code and narrative contributions and 
 
 ## License and credits
 
+Created by [@alejandrosena](https://x.com/alejandrosena) for **World of Warcraft: Forever, interface 16001**.
+
 QuestLore's original code and authored narrative summaries are released under the **MIT License**. See [LICENSE](LICENSE). The project artwork was generated for QuestLore; its prompt and export provenance are recorded in [media/README.md](media/README.md).
 
 World of Warcraft, its characters, quest names, world, and lore belong to Blizzard Entertainment and their respective rights holders. QuestLore is an independent fan project and is not affiliated with or endorsed by Blizzard, Forever, Polestar, or CurseForge. The license grants rights in this project's original work, not ownership of the underlying game universe. No game textures or third-party addon source are bundled. Runtime texture references use assets provided by the installed game.
+
+## Community contributors
+
+Thanks to [dawiss](https://github.com/dawiss) for the Polish quest narratives, race/class introductions and initial interface translation ([issue #2](https://github.com/mexiar/QuestLore/issues/2)). The maintainers completed the current Polish interface and encyclopedia.
+
+## Installed release notes
+
+After upgrading, a small dismissible notice below Lore opens **Options → AddOns → QuestLore → What’s new**. The notice says **Updated - See what’s new**. Dismissing or reading it is remembered per character for that release, including after a downgrade and reinstall. A fresh installation starts without an update notice; existing characters receive a one-time notice when migrating to the first release that supports this feature. The last five releases remain accessible at any time, newest first, with a selectable link to copy to the full CurseForge changelog, and **Show update notices** can be disabled. Notes follow the interface language. This feature reads bundled installed-release data and creates no network requests, addon-message traffic or polling timers.
+
+## Bugs and news
+
+Open **Options → AddOns → QuestLore → Bugs and news** for **[@alejandrosena](https://x.com/alejandrosena)**. Select and copy the profile URL to report bugs or follow updates in your browser. The X and CurseForge URL fields make no network requests inside WoW.

@@ -40,7 +40,6 @@ function Bridge:ReadTarget()
     local signature, quest = targetState(self.owner)
     if signature ~= self.signature then
         self.signature = signature
-        if ns.ClearSelectionContext then ns.ClearSelectionContext() end
     end
     self.quest = quest
 end
@@ -100,7 +99,7 @@ function Bridge:Poll()
     local signature = self.signature
     local quest = self:QuestID()
     if signature ~= self.signature or quest ~= self.lastQuest
-        or (quest and ns.Window.currentID ~= quest) then
+        or (quest and not ns.FocusedQuestID() and ns.Window.currentID ~= quest) then
         self.lastQuest = quest
         ns.QueueRefresh()
     end

@@ -13,13 +13,16 @@ function ns.PruneQuestSources()
     end
 end
 
-BINDING_HEADER_QUESTLORE = "QuestLore · El hilo de la misión"
-BINDING_NAME_QUESTLORE_TOGGLE = "Mostrar el relato"
-BINDING_NAME_QUESTLORE_SCROLL_UP = "Subir el relato"
-BINDING_NAME_QUESTLORE_SCROLL_DOWN = "Bajar el relato"
-BINDING_NAME_QUESTLORE_HISTORY = "Abrir el historial"
-BINDING_NAME_QUESTLORE_FONT_SMALLER = "Reducir tamaño del texto"
-BINDING_NAME_QUESTLORE_FONT_LARGER = "Ampliar tamaño del texto"
+function ns.LocalizeBindings()
+    BINDING_HEADER_QUESTLORE = "QuestLore"
+    BINDING_NAME_QUESTLORE_TOGGLE = ns.L("Mostrar el relato")
+    BINDING_NAME_QUESTLORE_SCROLL_UP = ns.L("Subir el relato")
+    BINDING_NAME_QUESTLORE_SCROLL_DOWN = ns.L("Bajar el relato")
+    BINDING_NAME_QUESTLORE_HISTORY = ns.L("Abrir el historial")
+    BINDING_NAME_QUESTLORE_FONT_SMALLER = ns.L("Reducir tamaño del texto")
+    BINDING_NAME_QUESTLORE_FONT_LARGER = ns.L("Ampliar tamaño del texto")
+end
+ns.LocalizeBindings()
 
 function ns.SetVisible(visible)
     ns.db.visible = visible
@@ -69,11 +72,7 @@ function ns.ClearSelectionContext()
     selectionMode, selectionTargetID = nil, nil
 end
 
-local function resolveContext()
-    local polestarID = ns.PolestarBridge:QuestID()
-    if polestarID then return polestarID end
-    local restedID = ns.RestedXPBridge:QuestID()
-    if restedID then return restedID end
+function ns.FocusedQuestID()
     -- The latest explicit interaction wins over a stale, still-open journal.
     if selectionMode == "tracked" then
         local id = ns.API.superTracked()
@@ -82,6 +81,21 @@ local function resolveContext()
         if ns.API.isActive(selectionTargetID) then return selectionTargetID end
     end
     selectionMode, selectionTargetID = nil, nil
+    if ns.API.isLogVisible() then
+        local id=ns.API.selected()
+        if ns.API.isActive(id) then return id end
+    end
+    local id=ns.API.superTracked()
+    if ns.API.isActive(id) then return id end
+end
+
+local function resolveContext()
+    local focused=ns.FocusedQuestID()
+    if focused then return focused end
+    local polestarID = ns.PolestarBridge:QuestID()
+    if polestarID then return polestarID end
+    local restedID = ns.RestedXPBridge:QuestID()
+    if restedID then return restedID end
     return ns.Model.Resolve(ns.API)
 end
 
@@ -184,7 +198,11 @@ local function installHooks()
     end
     if not hooked.superTracked and C_SuperTrack and type(C_SuperTrack.SetSuperTrackedQuestID) == "function" then
         hooksecurefunc(C_SuperTrack, "SetSuperTrackedQuestID", function(id)
-            if ns.API.isActive(id) then ns.SelectContext(id, "tracked") end
+            if ns.API.isActive(id) then ns.SelectContext(id, "tracked")
+            else
+                if selectionMode=="tracked" then ns.ClearSelectionContext() end
+                ns.QueueRefresh()
+            end
         end)
         hooked.superTracked = true
     end
@@ -196,12 +214,16 @@ local function installHooks()
 end
 
 local function initialise()
+    local existingInstall=type(QuestLoreCharacterDB)=="table" and type(QuestLoreCharacterDB.locale)=="string" and QuestLoreCharacterDB.build~=nil
     QuestLoreCharacterDB = type(QuestLoreCharacterDB) == "table" and QuestLoreCharacterDB or {}
     ns.db = QuestLoreCharacterDB
     if ns.db.attachToTracker == nil then ns.db.attachToTracker = true end
+    if ns.db.showFullTextButton == nil then ns.db.showFullTextButton = true end
     if ns.db.followPolestar == nil then ns.db.followPolestar = true end
     if ns.db.followRestedXP == nil then ns.db.followRestedXP = true end
     ns.locale = GetLocale()
+    ns.Locale.InitialiseUI()
+    ns.LocalizeBindings()
     local profile = ns.API.Profile()
     if profile.level and profile.level > 1 then ns.db.adventureStarted = true end
     local _, build = ns.API.Call(GetBuildInfo)
@@ -217,6 +239,7 @@ local function initialise()
     for _, entry in ipairs(ns.db.history) do
         if entry.id then ns.db.adventureStarted = true; break end
     end
+    if ns.Updates then ns.Updates:Initialise(existingInstall) end
     ns.Window:Create()
     if ns.Tracker then ns.Tracker:Create() end
     ns.Options:Create()

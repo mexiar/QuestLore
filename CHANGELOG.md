@@ -1,5 +1,136 @@
 # Changelog
 
+[Latest release: all changes since 0.18.0-beta7](docs/RELEASE-0.18.0-beta11.md)
+
+[Earlier cumulative notes: changes since 0.17.5](docs/CURSEFORGE_CHANGELOG_0.18.0-beta5.md)
+
+## 0.18.0-beta11 — 2026-11-20
+
+- Fix release-history separators displaying as missing-glyph boxes with the game font. Use standard hyphens supported by the existing UI font.
+- Add **Bugs and news** to the addon options with **[@alejandrosena](https://x.com/alejandrosena)** for bug reports and QuestLore updates. Provide a selectable, copyable profile URL and instructions in all seven interface languages.
+- Add saved-profile regression coverage for background transparency at **0%, 37% and 100%**, enabled and disabled backgrounds, and repeated reloads/upgrades. Verify language choices, text size, guide integrations, attachment, visibility, minimization, three-window geometry and existing history.
+- Preserve existing preferences per character; no preference-reset defect was found in this review.
+- Reuse the same independent, read-only URL field behavior for the X and CurseForge links.
+
+## 0.18.0-beta10 — 2026-11-20
+
+- Add Russian for all **5,259 quest narratives**, **90 race/class introductions**, **2,163 encyclopedia articles**, and the interface. These provisional English-based translations retain English proper names and encyclopedia titles. Quest titles and original full text still use the game client’s language.
+- Keep the existing German summaries, encyclopedia and interface available.
+- Shorten the post-update notice to **“Updated - See what’s new”**, translated into each interface language.
+- Keep a notice pending until opened or dismissed, then remember that acknowledgement for that version per character, including after reloads or reinstalling a previously acknowledged version.
+- Show the **last five releases**, newest first, in **Options → AddOns → QuestLore → What’s new**.
+- Add a selectable link to copy to the complete changelog on CurseForge. WoW does not launch web pages directly.
+- Preserve existing settings, saved window positions, narrative-language defaults and the Polish contributor credit.
+
+## 0.18.0-beta9 — 2026-11-20
+
+- Save encyclopedia window position and size per character, restoring them after login or a UI reload. Keep saved geometry when switching articles or languages, and fit it safely within the current screen.
+- Reuse a shared pool of encyclopedia link controls for visible history entries instead of retaining a separate set for every story visited.
+- Defer hidden history feed rebuilds until the panel is opened, and reuse entity matching results during font-size and width changes.
+- Retain the existing limit of **200 unique stories per character**, newest first. Existing preferences and saved Lore/full-text window geometry are preserved.
+- Add regression coverage for encyclopedia geometry, profile isolation, settings preservation and a complete 200-story history traversal.
+
+## 0.18.0-beta8 — 2026-11-20
+
+- Add a discreet, dismissible **what’s new** notice below Lore after installing a newer QuestLore release.
+- Click the notice to open the installed version’s release notes, or dismiss it. Remember the acknowledgement per character so it does not return on every reload.
+- Add **Options → AddOns → QuestLore → What’s new**, with scrollable notes available even after dismissing the notice.
+- Add **Show update notices**, enabled by default. Keep the notice hidden while Lore is minimized and account for its height when text wraps or the window is resized.
+- Translate notices and installed release notes into all six interface languages.
+- Keep the update feature entirely local: it displays bundled notes after an installed update and adds no online version checks, addon-message exchange or polling timers.
+- Add the creator credit linking to **[@alejandrosena](https://x.com/alejandrosena)** to the CurseForge description and retain it in the publication guidelines.
+
+## 0.18.0-beta7 — 2026-11-20
+
+- Add **Polish** as a selectable narrative and interface language, with **5,259 quest summaries and 90 race/class introductions** contributed by **[dawiss](https://github.com/dawiss)** in [issue #2](https://github.com/mexiar/QuestLore/issues/2). Thank you for helping bring QuestLore to Polish-speaking players!
+- Adapt the community contribution to the current addon and complete Polish interface strings for the encyclopedia, background transparency, story history, quest-focus priority and full-text button setting.
+- Add Polish translations for all **2,163 encyclopedia entities**, bringing the encyclopedia to **12,978 articles across six languages**. These provisional articles are translated from English and retain English proper names and titles.
+- Open Polish encyclopedia articles from Polish summaries, history and character introductions. Recognize reviewed inflected character names while preserving shared-name and spoiler-sensitive restrictions.
+- Preserve existing language choices and the automatic Spanish/English narrative defaults. Select **Polski** in addon settings; the interface language remains independently configurable.
+- Review a sample of the contributed narratives and introductions, apply source-checked editorial corrections, and validate the complete Polish catalog, source hashes, names, links and layout behavior.
+
+## 0.18.0-beta6 — 2026-11-19
+
+- Add a per-character **Show full quest text button** option, enabled by default for new and existing characters.
+- Hide or restore the action immediately in live Lore and story history, reclaiming its space without changing the selected quest.
+- Preserve the preference through reloads, minimization, font changes and language changes.
+- Localize the new option in all five interface languages. Keep literal fallback previews clickable independently of the button preference.
+
+## 0.18.0-beta5 — 2026-11-18
+
+- Add French, German and Brazilian Portuguese translations for all 2,163 encyclopedia entities: 6,489 new articles, bringing the five-language catalog to 10,815 articles.
+- Open encyclopedia articles in the narrative language from live summaries, history and character introductions. Keep contextual article links in that language and interface controls in the chosen interface language.
+- Preserve English entity titles, aliases and proper names in the three additional banks, matching the existing provisional narrative translation policy.
+- Reuse the reviewed English identity restrictions across translated links, including shared names and spoiler-sensitive aliases. Support French apostrophe elisions and German genitive endings around linked names.
+- Update the language-support notice in all five interfaces to include encyclopedia translations.
+- Validate complete language coverage, current English-source hashes, protected-name preservation and language-aware navigation during packaging.
+- Keep English and Latin American Spanish encyclopedia articles and all existing quest narratives unchanged. Translations are prepared offline, with sampled editorial review and no online translation during play.
+
+## 0.18.0-beta4 — 2026-11-18
+
+- Expand the encyclopedia from the four-entry Spanish pilot to **2,163 entities and 4,326 articles** in English and Latin American Spanish, covering characters, places, organizations, objects, peoples, events and concepts, including Forever-specific entities.
+- Open English articles from English narratives and Latin American Spanish articles from Spanish narratives. Keep reader controls in the independently selected interface language.
+- Link recognized names in active quest summaries, story history and race/class introductions, with contextual links inside articles. Preserve the active quest while reading.
+- Keep names yellow without underlines and retain the focused reader without an entry index or settings launcher.
+- Improve identity matching with localized aliases, reviewed quest scopes and longest-name priority. Leave uncertain shared names unlinked and avoid revealing hidden identities or later quest outcomes.
+- Index aliases once at load to avoid scanning the whole encyclopedia for each displayed name. Add no online requests or polling timers.
+- Add source-provenance checks and bilingual regression tests for matching, navigation, language separation, punctuation and spoiler-sensitive names.
+- Preserve existing narratives, the original Spanish pilot articles and the active-quest-only policy for full quest text.
+
+## 0.18.0-beta3 — 2026-11-18
+
+- Display story history as a continuous, newest-first feed with titles, narratives and separators instead of mission selection buttons.
+- Open full quest text from history while that quest remains active, without changing the current focused quest. Keep original text session-only; do not archive it.
+- Include encyclopedia links in history narratives and contextual cross-references inside encyclopedia articles.
+- Keep linked names yellow without underlines. Remove the encyclopedia entry index, settings launcher and language-availability subtitle; open the reader from the clicked name.
+- Reflow the history feed for font and panel size changes, and defer interactive link rendering until entries enter the viewport.
+
+## 0.18.0-beta2 — 2026-11-18
+
+- Give the active quest selected in the journal or focused in the native tracker priority over Polestar and RestedXP.
+- Preserve explicit selection when guide targets change. Fall back to guides when the selected/focused quest is cleared or no longer active.
+- Avoid repeated Polestar redraws while another quest has focus. Update the localized settings description to reflect the new priority.
+- Retain the Spanish encyclopedia pilot from beta1.
+
+## 0.18.0-beta1 — 2026-11-18
+
+- Add a Spanish encyclopedia pilot with four canonical entries: Orgnil Escaralma, Filo Ardiente, Durotar and Libro del conciliábulo.
+- Highlight recognized names in Spanish quest narratives in yellow with underlines. Click a name to open its independent reference article without changing the active quest or story history.
+- Add a movable, resizable, scrollable encyclopedia reader and an entry index, also accessible from addon settings.
+- Preserve linked text through font changes, wrapping, scrolling and the wide detached layout. Keep unknown names, other narrative languages and original quest text unchanged.
+- Restrict the Filo Ardiente cult link to reviewed quest contexts to avoid confusing similarly named groups. This pilot does not provide a complete entity catalog.
+
+## 0.17.5 — 2026-11-18
+
+- Add an optional black background for the Lore window, both attached to the quest tracker and detached.
+- Add a live background transparency slider: 0% is opaque and 100% is transparent. Text and controls retain their own opacity.
+- Save the background toggle and transparency per character. Keep the background disabled by default and preserve its preferred value when toggled off.
+- Let the background follow resizing and minimization. Localize the new settings in all five interface languages.
+
+## 0.17.4 — 2026-11-17
+
+- Complete interface localization in English, Latin American Spanish, French, German and Brazilian Portuguese, including tracker headings, key bindings, tooltips, loading states, settings and history.
+- Add a separate per-character interface-language selector. Automatic UI language follows supported game locales and falls back to English; narrative language remains independent.
+- Preserve existing explicit language choices when upgrading. Update interface text immediately when its language changes, including the registered history category.
+- Allow long translated settings labels and buttons to wrap, and reserve the full height of a wrapped original-text action so it does not overlap the narrative.
+- Localize AddOns list descriptions and categories. Keep quest names and original quest text in the game client's language.
+
+## 0.17.3 — 2026-11-17
+
+- Update 404 Latin American Spanish narratives using recovered original esMX quest records: rewrite 35 stories and correct source-attested names in another 369.
+- Use current client names such as Corma Villardo, Velarok Espada del Viento, Picoflojo, Garracha and Cromi. Resolve ambiguous references to families, wells and ships in context rather than blindly replacing NPC names.
+- Add or correct 4,055 Spanish fallback titles from validated client records. The active quest's localized game title continues to take priority.
+- Preserve differences between localized originals, including Galgar's esMX offer, and keep summaries limited to the current quest step.
+- Keep English, French, German and Portuguese narrative text unchanged. Missing, unvalidated or placeholder original descriptions do not trigger narrative rewrites.
+
+## 0.17.2 — 2026-11-17
+
+- Revise 34 English quest narratives against recovered, validated Forever client descriptions and objectives, including newly available original descriptions.
+- Update the corresponding 102 French, German and Brazilian Portuguese narratives, preserving English proper names. Keep Latin American Spanish narratives and titles unchanged.
+- Correct current-step context for sayaad training, Corma Villard, the Gnarlpine bounty, Kerlonian's missing belongings, Othmar and other changed assignments. Use Velarok Windblade's current English name throughout the relevant Searing Gorge stories.
+- Correct six English fallback quest titles to match the client. Localized titles returned by the player's client continue to take priority.
+- Leave narratives with missing, unvalidated or placeholder originals unchanged. Original client dialogue remains outside the addon package; these revisions do not imply complete original-text collection.
+
 ## 0.17.1 — 2026-11-17
 
 - Prefer the localized quest title returned by the game client in every summary language, including French, German and Portuguese and English-body fallbacks.

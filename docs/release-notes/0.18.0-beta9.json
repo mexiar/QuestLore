@@ -1,0 +1,12 @@
+{
+  "version": "0.18.0-beta9",
+  "notes": {
+    "es": "Novedades de QuestLore 0.18.0-beta9\n\n- La enciclopedia guarda su posición y tamaño por personaje y los restaura al volver a entrar o recargar la interfaz.\n- El historial reutiliza los controles de enlaces visibles y evita reconstruir la lista mientras está cerrada. Conserva su límite de 200 relatos por personaje.",
+    "en": "What’s new in QuestLore 0.18.0-beta9\n\n- The encyclopedia now saves its position and size per character and restores them after login or a UI reload.\n- Story history reuses visible link controls and avoids rebuilding the feed while closed. Its limit remains 200 stories per character.",
+    "fr": "Nouveautés de QuestLore 0.18.0-beta9\n\n- L’encyclopédie mémorise sa position et sa taille par personnage et les restaure après une connexion ou un rechargement de l’interface.\n- L’historique réutilise les contrôles des liens visibles et ne reconstruit plus la liste lorsqu’elle est fermée. La limite reste de 200 récits par personnage.",
+    "de": "Neues in QuestLore 0.18.0-beta9\n\n- Die Enzyklopädie speichert jetzt Position und Größe pro Charakter und stellt sie nach dem Einloggen oder Neuladen der Benutzeroberfläche wieder her.\n- Der Verlauf verwendet Steuerelemente sichtbarer Links erneut und baut die Liste nicht neu auf, solange sie geschlossen ist. Das Limit bleibt bei 200 Geschichten pro Charakter.",
+    "pt": "Novidades do QuestLore 0.18.0-beta9\n\n- A enciclopédia agora salva a posição e o tamanho por personagem e os restaura após entrar no jogo ou recarregar a interface.\n- O histórico reutiliza os controles dos links visíveis e evita reconstruir a lista enquanto está fechada. O limite continua sendo de 200 relatos por personagem.",
+    "pl": "Nowości w QuestLore 0.18.0-beta9\n\n- Encyklopedia zapisuje teraz położenie i rozmiar osobno dla każdej postaci i przywraca je po zalogowaniu lub przeładowaniu interfejsu.\n- Historia ponownie wykorzystuje kontrolki widocznych odnośników i nie przebudowuje listy, gdy jest zamknięta. Limit nadal wynosi 200 opowieści na postać.",
+    "ru": "Что нового в QuestLore 0.18.0-beta9\n\n- Энциклопедия сохраняет размер и положение отдельно для каждого персонажа и восстанавливает их после входа или перезагрузки интерфейса.\n- История повторно использует контролки видимых ссылок и не перестраивает закрытый список. Лимит остаётся равным 200 историям на персонажа."
+  }
+}

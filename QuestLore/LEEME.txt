@@ -1,22 +1,27 @@
-QuestLore 0.17.1 — El hilo de la misión
+QuestLore 0.18.0-beta11 — El hilo de la misión
 WoW: Forever · interfaz 16001 · English / español latinoamericano
-Traducciones provisionales: français / Deutsch / português (Brasil)
+Traducciones provisionales: français / Deutsch / português (Brasil) / Русский
+Polski: aportes de la comunidad de dawiss. Interfaz disponible en los siete idiomas.
 
 Copia esta carpeta en _forever_/Interface/AddOns/QuestLore.
 Si actualizas una instalación existente, usa /reload.
 
 Opciones → AddOns → QuestLore:
-- Idioma: Automático, Español (Latinoamérica), English, Français, Deutsch
-  o Português (Brasil). Los últimos tres se traducen desde inglés y mantienen
-  nombres propios y títulos ingleses. La auditoría de nombres de esMX sigue
-  en curso. Las opciones explican el estado de cada grupo.
-- Automático usa español LA para clientes españoles e inglés para el resto.
-  Los tres idiomas beta se eligen manualmente mientras continúa su revisión.
+- Idioma del relato: Automático, Español (Latinoamérica), English, Français,
+  Deutsch, Português (Brasil), Polski o Русский (бета).
+  Francés, alemán, portugués y ruso son traducciones provisionales del inglés
+  que conservan nombres propios ingleses. El título usa el idioma del cliente.
+- El idioma de la interfaz se elige por separado y puede detectar el del juego.
+- Automático para relatos usa español LA en clientes españoles e inglés en
+  los demás; los idiomas adicionales del relato se eligen manualmente.
 - Tamaño del texto de 12 a 24 con vista previa.
+- Mostrar botón de texto completo: activado por defecto. Puedes ocultarlo en
+  Lore y el historial; la preferencia se guarda por personaje.
 - Seguir la misión activa de Polestar (activado por defecto, opcional).
   Se guarda por personaje. Solo sigue misiones aceptadas; si no hay un
   objetivo válido, vuelve al seguimiento habitual. Mientras está activado,
-  Polestar tiene prioridad sobre otras selecciones del diario. Se comprueba
+  La misión seleccionada o en foco tiene prioridad; Polestar se usa
+  cuando no hay una misión en foco. Se comprueba
   cada segundo y al aceptar, completar o actualizar tus misiones.
 - Adjuntar al final del rastreador de misiones (requiere ForeverCore).
   Sigue la columna y su ancho; al desactivarlo restaura la posición y el
@@ -51,14 +56,15 @@ habitual. Si falta espacio, el resumen completo sigue disponible con scroll.
 
 La ventana sigue la misión activa, sin paginado ni indicadores de historial.
 Consulta los relatos anteriores en Opciones → AddOns → QuestLore → Historial,
-o pulsa Ver historial en el panel principal. Selecciona un título de la lista
-para leerlo sin cambiar el relato de la misión activa.
+o pulsa Ver historial en el panel principal. Los relatos aparecen completos,
+uno debajo de otro, del más reciente al más antiguo, separados por líneas.
+Leerlos no cambia el relato de la misión activa.
 El historial conserva hasta 200 entradas únicas por personaje.
-Cada misión tiene una página: volver a seleccionarla abre la existente,
+Cada misión tiene una entrada: volver a seleccionarla abre la existente,
 sin duplicarla ni cambiar su primera posición. Al actualizar, las visitas
 repetidas antiguas se unen conservando la versión más reciente del relato.
 
-La introducción integra raza y clase en un solo relato y está en ambos idiomas.
+La introducción integra raza y clase en un solo relato y está en los siete idiomas.
 Aparece al comienzo, con un personaje de nivel 1 sin misiones. Una vez iniciada
 la aventura, no reaparece automáticamente al vaciarse el diario; sigue siendo
 accesible desde el historial.
@@ -100,3 +106,35 @@ Questie funciona mediante la selección y el enfoque habituales de misiones.
 
 El título de la misión usa el nombre localizado del cliente, aunque el resumen
 esté en otro idioma. Solo se usa el título del catálogo si falta el del cliente.
+
+Enciclopedia: 2163 entidades con 15141 artículos en los siete idiomas.
+Los nombres reconocidos aparecen en amarillo, sin subrayado, en los resúmenes,
+el historial y las introducciones. Pulsa un nombre para abrir su ficha y los
+vínculos relacionados. No hay índice de entradas ni cambia la misión activa.
+Las fichas en francés, alemán, portugués de Brasil y ruso se traducen desde el inglés
+y conservan sus nombres, títulos y alias ingleses. Son traducciones provisionales
+con revisión editorial por muestras, no textos originales del cliente.
+Todo se distribuye localmente; no hay consultas ni traducción durante el juego.
+
+Polski: resúmenes de 5259 misiones y 90 introducciones aportados por dawiss
+(https://github.com/dawiss). Completamos la interfaz actual y la enciclopedia
+polaca a partir del inglés, con nombres propios y títulos ingleses. Selecciona
+Polski en el idioma del relato o de la interfaz. La selección automática de
+relatos sigue usando español para clientes españoles e inglés para los demás.
+Las fichas polacas son traducciones redactadas por IA a partir de cada original
+inglés, no los resultados de los modelos automáticos descartados en las pruebas.
+
+Novedades: tras instalar una actualización, un aviso discreto bajo Lore permite
+consultar las notas de las últimas cinco versiones, de la más reciente a la
+más antigua, y copiar el enlace al historial completo de CurseForge. Puedes cerrarlo y seguir leyendo
+las notas en Opciones → AddOns → QuestLore → Novedades. La lectura o el cierre
+se recuerdan por personaje y versión, incluso después de reinstalar una
+versión ya reconocida. El aviso dice «Actualizado - Ver novedades». Mostrar avisos de actualización está activado por
+defecto; puedes desactivarlo. Las notas usan el idioma de la interfaz.
+
+Русский: 5259 resúmenes, 90 introducciones y 2163 artículos traducidos del
+inglés, con nombres propios ingleses y revisión editorial por muestras.
+No se presentan como textos originales rusos ni como una revisión humana nativa.
+
+Errores y novedades: las opciones incluyen @alejandrosena en X y el enlace
+https://x.com/alejandrosena para seleccionar y copiar.

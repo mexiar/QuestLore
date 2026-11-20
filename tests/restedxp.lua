@@ -31,7 +31,18 @@ return function(env)
     local active={[12]=true,[13]=true,[99]=true}
     c.API.isActive=function(id) return active[id]==true end
     env.tick(0.2)
-    assert(c.db.followRestedXP and c.Options.restedXP.checked and c.Window.currentID==13,"RXP parent quest takes precedence over unrelated native tracking")
+    assert(c.db.followRestedXP and c.Options.restedXP.checked and c.Window.currentID==13,"RXP supplies a target when no quest has native focus")
+    local nativeFocus=c.API.superTracked
+    local focus=99
+    c.API.superTracked=function() return focus end
+    c.SelectContext(99,"tracked");env.tick(0.2)
+    assert(c.Window.currentID==99,"focused quest overrides RestedXP")
+    goal.questId=12;message("RXP_TARGET_LIST_UPDATE")
+    assert(c.Window.currentID==99,"RestedXP target changes cannot clear native focus")
+    focus=nil;c.QueueRefresh();env.tick(0.2)
+    assert(c.Window.currentID==12,"clearing focus restores RestedXP fallback")
+    goal.questId=13;message("RXP_TARGET_LIST_UPDATE")
+    c.API.superTracked=nativeFocus
     assert(registrations==4 and c.RestedXPBridge.listener~=engine,"independent AceEvent subscriber preserves RXP handlers")
     local timer=c.RestedXPBridge.ticker
     c.RestedXPBridge:Sync();c.RestedXPBridge:Sync();env.tick(0.2)

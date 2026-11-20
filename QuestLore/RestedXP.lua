@@ -83,7 +83,6 @@ function Bridge:Poll(force)
     local quest = self:QuestID()
     if quest ~= self.lastQuest then
         self.lastQuest = quest
-        ns.ClearSelectionContext()
         ns.QueueRefresh()
     end
 end

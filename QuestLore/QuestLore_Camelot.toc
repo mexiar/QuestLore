@@ -1,18 +1,31 @@
 ## Interface: 16001
 ## Title: QuestLore
-## Notes: The story behind your active quest. English and Spanish lore summaries.
+## Notes: Quest stories beside your tracker. Interface in English, Spanish, French, German, Portuguese, Polish and Russian.
 ## Notes-esES: El hilo de la misión: un resumen de por qué estás haciendo tu misión activa.
-## Notes-esMX: El hilo de la misión: un resumen de por qué estás haciendo tu misión activa.
+## Notes-esMX: El contexto de tu misión activa, junto al rastreador de misiones.
+## Notes-frFR: Le contexte de votre quête active, à côté du suivi des objectifs.
+## Notes-deDE: Der Hintergrund eurer aktiven Quest, direkt neben der Questverfolgung.
+## Notes-ptBR: O contexto da sua missão ativa, ao lado do rastreador de missões.
+## Notes-ruRU: История вашего текущего задания рядом со списком целей.
+## Notes-plPL: Kontekst aktywnego questa obok listy śledzonych zadań.
 ## Author: Alejandro Sena
-## Version: 0.17.1
+## X-Credits: Polish quest narratives, introductions and initial interface translation contributed by dawiss.
+## Version: 0.18.0-beta11
 ## OptionalDeps: ForeverCore, Polestar, RXPGuides
 ## Category: Quests
 ## Category-esES: Misiones
 ## Category-esMX: Misiones
+## Category-frFR: Quêtes
+## Category-deDE: Quests
+## Category-ptBR: Missões
+## Category-plPL: Zadania
 ## SavedVariablesPerCharacter: QuestLoreCharacterDB
 
 Text.lua
 Locale.lua
+ReleaseNotes.lua
+Updates.lua
+Encyclopedia_Data.lua
 Stories.lua
 Stories_Undead.lua
 Stories_ForeverTirisfal.lua
@@ -20,6 +33,8 @@ Narratives.lua
 Narratives_fr.lua
 Narratives_de.lua
 Narratives_pt.lua
+Narratives_pl.lua
+Narratives_ru.lua
 Origins_Stories.lua
 Origins.lua
 Model.lua
@@ -28,6 +43,7 @@ QuestAPI.lua
 Polestar.lua
 RestedXP.lua
 Justify.lua
+Encyclopedia.lua
 FullText.lua
 Window.lua
 Tracker.lua

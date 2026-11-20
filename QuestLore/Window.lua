@@ -84,14 +84,14 @@ function Window:ApplyPresentation(width, height)
         label:SetPoint("RIGHT",self.header,"RIGHT",-32,0)
         label:SetWidth(math.max(1,width-64))
         label:SetJustifyH("CENTER")
-        label:SetText(self.currentTitle or "Lore")
+        label:SetText(self.currentTitle or ns.L("Lore"))
         self.headerHeight=math.max(self.HEADER_HEIGHT,math.ceil(label:GetStringHeight())+4)
         self.title:Hide();self.body:Hide()
         if self.headerArt then self.headerArt:Hide();self.wideDivider:Show() end
     else
         label:SetPoint("LEFT",7,0);label:SetPoint("RIGHT",-26,0)
         label:SetWidth(math.max(1,width-33))
-        label:SetJustifyH("LEFT");label:SetText("Lore")
+        label:SetJustifyH("LEFT");label:SetText(ns.L("Lore"))
         self.headerHeight=self.HEADER_HEIGHT
         self.title:Show();self.body:Show();self.justified:Hide()
         if self.headerArt then self.headerArt:Show();self.wideDivider:Hide() end
@@ -121,7 +121,7 @@ function Window:MeasureContent(width)
     self.body:SetHeight(0)
     if self.wideLayout then
         self.body:ClearAllPoints();self.body:SetPoint("TOPLEFT",self.content,"TOPLEFT",0,0)
-        local height=self.justified:Layout(self.body:GetText() or "",width,ns.db.fontSize,math.max(2,math.floor(ns.db.fontSize/4)))+6
+        local height=self.justified:Layout(self.body:GetText() or "",width,ns.db.fontSize,math.max(2,math.floor(ns.db.fontSize/4)),self.entitySpans)+6
         self.content:SetHeight(height)
         return height
     end
@@ -129,9 +129,79 @@ function Window:MeasureContent(width)
     self.title:SetHeight(titleHeight)
     self.body:ClearAllPoints()
     self.body:SetPoint("TOPLEFT", self.content, "TOPLEFT", 0, -titleHeight - 8)
+    if self.entitySpans and #self.entitySpans>0 then
+        self.body:Hide()
+        local height=titleHeight+8+self.justified:Layout(self.body:GetText() or "",width,ns.db.fontSize,math.max(2,math.floor(ns.db.fontSize/4)),self.entitySpans,true,titleHeight+8)+6
+        self.content:SetHeight(height)
+        return height
+    end
     local height = titleHeight + 8 + math.ceil(self.body:GetStringHeight()) + 6
     self.content:SetHeight(height)
     return height
+end
+
+function Window:ApplyBackground()
+    local value=tonumber(ns.db.backgroundTransparency)
+    if not value or value~=value or value==math.huge or value==-math.huge then value=50 end
+    ns.db.backgroundTransparency=math.floor(math.max(0,math.min(100,value))+0.5)
+    ns.db.backgroundEnabled=ns.db.backgroundEnabled==true
+    if self.background then
+        self.background:SetColorTexture(0,0,0,ns.db.backgroundEnabled and (1-ns.db.backgroundTransparency/100) or 0)
+    end
+end
+
+function Window:SetBackground(enabled, transparency)
+    ns.db.backgroundEnabled=enabled==true
+    if transparency~=nil then ns.db.backgroundTransparency=transparency end
+    self:ApplyBackground()
+    if ns.Options then ns.Options:Sync() end
+end
+
+function Window:ShouldShowFullTextButton()
+    return self.fullTextEligible and ns.db.showFullTextButton~=false
+end
+
+function Window:SetShowFullTextButton(value)
+    ns.db.showFullTextButton=value==true
+    self:RefreshFullText()
+    self:Layout()
+    self:QueueLayout()
+    if ns.Options then ns.Options:Sync() end
+end
+
+function Window:LayoutFooter(width)
+    local bottom,footer=5,8
+    local notice=not ns.db.minimized and ns.db.showUpdateNotices~=false and ns.Updates and ns.Updates:Notice() or nil
+    if self.updateNoticeButton then
+        if notice then
+            local button,label=self.updateNoticeButton,self.updateNoticeButton.label
+            label:SetFont(self.fontName,math.max(10,ns.db.fontSize-2),"")
+            -- Reserve distinct hit areas for dismissal and the resize grip.
+            label:SetWidth(math.max(1,width-60));label:SetHeight(0)
+            button:SetText(notice.label)
+            local h=math.max(18,math.ceil(label:GetStringHeight())+4)
+            button:SetSize(math.max(1,width-60),h)
+            button:ClearAllPoints();button:SetPoint("BOTTOMLEFT",8,bottom);button:Show()
+            self.updateNoticeClose:ClearAllPoints()
+            self.updateNoticeClose:SetPoint("BOTTOMRIGHT",-28,bottom+h-16);self.updateNoticeClose:Show()
+            bottom=bottom+h+4;footer=footer+h+4
+        else self.updateNoticeButton:Hide();self.updateNoticeClose:Hide() end
+    end
+    if self.fullTextButton then
+        self.fullTextButton:ClearAllPoints();self.fullTextButton:SetPoint("BOTTOMLEFT",8,bottom)
+        if self:ShouldShowFullTextButton() then
+            local label=self.fullTextButton.label
+            label:SetWidth(math.max(1,width-32));label:SetHeight(0)
+            local h=math.max(22,math.ceil(label:GetStringHeight()))
+            self.fullTextButton:SetSize(math.max(1,width-32),h)
+            footer=footer+h
+        end
+    end
+    self.FOOTER_HEIGHT=footer
+end
+
+function Window:RefreshUpdateNotice()
+    if self.frame then self:Layout();self:QueueLayout() end
 end
 
 function Window:Layout()
@@ -140,6 +210,7 @@ function Window:Layout()
     local previousNatural, previousWidth = self.naturalContentHeight, self.layoutWidth
     local width = self.frame:GetWidth()
     local height = ns.db.minimized and self.expandedHeight or self.frame:GetHeight()
+    self:LayoutFooter(width)
     height=self:ApplyPresentation(width,height)
     local viewport = math.max(0, height - self:GetHeaderHeight() - self.CONTENT_TOP - self.FOOTER_HEIGHT)
     self.layoutWidth, self.viewportHeight = width, viewport
@@ -233,7 +304,7 @@ function Window:SetMinimized(value, initial)
     ns.db.minimized = value == true
     if ns.db.minimized and ns.FullText then ns.FullText:Close() end
     if self.fullTextButton then
-        if self.fullTextEligible and not ns.db.minimized then self.fullTextButton:Show() else self.fullTextButton:Hide() end
+        if self:ShouldShowFullTextButton() and not ns.db.minimized then self.fullTextButton:Show() else self.fullTextButton:Hide() end
     end
     if self.previewButton then
         if self.sourcePreview and self.fullTextEligible and not ns.db.minimized then self.previewButton:Show() else self.previewButton:Hide() end
@@ -341,9 +412,12 @@ function Window:Create()
     frame:SetFrameStrata("MEDIUM")
     frame:SetMovable(true)
     frame:EnableMouse(true)
-    -- No filled background or outer border: the world remains visible behind
-    -- the title and narrative, just as it does behind tracked objectives.
     self.frame = frame
+    -- A separate texture keeps background opacity independent of the text.
+    self.background=frame:CreateTexture(nil,"BACKGROUND")
+    self.background:SetPoint("TOPLEFT",frame,"TOPLEFT",0,0)
+    self.background:SetPoint("BOTTOMRIGHT",frame,"BOTTOMRIGHT",0,0)
+    self:ApplyBackground()
     local position = ns.db.position
     if type(position) == "table" and type(position.x) == "number" and type(position.y) == "number" then
         frame:SetPoint(position.point == "TOPLEFT" and "TOPLEFT" or "CENTER", UIParent,
@@ -377,7 +451,7 @@ function Window:Create()
     local headerLabel = header:CreateFontString(nil, "OVERLAY", "ObjectiveTrackerHeaderFont")
     headerLabel:SetPoint("LEFT", 7, 0); headerLabel:SetPoint("RIGHT", -26, 0)
     headerLabel:SetJustifyH("LEFT"); headerLabel:SetTextColor(unpack(palette.gold))
-    headerLabel:SetText("Lore"); shadow(headerLabel)
+    headerLabel:SetText(ns.L("Lore")); shadow(headerLabel)
     self.headerLabel = headerLabel
     headerLabel:SetWordWrap(true)
     if headerLabel.SetMaxLines then headerLabel:SetMaxLines(0) end
@@ -458,10 +532,30 @@ function Window:Create()
     fullTextButton.label:ClearAllPoints()
     fullTextButton.label:SetPoint("LEFT", fullTextButton, "LEFT", 0, 0)
     fullTextButton.label:SetJustifyH("LEFT")
+    fullTextButton.label:SetWordWrap(true)
     fullTextButton:SetPoint("BOTTOMLEFT", 8, 5)
     fullTextButton:SetScript("OnClick", function() ns.FullText:Open(self.currentID) end)
     fullTextButton:Hide()
     self.fullTextButton = fullTextButton
+
+    local updateNotice=textButton(frame,"QuestLoreUpdateNoticeButton","")
+    updateNotice.label:ClearAllPoints();updateNotice.label:SetPoint("LEFT",updateNotice,"LEFT",0,0)
+    updateNotice.label:SetJustifyH("LEFT");updateNotice.label:SetWordWrap(true)
+    updateNotice.label:SetTextColor(unpack(palette.muted))
+    updateNotice:SetScript("OnClick",function()
+        if ns.Updates then ns.Updates:Open();self:RefreshUpdateNotice() end
+    end)
+    updateNotice:SetScript("OnEnter",function() updateNotice.label:SetTextColor(unpack(palette.gold)) end)
+    updateNotice:SetScript("OnLeave",function() updateNotice.label:SetTextColor(unpack(palette.muted)) end)
+    updateNotice:Hide();self.updateNoticeButton=updateNotice
+    local noticeClose=textButton(frame,"QuestLoreUpdateNoticeClose","×")
+    noticeClose:SetSize(16,16)
+    noticeClose.label:SetFont(self.fontName,12,"")
+    noticeClose:SetScript("OnClick",function()
+        if ns.Updates then ns.Updates:Dismiss();self:RefreshUpdateNotice() end
+    end)
+    tooltip(noticeClose,"Cerrar aviso")
+    noticeClose:Hide();self.updateNoticeClose=noticeClose
 
     local grip = CreateFrame("Button", "QuestLoreResizeGrip", frame)
     grip:SetSize(20, 20); grip:SetPoint("BOTTOMRIGHT", -2, 2)
@@ -488,7 +582,7 @@ function Window:Create()
         region:HookScript("OnEnter",function() self:UpdateHoverControls(true) end)
         region:HookScript("OnLeave",function() self:UpdateHoverControls() end)
     end
-    watch(frame);watch(header);watch(scroll);watch(content);watch(self.minimize);watch(grip);watch(fullTextButton);watch(previewButton)
+    watch(frame);watch(header);watch(scroll);watch(content);watch(self.minimize);watch(grip);watch(fullTextButton);watch(previewButton);watch(updateNotice);watch(noticeClose)
     if scroll.ScrollBar then
         watch(scroll.ScrollBar)
         watch(scroll.ScrollBar.ScrollUpButton);watch(scroll.ScrollBar.ScrollDownButton)
@@ -509,6 +603,7 @@ function Window:Render(model)
     local changedQuest = self.currentKey ~= model.key
     self.currentID, self.currentKey, self.currentTitle = model.id, model.key, model.title
     self.sourcePreview = model.kind == "preview"
+    self.entitySpans=ns.Encyclopedia and (model.kind=="story" or model.kind=="origins") and ns.Encyclopedia.FindSpans(model.body,model.language,model.id) or nil
     self:RefreshFullText()
     if changedQuest then self.pendingScrollFraction = nil; self.scroll:SetVerticalScroll(0) end
     self.title:SetText(model.title); self.body:SetText(model.body)
@@ -520,13 +615,13 @@ function Window:RefreshFullText()
     if not self.fullTextButton then return end
     local previous = self.fullTextEligible
     self.fullTextEligible = ns.FullText and ns.FullText:CanRead(self.currentID) or false
-    self.FOOTER_HEIGHT = self.fullTextEligible and 30 or 8
     self.fullTextButton:SetText(ns.L("Leer texto completo"))
-    if self.fullTextEligible and not ns.db.minimized then self.fullTextButton:Show() else self.fullTextButton:Hide() end
+    if self:ShouldShowFullTextButton() and not ns.db.minimized then self.fullTextButton:Show() else self.fullTextButton:Hide() end
     if self.previewButton then
         if self.sourcePreview and self.fullTextEligible and not ns.db.minimized then self.previewButton:Show() else self.previewButton:Hide() end
     end
     if ns.FullText then ns.FullText:Refresh() end
+    if self.frame then self:LayoutFooter(self.frame:GetWidth()) end
     if previous ~= self.fullTextEligible then self:QueueLayout() end
 end
 

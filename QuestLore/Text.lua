@@ -8,6 +8,9 @@ local folds = {
     ["á"] = "a", ["é"] = "e", ["í"] = "i", ["ó"] = "o", ["ú"] = "u",
     ["Á"] = "a", ["É"] = "e", ["Í"] = "i", ["Ó"] = "o", ["Ú"] = "u",
     ["ü"] = "u", ["Ü"] = "u", ["ñ"] = "n", ["Ñ"] = "n",
+    ["ą"] = "a", ["Ą"] = "a", ["ć"] = "c", ["Ć"] = "c", ["ę"] = "e", ["Ę"] = "e",
+    ["ł"] = "l", ["Ł"] = "l", ["ń"] = "n", ["Ń"] = "n", ["ś"] = "s", ["Ś"] = "s",
+    ["ź"] = "z", ["Ź"] = "z", ["ż"] = "z", ["Ż"] = "z",
 }
 
 function Text.Fold(value)
@@ -23,8 +26,11 @@ function Text.Clean(value)
     value = value:gsub("|T.-|t", ""):gsub("|A.-|a", "")
     value = value:gsub("%$[Bb]", "\n\n")
     value = value:gsub("%$[Gg]([^:;]*):([^;]*);", "%1")
-    value = value:gsub("%$[Nn]", (ns.Locale and ns.Locale.Get()=="en") and "adventurer" or "aventurero"):gsub("%$[Cc]", (ns.Locale and ns.Locale.Get()=="en") and "adventurer" or "aventurero")
-    value = value:gsub("%$[Rr]", (ns.Locale and ns.Locale.Get()=="en") and "traveler" or "viajero")
+    local language=ns.Locale and ns.Locale.Get()
+    local adventurer=language=="ru" and "путешественник" or language=="pl" and "podróżnik" or (language=="en" and "adventurer" or "aventurero")
+    local traveler=language=="ru" and "странник" or language=="pl" and "wędrowiec" or (language=="en" and "traveler" or "viajero")
+    value = value:gsub("%$[Nn]",adventurer):gsub("%$[Cc]",adventurer)
+    value = value:gsub("%$[Rr]",traveler)
     value = value:gsub("%$[%w]+[^%s]*", "") -- unresolved client tokens
     -- Quest text uses angle brackets for narrative actions, not HTML. Keep
     -- their meaning; some item-started quests consist entirely of an action.

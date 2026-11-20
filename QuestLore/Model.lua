@@ -23,14 +23,14 @@ function Model.Build(quest, locale)
     local function translated(key) return ns.L(key, language) end
     if not quest then
         return {
-            title = translated("Selecciona una misión"),
-            body = translated("Abre el diario y selecciona una misión, o sigue una para leer por qué estás haciéndola."),
+            title = ns.L("Selecciona una misión"),
+            body = ns.L("Abre el diario y selecciona una misión, o sigue una para leer por qué estás haciéndola."),
             source = "", kind = "empty", key = "empty",
         }
     end
     local description = ns.Text.Clean(quest.description)
     local result = { id = quest.id, key = "quest:" .. quest.id, title = ns.Text.Clean(quest.title), gameTitle = ns.Text.Clean(quest.title), language = language, requestedLanguage = language }
-    if result.title == "" then result.title = translated("Misión ") .. quest.id end
+    if result.title == "" then result.title = ns.L("Misión ") .. quest.id end
     local bilingual = ns.Narratives and ns.Narratives[quest.id]
     local legacy = ns.Stories[quest.id]
     local validLegacy = true
@@ -84,8 +84,8 @@ function Model.Build(quest, locale)
     local preview = ns.Text.Preview(original)
     if preview == "" then
         result.kind = quest.loading and "loading" or "missing"
-        result.body = quest.loading and translated("Cargando el relato de la misión…")
-            or translated("Todavía no hay relato disponible para esta misión. Prueba a abrir sus detalles en el diario.")
+        result.body = quest.loading and ns.L("Cargando el relato de la misión…")
+            or ns.L("Todavía no hay relato disponible para esta misión. Prueba a abrir sus detalles en el diario.")
         result.source = ""
         return result
     end

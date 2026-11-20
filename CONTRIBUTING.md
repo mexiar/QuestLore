@@ -4,7 +4,7 @@ Please describe the player-visible problem and expected behavior before submitti
 
 ## Narrative corrections
 
-Include the quest ID, the Forever title, and a source URL or a short relevant excerpt from the acceptance text. Match the current Forever quest rather than assuming its Classic namesake is identical. Update both language entries in `QuestLore/Narratives.lua` and any matching legacy Spanish entry in `Stories*.lua` so the compatibility fallback agrees. Opening stories live in `Origins_Stories.lua`.
+Include the quest ID, the Forever title, and a source URL or a short relevant excerpt from the acceptance text. Match the current Forever quest rather than assuming its Classic namesake is identical. Update both language entries in `QuestLore/Narratives.lua` and any matching legacy Spanish entry in `Stories*.lua` so the compatibility fallback agrees. Additional languages live in `Narratives_<language>.lua`; opening stories live in `Origins_Stories.lua`. Encyclopedia articles live in `Encyclopedia_Data.lua`. Update the affected language without silently replacing localized names with English names.
 
 Write concise original prose, normally no more than 100 words per language. Explain the assignment's problem, motivation, and known stakes. Use neutral Spanish, natural English, and equivalent meaning. Avoid filler, objective-list rewrites, editorial commentary, invented personal history, and unsupported causes. Preserve uncertainty when the quest giver is uncertain.
 

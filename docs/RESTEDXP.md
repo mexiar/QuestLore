@@ -2,7 +2,7 @@
 
 QuestLore reads the live RXPGuides engine through AceAddon-3.0's `GetAddon("RXPGuides", true)`. The global `RXPGuides` table is its guide-import facade, not the engine. No guide text is imported, bundled or persisted.
 
-The per-character **Follow RestedXP's active quest** option defaults to on. A missing addon creates no polling timer. Turn it off to use ordinary selection, or to stop its direct guide following. When both direct bridges have a valid accepted quest, Polestar takes priority; disable Polestar's bridge to give RestedXP priority.
+The per-character **Follow RestedXP's active quest** option defaults to on. A missing addon creates no polling timer. Turn it off to use ordinary selection, or to stop its direct guide following. An active quest selected or focused by the player takes priority over both guides. When no quest has focus and both direct bridges identify a valid accepted quest, Polestar takes priority.
 
 ## Target selection
 

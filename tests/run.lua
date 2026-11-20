@@ -10,6 +10,9 @@ assert(loadfile(root .. "/tests/source_api.lua"))(root)
 local ns = {}
 loadModule("Text.lua", ns)
 loadModule("Locale.lua", ns)
+loadModule("ReleaseNotes.lua", ns)
+loadModule("Updates.lua", ns)
+loadModule("Encyclopedia_Data.lua", ns)
 loadModule("Stories.lua", ns)
 loadModule("Stories_Undead.lua", ns)
 loadModule("Stories_ForeverTirisfal.lua", ns)
@@ -194,7 +197,12 @@ function Methods:SetParent(parent) self.parent=parent end
 function Methods:GetParent() return self.parent end
 function Methods:GetEffectiveScale() return self.scale or 1 end
 function Methods:SetScale(value) self.scale=value end
-function Methods:SetText(t) self.text = t end
+function Methods:SetText(t)
+    self.text = t
+    if self.buttonFontString then self.buttonFontString:SetText(t) end
+end
+function Methods:SetFontString(font) self.buttonFontString=font end
+function Methods:GetFontString() return self.buttonFontString end
 function Methods:GetText() return self.text end
 function Methods:GetStringWidth()
     local width=#((self.text or ""):gsub("[\128-\191]", ""))*(self.fontSize or 16)*0.5
@@ -227,8 +235,9 @@ for _, name in ipairs({"SetClampedToScreen", "SetFrameStrata", "SetMovable", "En
     "SetBackdropColor", "SetBackdropBorderColor", "RegisterForDrag", "StartMoving", "StopMovingOrSizing",
     "SetTextColor", "SetColorTexture", "EnableMouseWheel", "SetJustifyH", "SetJustifyV",
     "SetWordWrap", "SetSpacing", "SetNormalTexture", "SetPushedTexture", "SetDisabledTexture",
-    "SetHighlightTexture", "SetResizable", "SetAtlas", "SetTexCoord", "SetMinMaxValues", "SetValueStep", "SetObeyStepOnDrag", "SetShadowColor", "SetShadowOffset"}) do Methods[name] = function() end end
+    "SetHighlightTexture", "SetResizable", "SetAtlas", "SetTexCoord", "SetMinMaxValues", "SetValueStep", "SetObeyStepOnDrag", "SetShadowColor", "SetShadowOffset", "SetAutoFocus", "SetFontObject", "HighlightText", "ClearFocus"}) do Methods[name] = function() end end
 function Methods:SetTextColor(...) self.textColor={...} end
+function Methods:SetColorTexture(...) self.color={...} end
 function Methods:SetJustifyH(value) self.justifyH=value end
 function Methods:SetSpacing(value) self.spacing=value end
 function Methods:SetWordWrap(value) self.wordWrap=value end
@@ -257,8 +266,8 @@ function GameTooltip:SetOwner(owner) self.owner=owner end
 UISpecialFrames, SlashCmdList = {}, {}
 local categories={}
 Settings={
- RegisterCanvasLayoutCategory=function(panel,name) return {panel=panel,name=name,GetID=function() return name end} end,
- RegisterCanvasLayoutSubcategory=function(parent,panel,name) return {parent=parent,panel=panel,name=name,GetID=function() return name end} end,
+ RegisterCanvasLayoutCategory=function(panel,name) return {panel=panel,name=name,GetID=function() return name end,SetName=function(self,value) self.name=value end} end,
+ RegisterCanvasLayoutSubcategory=function(parent,panel,name) return {parent=parent,panel=panel,name=name,GetID=function() return name end,SetName=function(self,value) self.name=value end} end,
  OpenToCategory=function(id) Settings.lastOpened=id end,
  RegisterAddOnCategory=function(category) categories[#categories+1]=category end,
 }
@@ -339,6 +348,7 @@ loadModule("QuestAPI.lua", ns)
 loadModule("Polestar.lua", ns)
 loadModule("RestedXP.lua", ns)
 loadModule("Justify.lua", ns)
+loadModule("Encyclopedia.lua", ns)
 loadModule("FullText.lua", ns)
 loadModule("Window.lua", ns)
 loadModule("Tracker.lua", ns)
@@ -454,7 +464,7 @@ tracked=13;emit("SUPER_TRACKING_CHANGED");tick(0.2)
 equal(ns.Window.currentID,13,"live quest updates while options archive is open")
 equal(ns.Options.historyKey,archiveKey,"live updates preserve selected archive entry")
 local archiveIndex=ns.history:Find(archiveKey)
-equal(ns.Options.historyBody.text,ns.history.entries[archiveIndex].body,"archive displays the selected full narrative")
+equal(ns.Options.historyByKey[ns.Options.historyKey].body.text,ns.history.entries[archiveIndex].body,"archive displays the selected full narrative")
 check(ns.Window.current==nil,"Current button is removed")
 QuestLore_Current();tick(0.2)
 equal(ns.Window.currentID,13,"legacy current binding follows live tracking")
@@ -542,7 +552,7 @@ equal(ns.Window.currentID,99,"reopening reads current quest after hidden changes
 ns.SetVisible(false)
 ns.db.position={x=200,y=80}
 local reloaded = {}
-for _,file in ipairs({"Text.lua","Locale.lua","Stories.lua","Stories_Undead.lua","Stories_ForeverTirisfal.lua","Narratives.lua","Origins_Stories.lua","Origins.lua","Model.lua","History.lua","QuestAPI.lua","Polestar.lua","RestedXP.lua","Justify.lua","FullText.lua","Window.lua","Tracker.lua","Options.lua","Core.lua"}) do
+for _,file in ipairs({"Text.lua","Locale.lua","Encyclopedia_Data.lua","Stories.lua","Stories_Undead.lua","Stories_ForeverTirisfal.lua","Narratives.lua","Narratives_pl.lua","Narratives_ru.lua","Origins_Stories.lua","Origins.lua","Model.lua","History.lua","QuestAPI.lua","Polestar.lua","RestedXP.lua","Justify.lua","Encyclopedia.lua","FullText.lua","ReleaseNotes.lua","Updates.lua","Window.lua","Tracker.lua","Options.lua","Core.lua"}) do
     loadModule(file,reloaded)
 end
 local reloadEvents=frames[#frames]
@@ -560,7 +570,7 @@ equal(reloaded.Window.body.fontSize,18,"font size survives a reload")
 QuestLoreCharacterDB=nil
 logged={};tracked=0
 local fresh={}
-for _,file in ipairs({"Text.lua","Locale.lua","Stories.lua","Stories_Undead.lua","Stories_ForeverTirisfal.lua","Narratives.lua","Origins_Stories.lua","Origins.lua","Model.lua","History.lua","QuestAPI.lua","Polestar.lua","RestedXP.lua","Justify.lua","FullText.lua","Window.lua","Tracker.lua","Options.lua","Core.lua"}) do
+for _,file in ipairs({"Text.lua","Locale.lua","Encyclopedia_Data.lua","Stories.lua","Stories_Undead.lua","Stories_ForeverTirisfal.lua","Narratives.lua","Narratives_pl.lua","Narratives_ru.lua","Origins_Stories.lua","Origins.lua","Model.lua","History.lua","QuestAPI.lua","Polestar.lua","RestedXP.lua","Justify.lua","Encyclopedia.lua","FullText.lua","ReleaseNotes.lua","Updates.lua","Window.lua","Tracker.lua","Options.lua","Core.lua"}) do
     loadModule(file,fresh)
 end
 local freshEvents=frames[#frames]
@@ -704,7 +714,7 @@ window:SetMinimized(true)
 local function loginCharacter(db)
     QuestLoreCharacterDB=db
     local character={}
-    for _,file in ipairs({"Text.lua","Locale.lua","Stories.lua","Stories_Undead.lua","Stories_ForeverTirisfal.lua","Narratives.lua","Origins_Stories.lua","Origins.lua","Model.lua","History.lua","QuestAPI.lua","Polestar.lua","RestedXP.lua","Justify.lua","FullText.lua","Window.lua","Tracker.lua","Options.lua","Core.lua"}) do
+    for _,file in ipairs({"Text.lua","Locale.lua","Encyclopedia_Data.lua","Stories.lua","Stories_Undead.lua","Stories_ForeverTirisfal.lua","Narratives.lua","Narratives_pl.lua","Narratives_ru.lua","Origins_Stories.lua","Origins.lua","Model.lua","History.lua","QuestAPI.lua","Polestar.lua","RestedXP.lua","Justify.lua","Encyclopedia.lua","FullText.lua","ReleaseNotes.lua","Updates.lua","Window.lua","Tracker.lua","Options.lua","Core.lua"}) do
         loadModule(file,character)
     end
     local event=frames[#frames]
@@ -764,9 +774,10 @@ native.Window:SetMinimized(true)
 assert(native.Window.frame:GetHeight()==native.Window:GetHeaderHeight() and not native.Window.scroll:IsShown(),"minimized tracker keeps only Lore header")
 print("PASS: transparent tracker section, fixed Lore header, yellow quest title and white summary")
 
-for _, locale in ipairs({"enUS","enGB","ruRU","koKR","zhCN"}) do
+for _, locale in ipairs({"enUS","enGB","koKR","zhCN"}) do
     equal(ns.Locale.Resolve(locale),"en","non-Spanish game locale defaults to English")
 end
+equal(ns.Locale.Resolve("ruRU"),"ru","Russian is a supported explicit narrative and native UI language")
 equal(ns.Locale.Resolve("esMX"),"es","Latin American Spanish auto language")
 equal(ns.Locale.Resolve("esES"),"es","European Spanish auto language")
 for language, stories in pairs(ns.OriginStories) do
@@ -782,6 +793,8 @@ equal(native.Locale.Get(),"en","automatic mode keeps English until experimental 
 native.Locale.Set("es")
 equal(native.Locale.Get(),"es","explicit Spanish overrides client")
 native.Locale.Set("en")
+equal(native.Options.value.text,"Taille du texte : 14","summary language leaves automatic French interface unchanged")
+native.Locale.SetUI("en")
 equal(native.Options.value.text,"Text size: 14","options translate immediately")
 local priest=native.Origins.Build({race="Scourge",class="PRIEST",faction="Horde"})
 check(priest.body:find("Light and Shadow",1,true),"unified Forsaken priest story in English")
@@ -988,8 +1001,7 @@ assert(opts.historyPanel and opts.historyRows and opts.historyButton,"history is
 opts:OpenHistory()
 assert(Settings.lastOpened==opts.historyCategory:GetID(),"history button opens native AddOns subcategory")
 if #detachedPreference.history.entries>0 then
-    opts.historyRows[1].scripts.OnClick()
-    assert(opts.historyBody.text==detachedPreference.history.entries[1].body,"archive row selects full saved story")
+    assert(opts.historyRows[1].body.text==detachedPreference.history.entries[#detachedPreference.history.entries].body,"newest saved story is first in the feed")
     local live=detachedPreference.Window.currentKey
     opts:MoveHistory(1)
     assert(detachedPreference.Window.currentKey==live,"archive selection never replaces main quest")
@@ -1002,17 +1014,16 @@ local archive=detachedPreference.history
 local oldEntries=archive.entries
 archive.entries={}
 for i=1,200 do archive.entries[i]={key="archive:"..i,title="Story "..i,body="Narrative "..i,source="",kind="story"} end
-opts:SyncHistory()
-assert(#opts.historyRows==200 and opts.historyListContent:GetHeight()==6800,"all 200 entries remain accessible in scrollable archive")
-opts.historyRows[1].scripts.OnClick()
-assert(opts.historyKey=="archive:1" and opts.historyBody.text=="Narrative 1","first archive row has its own selection callback")
-opts.historyRows[200].scripts.OnClick()
-assert(opts.historyKey=="archive:200" and opts.historyBody.text=="Narrative 200","last archive row has its own selection callback")
+opts:SyncHistory(true)
+assert(#opts.historyRows==200 and opts.historyContent:GetHeight()>6800,"all 200 complete stories fit in the scrollable feed")
+assert(opts.historyRows[1].entry.key=="archive:200" and opts.historyRows[1].body.text=="Narrative 200","newest story is first")
+assert(opts.historyRows[200].entry.key=="archive:1" and opts.historyRows[200].body.text=="Narrative 1","oldest story is last")
+assert(not opts.historyRows[1].scripts.OnClick,"story rows are not selection buttons")
 local liveKey=detachedPreference.Window.currentKey
-opts.historyList.scripts.OnMouseWheel(nil,-1)
-assert(opts.historyList:GetVerticalScroll()>0,"archive titles can scroll")
+opts.historyScroll.scripts.OnMouseWheel(nil,-1)
+assert(opts.historyScroll:GetVerticalScroll()>0,"archive titles can scroll")
 assert(detachedPreference.Window.currentKey==liveKey,"archive scrolling does not alter active narrative")
-archive.entries={};opts:SyncHistory()
+archive.entries={};opts:SyncHistory(true)
 assert(opts.historyKey==nil and not opts.historyRows[1]:IsShown(),"empty archive clears selection and hides recycled rows")
 archive.entries=oldEntries
 local originalCore, originalCombat=ForeverCore, InCombatLockdown
@@ -1031,11 +1042,12 @@ local beforeLanguageTracked=tracked
 tracked=13;QuestMapFrame.DetailsFrame:Hide()
 local translated=loginCharacter({language="es",attachToTracker=false});tick(0.2)
 translated.Options:OpenHistory()
+translated.Options.historyPanel:Show() -- Native settings opener is mocked in this harness.
 local entriesBeforeLanguage=#translated.history.entries
 translated.db.visible=false
 translated.Locale.Set("en")
 local selectedArchive=translated.history:Find(translated.Options.historyKey)
-assert(translated.Options.historyBody.text==translated.history.entries[selectedArchive].body,"archive language refreshes immediately even with live window hidden")
+assert(translated.Options.historyByKey[translated.Options.historyKey].body.text==translated.history.entries[selectedArchive].body,"archive language refreshes immediately even with live window hidden")
 assert(#translated.history.entries==entriesBeforeLanguage,"language changes never duplicate archive entries")
 print("PASS: hidden live window does not delay archive language changes")
 tracked=beforeLanguageTracked
@@ -1060,11 +1072,12 @@ local function announcePolestar(target)
 end
 logged[13]={title="La Milicia Popular II",description="Los saqueadores Defias amenazan a la Milicia."}
 logged[99]={title="Una misión desconocida",description=narrative}
-tracked=99;QuestMapFrame.DetailsFrame:Hide()
+local beforeGuideFocus=tracked
+tracked=nil;QuestMapFrame.DetailsFrame:Hide()
 Polestar=fakePolestar
 local following=loginCharacter({attachToTracker=false});tick(0.2)
 assert(following.db.followPolestar and following.Options.polestar.checked,"Polestar following defaults on per character")
-assert(following.Window.currentID==13,"initial Polestar target overrides unrelated native tracking")
+assert(following.Window.currentID==13,"Polestar supplies context when there is no focused quest")
 assert(subscriptionCount==1,"one subscription on initial load")
 following.PolestarBridge:Sync();following.PolestarBridge:Sync();tick(0.2)
 assert(subscriptionCount==1,"repeated addon sync never duplicates subscriptions")
@@ -1072,12 +1085,31 @@ announcePolestar({quest="99",kind="turnin",stepIndex=2,goalIndex=1})
 assert(following.Window.currentID==99,"accepted Polestar turn-in supports numeric string IDs")
 announcePolestar({quest=13,kind="kill",stepIndex=3,goalIndex=1,area=50,search=true})
 assert(following.Window.currentID==13,"area/search targets follow their accepted quest directly")
-following.SelectContext(99,"tracked");tick(0.2)
-assert(following.Window.currentID==13,"Polestar retains priority over automatic or manual selection of another quest")
+C_SuperTrack.SetSuperTrackedQuestID(99);tick(0.2)
+assert(following.Window.currentID==99,"focused quest overrides Polestar")
+following.ClearSelectionContext();following.Refresh()
+assert(following.Window.currentID==99,"existing client focus is honored without a new click")
 announcePolestar({quest=13,kind="kill",stepIndex=3,goalIndex=1,label="temporary travel leg",x=40,y=50})
-assert(following.Window.currentID==13,"same goal or changed travel label continues following Polestar")
+assert(following.Window.currentID==99,"guide labels cannot replace focused quest")
 announcePolestar({quest=13,kind="kill",stepIndex=3,goalIndex=2})
-assert(following.Window.currentID==13,"a new guide goal resumes direct following")
+assert(following.Window.currentID==99,"guide goal changes cannot clear manual focus")
+local focusedRefreshes=0
+local refreshFocused=following.Refresh
+following.Refresh=function() focusedRefreshes=focusedRefreshes+1;return refreshFocused() end
+tick(2.2);focusedRefreshes=0;tick(3.2)
+assert(focusedRefreshes==0,"unchanged guide does not repaint a focused quest every second")
+following.Refresh=refreshFocused
+logged[12]={title="La Milicia Popular",description="La Milicia Popular quiere defender los campos."}
+QuestMapFrame_OpenToQuestDetails(12);tick(0.2)
+assert(following.Window.currentID==12,"explicit journal selection overrides tracking and guides")
+QuestMapFrame.DetailsFrame:Hide();following.QueueRefresh();tick(0.2)
+assert(following.Window.currentID==99,"closing journal returns to focus before guide")
+local removedFocus=logged[99];logged[99]=nil
+following.testEvents.scripts.OnEvent(following.testEvents,"QUEST_REMOVED",99);tick(0.2)
+assert(following.Window.currentID==13,"removed focused quest cannot mask a valid guide target")
+logged[99]=removedFocus
+C_SuperTrack.SetSuperTrackedQuestID(0);tick(0.2)
+assert(following.Window.currentID==13,"clearing focus restores guide fallback")
 for _,target in ipairs({{quest=13,kind="manual"},{quest=13,kind="accept"},{quest=999999,kind="kill"},{quest=0,kind="kill"},{quest=-1,kind="kill"},{quest=13.5,kind="kill"},{quest="bad",kind="kill"},{quest=math.huge,kind="kill"},{kind="flightmaster",label="travel"}}) do
     announcePolestar(target)
     assert(following.Window.currentID==99,"manual, future, malformed or travel-only targets fall back to native tracking")
@@ -1129,6 +1161,7 @@ polestarTarget={quest=13,kind="turnin",stepIndex=8}
 following.PolestarBridge:SetEnabled(true);tick(0.2)
 assert(following.Window.currentID==13,"reenabling resumes following immediately")
 following.Locale.Set("en")
+following.Locale.SetUI("en")
 assert(following.Options.polestar.label.text=="Follow Polestar's active quest","Polestar option is localized")
 -- A missing or incompatible addon must leave the preference available.
 following.PolestarBridge:SetEnabled(false)
@@ -1173,6 +1206,7 @@ assert(disabled.Window.currentID==99 and not disabled.PolestarBridge.owner,"subs
 fakePolestar.On=oldOn
 disabled.PolestarBridge:SetEnabled(false)
 Polestar=previousPolestar
+tracked=beforeGuideFocus
 print("PASS: direct Polestar targets, per-character toggle, one subscription/ticker, late load, strict priority, missed events, acceptance guards, removal, native fallback and API failures")
 
 assert(loadfile(root.."/tests/layout.lua"))()({
@@ -1183,10 +1217,31 @@ assert(loadfile(root.."/tests/layout.lua"))()({
 assert(loadfile(root.."/tests/horizontal.lua"))()({login=loginCharacter,tick=tick,object=object})
 
 assert(loadfile(root.."/tests/fulltext.lua"))()({login=loginCharacter,tick=tick,object=object})
+assert(loadfile(root.."/tests/fulltext_toggle.lua"))()({login=loginCharacter,tick=tick})
 
-assert(loadfile(root.."/tests/restedxp.lua"))()({login=loginCharacter,tick=tick,setNative=function() tracked=99;logged[12]={title="La Milicia Popular",description="La Milicia Popular quiere defender los campos."};logged[13]={title="La Milicia Popular II",description="Los saqueadores Defias amenazan a la Milicia."};QuestMapFrame.DetailsFrame:Hide() end})
+assert(loadfile(root.."/tests/restedxp.lua"))()({login=loginCharacter,tick=tick,setNative=function() tracked=nil;logged[12]={title="La Milicia Popular",description="La Milicia Popular quiere defender los campos."};logged[13]={title="La Milicia Popular II",description="Los saqueadores Defias amenazan a la Milicia."};QuestMapFrame.DetailsFrame:Hide() end})
 
 assert(loadfile(root.."/tests/preview.lua"))()({login=loginCharacter,tick=tick,select=function(id,description,objectives)
     tracked=id;QuestMapFrame.DetailsFrame:Hide()
     if description then logged[id]={title="Original del cliente",description=description,objectives=objectives} else logged[id]=nil end
 end})
+
+assert(loadfile(root.."/tests/ui_localization.lua"))()({login=loginCharacter,tick=tick})
+
+assert(loadfile(root.."/tests/background.lua"))()({login=loginCharacter,tick=tick})
+
+assert(loadfile(root.."/tests/encyclopedia_matcher.lua"))()(root)
+assert(loadfile(root.."/tests/encyclopedia.lua"))()({login=loginCharacter,tick=tick})
+assert(loadfile(root.."/tests/encyclopedia_bilingual.lua"))()({login=loginCharacter,tick=tick})
+
+assert(loadfile(root.."/tests/history_feed.lua"))()({login=loginCharacter,tick=tick})
+
+assert(loadfile(root.."/tests/polish.lua"))(root, {login=loginCharacter,tick=tick})
+
+assert(loadfile(root.."/tests/updates.lua"))()({root=root,login=loginCharacter,tick=tick})
+
+assert(loadfile(root.."/tests/encyclopedia_geometry.lua"))()({login=loginCharacter,tick=tick})
+assert(loadfile(root.."/tests/history_performance.lua"))()({login=loginCharacter,tick=tick})
+
+assert(loadfile(root.."/tests/preferences.lua"))()({login=loginCharacter,tick=tick})
+assert(loadfile(root.."/tests/contact.lua"))()({login=loginCharacter,tick=tick})

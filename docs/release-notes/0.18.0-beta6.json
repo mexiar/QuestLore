@@ -1,0 +1,12 @@
+{
+  "version": "0.18.0-beta6",
+  "notes": {
+    "es": "Novedades de QuestLore 0.18.0-beta6\n\n- Se añadió la opción «Mostrar botón de texto completo», activada por defecto y guardada por personaje.\n- Ocultar o mostrar el botón actualiza el resumen y el historial sin cambiar la misión seleccionada. Las vistas previas de misiones sin resumen siguen siendo pulsables.",
+    "en": "What’s new in QuestLore 0.18.0-beta6\n\n- Add the per-character “Show full quest text button” option, enabled by default.\n- Hide or restore the button in Lore and history without changing the selected quest. Missing-summary previews remain clickable.",
+    "fr": "Nouveautés de QuestLore 0.18.0-beta6\n\n- Ajout de l’option « Afficher le bouton du texte complet », activée par défaut et enregistrée par personnage.\n- Le bouton peut être masqué dans le résumé et l’historique sans changer de quête. Les aperçus des quêtes sans résumé restent cliquables.",
+    "de": "Neues in QuestLore 0.18.0-beta6\n\n- Die Option „Schaltfläche für vollständigen Questtext anzeigen“ ist standardmäßig aktiviert und wird pro Charakter gespeichert.\n- Die Schaltfläche lässt sich in Zusammenfassung und Verlauf ohne Questwechsel ausblenden. Vorschauen ohne Zusammenfassung bleiben anklickbar.",
+    "pt": "Novidades do QuestLore 0.18.0-beta6\n\n- Adicionada a opção de mostrar o botão de texto completo, ativada por padrão e salva por personagem.\n- O botão pode ser ocultado no resumo e no histórico sem mudar a missão selecionada. Prévias de missões sem resumo continuam clicáveis.",
+    "pl": "Nowości w QuestLore 0.18.0-beta6\n\n- Dodano zapisywaną osobno dla postaci opcję pokazywania przycisku pełnego tekstu questa, domyślnie włączoną.\n- Przycisk można ukryć w opowieści i historii bez zmiany wybranego questa. Podglądy questów bez streszczenia pozostają klikalne.",
+    "ru": "Что нового в QuestLore 0.18.0-beta6\n\n- Добавлена настройка показа кнопки полного текста задания. Она включена по умолчанию и сохраняется отдельно для каждого персонажа.\n- Кнопку можно скрыть в истории и кратком описании без смены задания. Предпросмотр заданий без краткой истории остаётся доступным по нажатию."
+  }
+}

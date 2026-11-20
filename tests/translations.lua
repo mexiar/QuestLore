@@ -4,11 +4,11 @@ local ns = {db={language="en"},locale="enUS"}
 local function load(name) assert(loadfile(root.."/QuestLore/"..name))("QuestLore",ns) end
 load("Text.lua");load("Locale.lua");load("Stories.lua")
 load("Narratives.lua");load("Origins_Stories.lua")
-for _,lang in ipairs({"fr","de","pt"}) do load("Narratives_"..lang..".lua") end
+for _,lang in ipairs({"fr","de","pt","pl","ru"}) do load("Narratives_"..lang..".lua") end
 load("Origins.lua");load("Model.lua");load("History.lua")
 local function count(t) local n=0;for _ in pairs(t) do n=n+1 end;return n end
 assert(count(ns.Narratives)==5259)
-for _,lang in ipairs({"fr","de","pt"}) do
+for _,lang in ipairs({"fr","de","pt","pl","ru"}) do
     local bank=assert(ns.NarrativeTranslations[lang],"missing language "..lang)
     local origins=assert(ns.OriginTranslations[lang],"missing introductions "..lang)
     assert(count(bank)==5259 and count(origins)==90,"translation coverage "..lang)
@@ -34,4 +34,4 @@ for _,lang in ipairs({"fr","de","pt"}) do
     local intro=ns.Origins.Build({race="Scourge",class="PRIEST",faction="Horde"})
     assert(intro.language==lang and intro.body==origins["Scourge:PRIEST"],"translated origin selection")
 end
-print("PASS: 15,777 translated quest summaries and 270 introductions; exhaustive selection, no empty/English fallback/sentinel, localized client titles and summary-only history")
+print("PASS: 26,295 translated quest summaries and 450 introductions; exhaustive selection, no empty/English fallback/sentinel, localized client titles and summary-only history")

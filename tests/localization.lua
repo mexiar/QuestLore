@@ -11,20 +11,22 @@ end
 local ns = { db={language="auto"}, locale="esMX" }
 local function load(name) assert(loadfile(root.."/QuestLore/"..name))("QuestLore",ns) end
 load("Locale.lua"); load("Text.lua"); load("Model.lua"); load("Origins.lua")
-for _,pair in ipairs({{"esMX","es"},{"esES","es"},{"enUS","en"},{"enGB","en"},{"frFR","fr"},{"deDE","de"},{"ptBR","pt"},{"ptPT","pt"},{"koKR","en"},{"zhTW","en"},{"ruRU","en"}}) do
+for _,pair in ipairs({{"esMX","es"},{"esES","es"},{"enUS","en"},{"enGB","en"},{"frFR","fr"},{"deDE","de"},{"ptBR","pt"},{"ptPT","pt"},{"plPL","pl"},{"koKR","en"},{"zhTW","en"},{"ruRU","ru"}}) do
     equal(ns.Locale.Resolve(pair[1]),pair[2],"locale mapping "..pair[1])
     ns.locale=pair[1]; equal(ns.Locale.Get(),pair[2]=="es" and "es" or "en","automatic base language "..pair[1])
 end
-for _,lang in ipairs({"es","en","fr","de","pt"}) do
+for _,lang in ipairs({"es","en","fr","de","pt","pl","ru"}) do
     ns.Locale.Set(lang); equal(ns.Locale.Get(),lang,"manual preference "..lang)
 end
-ns.Locale.Set("invalid"); equal(ns.Locale.Get(),"pt","invalid setting ignored")
+ns.Locale.Set("invalid"); equal(ns.Locale.Get(),"ru","invalid setting ignored")
 ns.Locale.Set("auto"); ns.locale="esES"
 equal(ns.Locale.Get(),"es","Spain client uses explicitly labeled Latin America base")
 equal(ns.L("Español (Latinoamérica)","en"),"Español (Latinoamérica)","Spanish variant label")
 equal(ns.L("Cerrar","fr"),"Fermer","French UI")
 equal(ns.L("Cerrar","de"),"Schließen","German UI")
 equal(ns.L("Cerrar","pt"),"Fechar","Brazilian Portuguese UI")
+equal(ns.L("Cerrar","pl"),"Zamknij","Polish UI")
+equal(ns.L("Cerrar","ru"),"Закрыть","Russian UI")
 equal(ns.L("unregistered string","fr"),"unregistered string","unknown key fallback")
 -- Check every UI entry has a nonempty value in each supported dictionary.
 local dictionaries
@@ -35,12 +37,22 @@ for index=1,20 do
 end
 check(type(dictionaries)=="table","UI dictionaries inspectable")
 for key in pairs(dictionaries.es) do
-    for _,lang in ipairs({"en","fr","de","pt"}) do
+    for _,lang in ipairs({"en","fr","de","pt","pl","ru"}) do
         check(type(dictionaries[lang][key])=="string" and dictionaries[lang][key]~="","UI key exists for "..lang..": "..key)
     end
 end
+-- Reject newly introduced UI keys that silently fall through to Spanish.
+for _,module in ipairs({"Core.lua","FullText.lua","Model.lua","Options.lua","Origins.lua","Window.lua","Encyclopedia.lua"}) do
+    local file=assert(io.open(root.."/QuestLore/"..module,"r"))
+    local source=file:read("*a");file:close()
+    for key in source:gmatch('ns%.L%("([^"]+)"') do
+        for _,language in ipairs({"es","en","fr","de","pt","pl","ru"}) do
+            check(type(dictionaries[language][key])=="string" and dictionaries[language][key]~="","live UI key exists: "..module.." "..language.." "..key)
+        end
+    end
+end
 for _,key in ipairs({"Leer texto completo","Volver al resumen","Texto original del juego","Cerrar","El texto completo solo está disponible para misiones activas."}) do
-    for _,lang in ipairs({"en","fr","de","pt"}) do check(ns.L(key,lang)~=key,"viewer UI localized: "..lang) end
+    for _,lang in ipairs({"en","fr","de","pt","pl","ru"}) do check(ns.L(key,lang)~=key,"viewer UI localized: "..lang) end
 end
 ns.Stories={}
 ns.Narratives={[101]={en="Arugal needs help in Silverpine Forest.",es="Arugal necesita ayuda en el Bosque de Argénteos.",titleEN="Arugal's Request",titleES="La petición de Arugal"}}

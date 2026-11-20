@@ -1,0 +1,12 @@
+{
+  "version": "0.18.0-beta7",
+  "notes": {
+    "es": "Novedades de QuestLore 0.18.0-beta7\n\n- Polaco: 5.259 resúmenes, 90 introducciones y traducción inicial de la interfaz aportados por dawiss. Se completaron la interfaz actual y los 2.163 artículos de la enciclopedia.\n- Se conservan los nombres propios en inglés y las preferencias de idioma existentes.",
+    "en": "What’s new in QuestLore 0.18.0-beta7\n\n- Polish: 5,259 quest summaries, 90 introductions and the initial interface translation contributed by dawiss. Complete the current interface and all 2,163 encyclopedia articles.\n- Preserve English proper names and existing language preferences.",
+    "fr": "Nouveautés de QuestLore 0.18.0-beta7\n\n- Polonais : 5 259 résumés, 90 introductions et une première traduction de l’interface fournis par dawiss. Traduction des nouveaux contrôles et des 2 163 articles.\n- Les noms propres anglais et les préférences de langue sont conservés.",
+    "de": "Neues in QuestLore 0.18.0-beta7\n\n- Polnisch: 5.259 Zusammenfassungen, 90 Einführungen und die erste Oberflächenübersetzung von dawiss. Ergänzt wurden die aktuellen Steuerelemente und alle 2.163 Enzyklopädieartikel.\n- Englische Eigennamen und bestehende Spracheinstellungen bleiben erhalten.",
+    "pt": "Novidades do QuestLore 0.18.0-beta7\n\n- Polonês: 5.259 resumos, 90 introduções e a tradução inicial da interface contribuídos por dawiss. Tradução dos controles atuais e dos 2.163 artigos da enciclopédia.\n- Nomes próprios em inglês e preferências de idioma existentes foram preservados.",
+    "pl": "Nowości w QuestLore 0.18.0-beta7\n\n- Polskie tłumaczenie 5259 questów, 90 wprowadzeń i początkowego interfejsu przekazane przez dawiss. Uzupełniono bieżący interfejs oraz wszystkie 2163 artykuły encyklopedii.\n- Zachowano angielskie nazwy własne i dotychczasowe ustawienia języka.",
+    "ru": "Что нового в QuestLore 0.18.0-beta7\n\n- Польский язык: dawiss предоставил 5259 историй заданий, 90 вступлений и начальный перевод интерфейса. Дополнен текущий интерфейс и переведены все 2163 статьи энциклопедии.\n- Сохранены английские имена собственные и прежние языковые настройки."
+  }
+}
